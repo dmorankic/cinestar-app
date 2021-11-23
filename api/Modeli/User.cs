@@ -17,5 +17,7 @@ namespace Modeli
         public string password { get; set; }
 
         public int broj_telefona { get; set; }
+        public int gradId { get; set; }
+        public Grad grad { get; set; }
     }
 }

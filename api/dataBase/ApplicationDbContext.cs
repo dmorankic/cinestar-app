@@ -32,6 +32,12 @@ namespace dataBase
         public DbSet<Proizvod> proizvod { get; set; }
         public DbSet<StavkaPonude> stavkaPonude { get; set; }
         public DbSet<Rad> radovi { get; set; }
+        public DbSet<Karta> karta { get; set; }
+        public DbSet<Sjediste> sjediste { get; set; }
+        public DbSet<Dvorana> dvorana { get; set; }
+        public DbSet<Kino> kino { get; set; }
+        public DbSet<Grad> grad { get; set; }
+
 
 
 

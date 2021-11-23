@@ -13,5 +13,6 @@ namespace Modeli
         public VrstaProjekcije vrstaProjekcije { get; set; }
         public int filmId { get; set; }
         public Film film { get; set; }
+       
     }
 }

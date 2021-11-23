@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dataBase.Migrations
 {
-    public partial class posljednja : Migration
+    public partial class damirAd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,19 @@ namespace dataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "grad",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    naziv = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_grad", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "kasa",
                 columns: table => new
                 {
@@ -63,24 +76,6 @@ namespace dataBase.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_kasa", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "useri",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ime_prezime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    b_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    broj_telefona = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_useri", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -127,6 +122,126 @@ namespace dataBase.Migrations
                         name: "FK_filmovi_detaljiFilma_detaljiFilmaID",
                         column: x => x.detaljiFilmaID,
                         principalTable: "detaljiFilma",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "kino",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    naziv = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    gradId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_kino", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_kino_grad_gradId",
+                        column: x => x.gradId,
+                        principalTable: "grad",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "useri",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ime_prezime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    b_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    broj_telefona = table.Column<int>(type: "int", nullable: false),
+                    gradId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_useri", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_useri_grad_gradId",
+                        column: x => x.gradId,
+                        principalTable: "grad",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "glumacFilm",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    glumacId = table.Column<int>(type: "int", nullable: false),
+                    filmId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_glumacFilm", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_glumacFilm_filmovi_filmId",
+                        column: x => x.filmId,
+                        principalTable: "filmovi",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_glumacFilm_glumci_glumacId",
+                        column: x => x.glumacId,
+                        principalTable: "glumci",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "projekcije",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    dan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    vrijemePrikazivanja = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    vrstaProjekcijeId = table.Column<int>(type: "int", nullable: false),
+                    filmId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_projekcije", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_projekcije_filmovi_filmId",
+                        column: x => x.filmId,
+                        principalTable: "filmovi",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_projekcije_vrstaProjekcije_vrstaProjekcijeId",
+                        column: x => x.vrstaProjekcijeId,
+                        principalTable: "vrstaProjekcije",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "dvorana",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    brojDvorane = table.Column<int>(type: "int", nullable: false),
+                    brojSjedista = table.Column<int>(type: "int", nullable: false),
+                    kinoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_dvorana", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_dvorana_kino_kinoId",
+                        column: x => x.kinoId,
+                        principalTable: "kino",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -185,55 +300,22 @@ namespace dataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "glumacFilm",
+                name: "sjediste",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    glumacId = table.Column<int>(type: "int", nullable: false),
-                    filmId = table.Column<int>(type: "int", nullable: false)
+                    red = table.Column<int>(type: "int", nullable: false),
+                    kolona = table.Column<int>(type: "int", nullable: false),
+                    dvoranaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_glumacFilm", x => x.id);
+                    table.PrimaryKey("PK_sjediste", x => x.id);
                     table.ForeignKey(
-                        name: "FK_glumacFilm_filmovi_filmId",
-                        column: x => x.filmId,
-                        principalTable: "filmovi",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_glumacFilm_glumci_glumacId",
-                        column: x => x.glumacId,
-                        principalTable: "glumci",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "projekcije",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    dan = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    vrijemePrikazivanja = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    vrstaProjekcijeId = table.Column<int>(type: "int", nullable: false),
-                    filmId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_projekcije", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_projekcije_filmovi_filmId",
-                        column: x => x.filmId,
-                        principalTable: "filmovi",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_projekcije_vrstaProjekcije_vrstaProjekcijeId",
-                        column: x => x.vrstaProjekcijeId,
-                        principalTable: "vrstaProjekcije",
+                        name: "FK_sjediste_dvorana_dvoranaId",
+                        column: x => x.dvoranaId,
+                        principalTable: "dvorana",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -362,6 +444,45 @@ namespace dataBase.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "karta",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    cijena = table.Column<float>(type: "real", nullable: false),
+                    racunId = table.Column<int>(type: "int", nullable: false),
+                    projekcijaId = table.Column<int>(type: "int", nullable: false),
+                    sjedisteId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_karta", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_karta_projekcije_projekcijaId",
+                        column: x => x.projekcijaId,
+                        principalTable: "projekcije",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_karta_racun_racunId",
+                        column: x => x.racunId,
+                        principalTable: "racun",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_karta_sjediste_sjedisteId",
+                        column: x => x.sjedisteId,
+                        principalTable: "sjediste",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_dvorana_kinoId",
+                table: "dvorana",
+                column: "kinoId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_filmovi_detaljiFilmaID",
                 table: "filmovi",
@@ -376,6 +497,27 @@ namespace dataBase.Migrations
                 name: "IX_glumacFilm_glumacId",
                 table: "glumacFilm",
                 column: "glumacId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_karta_projekcijaId",
+                table: "karta",
+                column: "projekcijaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_karta_racunId",
+                table: "karta",
+                column: "racunId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_karta_sjedisteId",
+                table: "karta",
+                column: "sjedisteId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_kino_gradId",
+                table: "kino",
+                column: "gradId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Korisnik_confMailXkorisniciId",
@@ -428,9 +570,19 @@ namespace dataBase.Migrations
                 column: "radnikId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_sjediste_dvoranaId",
+                table: "sjediste",
+                column: "dvoranaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_stavkaPonude_ponudaId",
                 table: "stavkaPonude",
                 column: "ponudaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_useri_gradId",
+                table: "useri",
+                column: "gradId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -439,10 +591,19 @@ namespace dataBase.Migrations
                 name: "glumacFilm");
 
             migrationBuilder.DropTable(
+                name: "karta");
+
+            migrationBuilder.DropTable(
                 name: "Korisnik");
 
             migrationBuilder.DropTable(
                 name: "proizvod");
+
+            migrationBuilder.DropTable(
+                name: "radovi");
+
+            migrationBuilder.DropTable(
+                name: "glumci");
 
             migrationBuilder.DropTable(
                 name: "projekcije");
@@ -451,10 +612,7 @@ namespace dataBase.Migrations
                 name: "racun");
 
             migrationBuilder.DropTable(
-                name: "radovi");
-
-            migrationBuilder.DropTable(
-                name: "glumci");
+                name: "sjediste");
 
             migrationBuilder.DropTable(
                 name: "confirmMailKorisnik");
@@ -466,16 +624,22 @@ namespace dataBase.Migrations
                 name: "vrstaProjekcije");
 
             migrationBuilder.DropTable(
+                name: "kasa");
+
+            migrationBuilder.DropTable(
                 name: "stavkaPonude");
 
             migrationBuilder.DropTable(
-                name: "kasa");
+                name: "dvorana");
 
             migrationBuilder.DropTable(
                 name: "detaljiFilma");
 
             migrationBuilder.DropTable(
                 name: "ponuda");
+
+            migrationBuilder.DropTable(
+                name: "kino");
 
             migrationBuilder.DropTable(
                 name: "Radnik");
@@ -485,6 +649,9 @@ namespace dataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "vrstaRadnika");
+
+            migrationBuilder.DropTable(
+                name: "grad");
         }
     }
 }

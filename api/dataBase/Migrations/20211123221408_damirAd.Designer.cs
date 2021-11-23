@@ -10,8 +10,8 @@ using dataBase;
 namespace dataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211123200431_posljednja")]
-    partial class posljednja
+    [Migration("20211123221408_damirAd")]
+    partial class damirAd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,6 +58,29 @@ namespace dataBase.Migrations
                     b.HasKey("id");
 
                     b.ToTable("detaljiFilma");
+                });
+
+            modelBuilder.Entity("Modeli.Dvorana", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("brojDvorane")
+                        .HasColumnType("int");
+
+                    b.Property<int>("brojSjedista")
+                        .HasColumnType("int");
+
+                    b.Property<int>("kinoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("kinoId");
+
+                    b.ToTable("dvorana");
                 });
 
             modelBuilder.Entity("Modeli.Film", b =>
@@ -129,6 +152,52 @@ namespace dataBase.Migrations
                     b.ToTable("glumacFilm");
                 });
 
+            modelBuilder.Entity("Modeli.Grad", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("grad");
+                });
+
+            modelBuilder.Entity("Modeli.Karta", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<float>("cijena")
+                        .HasColumnType("real");
+
+                    b.Property<int>("projekcijaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("racunId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("sjedisteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("projekcijaId");
+
+                    b.HasIndex("racunId");
+
+                    b.HasIndex("sjedisteId")
+                        .IsUnique();
+
+                    b.ToTable("karta");
+                });
+
             modelBuilder.Entity("Modeli.Kasa", b =>
                 {
                     b.Property<int>("id")
@@ -145,6 +214,26 @@ namespace dataBase.Migrations
                     b.HasKey("id");
 
                     b.ToTable("kasa");
+                });
+
+            modelBuilder.Entity("Modeli.Kino", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("gradId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("gradId");
+
+                    b.ToTable("kino");
                 });
 
             modelBuilder.Entity("Modeli.Ponuda", b =>
@@ -286,6 +375,29 @@ namespace dataBase.Migrations
                     b.ToTable("radovi");
                 });
 
+            modelBuilder.Entity("Modeli.Sjediste", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("dvoranaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("kolona")
+                        .HasColumnType("int");
+
+                    b.Property<int>("red")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("dvoranaId");
+
+                    b.ToTable("sjediste");
+                });
+
             modelBuilder.Entity("Modeli.StavkaPonude", b =>
                 {
                     b.Property<int>("id")
@@ -331,6 +443,9 @@ namespace dataBase.Migrations
                     b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("gradId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ime_prezime")
                         .HasColumnType("nvarchar(max)");
 
@@ -341,6 +456,8 @@ namespace dataBase.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("gradId");
 
                     b.ToTable("useri");
                 });
@@ -414,6 +531,17 @@ namespace dataBase.Migrations
                     b.ToTable("Radnik");
                 });
 
+            modelBuilder.Entity("Modeli.Dvorana", b =>
+                {
+                    b.HasOne("Modeli.Kino", "kino")
+                        .WithMany()
+                        .HasForeignKey("kinoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("kino");
+                });
+
             modelBuilder.Entity("Modeli.Film", b =>
                 {
                     b.HasOne("Modeli.DetaljiFilma", "detaljiFilma")
@@ -442,6 +570,44 @@ namespace dataBase.Migrations
                     b.Navigation("film");
 
                     b.Navigation("glumac");
+                });
+
+            modelBuilder.Entity("Modeli.Karta", b =>
+                {
+                    b.HasOne("Modeli.Projekcija", "projekcija")
+                        .WithMany()
+                        .HasForeignKey("projekcijaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Modeli.Racun", "racun")
+                        .WithMany()
+                        .HasForeignKey("racunId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Modeli.Sjediste", "sjediste")
+                        .WithOne("karta")
+                        .HasForeignKey("Modeli.Karta", "sjedisteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("projekcija");
+
+                    b.Navigation("racun");
+
+                    b.Navigation("sjediste");
+                });
+
+            modelBuilder.Entity("Modeli.Kino", b =>
+                {
+                    b.HasOne("Modeli.Grad", "grad")
+                        .WithMany()
+                        .HasForeignKey("gradId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("grad");
                 });
 
             modelBuilder.Entity("Modeli.Ponuda", b =>
@@ -521,6 +687,17 @@ namespace dataBase.Migrations
                     b.Navigation("radnik");
                 });
 
+            modelBuilder.Entity("Modeli.Sjediste", b =>
+                {
+                    b.HasOne("Modeli.Dvorana", "dvorana")
+                        .WithMany()
+                        .HasForeignKey("dvoranaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("dvorana");
+                });
+
             modelBuilder.Entity("Modeli.StavkaPonude", b =>
                 {
                     b.HasOne("Modeli.Ponuda", "ponude")
@@ -530,6 +707,17 @@ namespace dataBase.Migrations
                         .IsRequired();
 
                     b.Navigation("ponude");
+                });
+
+            modelBuilder.Entity("Modeli.User", b =>
+                {
+                    b.HasOne("Modeli.Grad", "grad")
+                        .WithMany()
+                        .HasForeignKey("gradId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("grad");
                 });
 
             modelBuilder.Entity("Modeli.Korisnik", b =>
@@ -560,6 +748,11 @@ namespace dataBase.Migrations
                         .HasForeignKey("vrstaRadnikaId");
 
                     b.Navigation("vrstaRadnika");
+                });
+
+            modelBuilder.Entity("Modeli.Sjediste", b =>
+                {
+                    b.Navigation("karta");
                 });
 #pragma warning restore 612, 618
         }
