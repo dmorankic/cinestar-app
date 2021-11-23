@@ -10,8 +10,5 @@ namespace Modeli
         public double stanje_kase { get; set; }
         public bool aktivna { get; set; }
 
-        //obavlja rad
-        public int radnikId { get; set; }
-        public Radnik radnik { get; set; }
     }
 }
