@@ -172,13 +172,13 @@ namespace dataBase.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<int?>("Racunid")
+                        .HasColumnType("int");
+
                     b.Property<float>("cijena")
                         .HasColumnType("real");
 
                     b.Property<int>("projekcijaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("racunId")
                         .HasColumnType("int");
 
                     b.Property<int>("sjedisteId")
@@ -186,12 +186,11 @@ namespace dataBase.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("Racunid");
+
                     b.HasIndex("projekcijaId");
 
-                    b.HasIndex("racunId");
-
-                    b.HasIndex("sjedisteId")
-                        .IsUnique();
+                    b.HasIndex("sjedisteId");
 
                     b.ToTable("karta");
                 });
@@ -206,10 +205,15 @@ namespace dataBase.Migrations
                     b.Property<bool>("aktivna")
                         .HasColumnType("bit");
 
+                    b.Property<int>("kinoId")
+                        .HasColumnType("int");
+
                     b.Property<double>("stanje_kase")
                         .HasColumnType("float");
 
                     b.HasKey("id");
+
+                    b.HasIndex("kinoId");
 
                     b.ToTable("kasa");
                 });
@@ -327,6 +331,9 @@ namespace dataBase.Migrations
                     b.Property<int>("kasaId")
                         .HasColumnType("int");
 
+                    b.Property<int>("korisnikId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("stavkaPonudeId")
                         .HasColumnType("int");
 
@@ -339,6 +346,8 @@ namespace dataBase.Migrations
                     b.HasKey("id");
 
                     b.HasIndex("kasaId");
+
+                    b.HasIndex("korisnikId");
 
                     b.HasIndex("stavkaPonudeId");
 
@@ -450,6 +459,9 @@ namespace dataBase.Migrations
                     b.Property<string>("password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("spol")
+                        .HasColumnType("int");
+
                     b.Property<string>("username")
                         .HasColumnType("nvarchar(max)");
 
@@ -494,7 +506,7 @@ namespace dataBase.Migrations
                 {
                     b.HasBaseType("Modeli.User");
 
-                    b.Property<int?>("confMailXkorisniciId")
+                    b.Property<int>("confMailXkorisniciId")
                         .HasColumnType("int");
 
                     b.Property<int>("confirmed")
@@ -518,10 +530,13 @@ namespace dataBase.Migrations
                     b.Property<string>("jmbg")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("plata")
+                        .HasColumnType("int");
+
                     b.Property<string>("strucnaSprema")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("vrstaRadnikaId")
+                    b.Property<int>("vrstaRadnikaId")
                         .HasColumnType("int");
 
                     b.HasIndex("vrstaRadnikaId");
@@ -572,29 +587,36 @@ namespace dataBase.Migrations
 
             modelBuilder.Entity("Modeli.Karta", b =>
                 {
+                    b.HasOne("Modeli.Racun", null)
+                        .WithMany("k")
+                        .HasForeignKey("Racunid");
+
                     b.HasOne("Modeli.Projekcija", "projekcija")
                         .WithMany()
                         .HasForeignKey("projekcijaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Modeli.Racun", "racun")
-                        .WithMany()
-                        .HasForeignKey("racunId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Modeli.Sjediste", "sjediste")
-                        .WithOne("karta")
-                        .HasForeignKey("Modeli.Karta", "sjedisteId")
+                        .WithMany()
+                        .HasForeignKey("sjedisteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("projekcija");
 
-                    b.Navigation("racun");
-
                     b.Navigation("sjediste");
+                });
+
+            modelBuilder.Entity("Modeli.Kasa", b =>
+                {
+                    b.HasOne("Modeli.Kino", "kino")
+                        .WithMany()
+                        .HasForeignKey("kinoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("kino");
                 });
 
             modelBuilder.Entity("Modeli.Kino", b =>
@@ -657,11 +679,19 @@ namespace dataBase.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Modeli.Korisnik", "korisnik")
+                        .WithMany()
+                        .HasForeignKey("korisnikId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Modeli.StavkaPonude", "stavkaPonude")
                         .WithMany()
                         .HasForeignKey("stavkaPonudeId");
 
                     b.Navigation("kasa");
+
+                    b.Navigation("korisnik");
 
                     b.Navigation("stavkaPonude");
                 });
@@ -728,7 +758,9 @@ namespace dataBase.Migrations
 
                     b.HasOne("Modeli.ConfirmMailKorisnik", "confMailXkorisnici")
                         .WithMany()
-                        .HasForeignKey("confMailXkorisniciId");
+                        .HasForeignKey("confMailXkorisniciId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("confMailXkorisnici");
                 });
@@ -743,14 +775,16 @@ namespace dataBase.Migrations
 
                     b.HasOne("Modeli.VrstaRadnika", "vrstaRadnika")
                         .WithMany()
-                        .HasForeignKey("vrstaRadnikaId");
+                        .HasForeignKey("vrstaRadnikaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("vrstaRadnika");
                 });
 
-            modelBuilder.Entity("Modeli.Sjediste", b =>
+            modelBuilder.Entity("Modeli.Racun", b =>
                 {
-                    b.Navigation("karta");
+                    b.Navigation("k");
                 });
 #pragma warning restore 612, 618
         }

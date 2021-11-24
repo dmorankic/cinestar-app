@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dataBase.Migrations
 {
-    public partial class damirAd : Migration
+    public partial class baza : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,20 +62,6 @@ namespace dataBase.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_grad", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "kasa",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    stanje_kase = table.Column<double>(type: "float", nullable: false),
-                    aktivna = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_kasa", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,7 +144,8 @@ namespace dataBase.Migrations
                     b_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     broj_telefona = table.Column<int>(type: "int", nullable: false),
-                    gradId = table.Column<int>(type: "int", nullable: false)
+                    gradId = table.Column<int>(type: "int", nullable: false),
+                    spol = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,13 +234,34 @@ namespace dataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "kasa",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    stanje_kase = table.Column<double>(type: "float", nullable: false),
+                    aktivna = table.Column<bool>(type: "bit", nullable: false),
+                    kinoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_kasa", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_kasa_kino_kinoId",
+                        column: x => x.kinoId,
+                        principalTable: "kino",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Korisnik",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     datum_kreiranja_racuna = table.Column<DateTime>(type: "datetime2", nullable: false),
                     confirmed = table.Column<int>(type: "int", nullable: false),
-                    confMailXkorisniciId = table.Column<int>(type: "int", nullable: true)
+                    confMailXkorisniciId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -263,7 +271,7 @@ namespace dataBase.Migrations
                         column: x => x.confMailXkorisniciId,
                         principalTable: "confirmMailKorisnik",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Korisnik_useri_Id",
                         column: x => x.Id,
@@ -280,7 +288,8 @@ namespace dataBase.Migrations
                     jmbg = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     datum_uposljenja = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     strucnaSprema = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    vrstaRadnikaId = table.Column<int>(type: "int", nullable: true)
+                    plata = table.Column<int>(type: "int", nullable: false),
+                    vrstaRadnikaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,7 +305,7 @@ namespace dataBase.Migrations
                         column: x => x.vrstaRadnikaId,
                         principalTable: "vrstaRadnika",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -425,7 +434,8 @@ namespace dataBase.Migrations
                     ukupnaCijena = table.Column<double>(type: "float", nullable: false),
                     vrijemeKupovine = table.Column<DateTime>(type: "datetime2", nullable: false),
                     kasaId = table.Column<int>(type: "int", nullable: false),
-                    stavkaPonudeId = table.Column<int>(type: "int", nullable: true)
+                    stavkaPonudeId = table.Column<int>(type: "int", nullable: true),
+                    korisnikId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -435,6 +445,12 @@ namespace dataBase.Migrations
                         column: x => x.kasaId,
                         principalTable: "kasa",
                         principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_racun_Korisnik_korisnikId",
+                        column: x => x.korisnikId,
+                        principalTable: "Korisnik",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_racun_stavkaPonude_stavkaPonudeId",
@@ -451,9 +467,9 @@ namespace dataBase.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     cijena = table.Column<float>(type: "real", nullable: false),
-                    racunId = table.Column<int>(type: "int", nullable: false),
                     projekcijaId = table.Column<int>(type: "int", nullable: false),
-                    sjedisteId = table.Column<int>(type: "int", nullable: false)
+                    sjedisteId = table.Column<int>(type: "int", nullable: false),
+                    Racunid = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -465,11 +481,11 @@ namespace dataBase.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_karta_racun_racunId",
-                        column: x => x.racunId,
+                        name: "FK_karta_racun_Racunid",
+                        column: x => x.Racunid,
                         principalTable: "racun",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_karta_sjediste_sjedisteId",
                         column: x => x.sjedisteId,
@@ -504,15 +520,19 @@ namespace dataBase.Migrations
                 column: "projekcijaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_karta_racunId",
+                name: "IX_karta_Racunid",
                 table: "karta",
-                column: "racunId");
+                column: "Racunid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_karta_sjedisteId",
                 table: "karta",
-                column: "sjedisteId",
-                unique: true);
+                column: "sjedisteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_kasa_kinoId",
+                table: "kasa",
+                column: "kinoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_kino_gradId",
@@ -548,6 +568,11 @@ namespace dataBase.Migrations
                 name: "IX_racun_kasaId",
                 table: "racun",
                 column: "kasaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_racun_korisnikId",
+                table: "racun",
+                column: "korisnikId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_racun_stavkaPonudeId",
@@ -594,9 +619,6 @@ namespace dataBase.Migrations
                 name: "karta");
 
             migrationBuilder.DropTable(
-                name: "Korisnik");
-
-            migrationBuilder.DropTable(
                 name: "proizvod");
 
             migrationBuilder.DropTable(
@@ -615,9 +637,6 @@ namespace dataBase.Migrations
                 name: "sjediste");
 
             migrationBuilder.DropTable(
-                name: "confirmMailKorisnik");
-
-            migrationBuilder.DropTable(
                 name: "filmovi");
 
             migrationBuilder.DropTable(
@@ -627,6 +646,9 @@ namespace dataBase.Migrations
                 name: "kasa");
 
             migrationBuilder.DropTable(
+                name: "Korisnik");
+
+            migrationBuilder.DropTable(
                 name: "stavkaPonude");
 
             migrationBuilder.DropTable(
@@ -634,6 +656,9 @@ namespace dataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "detaljiFilma");
+
+            migrationBuilder.DropTable(
+                name: "confirmMailKorisnik");
 
             migrationBuilder.DropTable(
                 name: "ponuda");

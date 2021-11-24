@@ -8,6 +8,5 @@ namespace Modeli
     {
         public int id { get; set; }
         public string dimenzija { get; set; }
-
     }
 }

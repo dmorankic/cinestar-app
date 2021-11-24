@@ -11,7 +11,6 @@ namespace Modeli
         public string prezime { get; set; }
         public DateTime datumRodjenja { get; set; }
 
-
     }
 
 }

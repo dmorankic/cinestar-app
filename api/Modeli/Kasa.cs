@@ -9,6 +9,9 @@ namespace Modeli
         public int id { get; set; }
         public double stanje_kase { get; set; }
         public bool aktivna { get; set; }
+        //nalazi se u kinu
+        public int kinoId { get; set; }
+        public Kino kino { get; set; }
 
     }
 }

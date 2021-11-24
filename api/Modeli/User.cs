@@ -15,9 +15,11 @@ namespace Modeli
         public string email { get; set; }
         public DateTime b_date { get; set; }
         public string password { get; set; }
-
         public int broj_telefona { get; set; }
         public int gradId { get; set; }
+
+        //dolazi iz grada
         public Grad grad { get; set; }
+        public int spol { get; set; }
     }
 }

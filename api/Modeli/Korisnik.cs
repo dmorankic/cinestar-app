@@ -10,7 +10,7 @@ namespace Modeli
     {
         public DateTime datum_kreiranja_racuna { get; set; }
         public int confirmed { get; set; }
-        public int? confMailXkorisniciId { get; set; }
+        public int confMailXkorisniciId { get; set; }
         public ConfirmMailKorisnik confMailXkorisnici { get; set; }
     }
 }

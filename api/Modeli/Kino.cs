@@ -8,6 +8,7 @@ namespace Modeli
     {
         public int id { get; set; }
         public string naziv { get; set; }
+        //nalazi se u gradu
         public int gradId { get; set; }
         public Grad grad { get; set; }
     }

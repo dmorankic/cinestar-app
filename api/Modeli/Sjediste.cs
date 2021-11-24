@@ -9,7 +9,6 @@ namespace Modeli
         public int id { get; set; }
         public int red { get; set; }
         public int kolona { get; set; }
-        public Karta karta { get; set; }
         public int dvoranaId { get; set; }
         public Dvorana dvorana { get; set; }
 
