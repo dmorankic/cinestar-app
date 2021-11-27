@@ -57,7 +57,11 @@ namespace Cinestar_WEB_API
                 });
             });
 
-            services.AddDbContext<ApplicationDbContext>();
+            //services.AddDbContext<ApplicationDbContext>();
+            //services.AddSingleton<ApplicationDbContext>();
+
+            services.AddInfrastructure();
+            //
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
