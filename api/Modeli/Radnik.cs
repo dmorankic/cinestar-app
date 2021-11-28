@@ -15,6 +15,8 @@ namespace Modeli
         //on je vrsta radnika
         public int vrstaRadnikaId { get; set; }
         public VrstaRadnika vrstaRadnika { get; set; }
+
+
     }
 
 }

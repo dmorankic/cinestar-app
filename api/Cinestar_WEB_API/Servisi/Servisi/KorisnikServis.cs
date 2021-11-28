@@ -49,20 +49,19 @@ namespace Servisi.Servisi
             var mail = new ConfirmMailKorisnik() { issuedConfCode = "123456" };
 
 
-            db_context.confirmMailKorisnik.Add(mail);
+            var resp = db_context.confirmMailKorisnik.Add(mail);
 
             db_context.SaveChanges();
 
-            //obj.confirmMailKorisnikId = db_context.confirmMailKorisnik.Where(x => x.user == mail.user).FirstOrDefault().id;
+            obj.confMailXkorisniciId = resp.Entity.id;
 
-            obj.confirmMailKorisnik = mail;
+            obj.confMailXkorisnici = mail;
 
-            obj.gradId = obj.gradId;
             obj.grad = db_context.grad.Find(obj.gradId);
 
             db_context.korisnici.Add(obj);
 
-            await db_context.SaveChangesAsync();
+            db_context.SaveChanges();
 
             return obj;
         }

@@ -30,6 +30,7 @@ namespace Servisi.Servisi
             var set = db_context.Set<db_type>();
             var record = set.Find(id);
             var result = set.Remove(record);
+            db_context.SaveChanges();
             return record;
         }
 

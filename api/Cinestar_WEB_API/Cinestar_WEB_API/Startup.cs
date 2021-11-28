@@ -24,6 +24,9 @@ namespace Cinestar_WEB_API
 
         public IConfiguration Configuration { get; }
 
+        string def = "default";
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -57,11 +60,23 @@ namespace Cinestar_WEB_API
                 });
             });
 
-            //services.AddDbContext<ApplicationDbContext>();
-            //services.AddSingleton<ApplicationDbContext>();
-
+            //services registering
             services.AddInfrastructure();
-            //
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: def,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins(
+                                          "http://localhost:4200",
+                                          "p2098.app.fit.ba"
+                                          )
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod(); 
+                                  });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,15 +89,15 @@ namespace Cinestar_WEB_API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cinestar_WEB_API v1"));
             }
 
-            app.UseCors("default");
 
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors(def);
 
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

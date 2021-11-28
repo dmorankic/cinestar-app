@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Servisi.IServisi;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 namespace Cinestar_WEB_API.Controllers
 {
     [ApiController]
+    [EnableCors("default")]
+
     public class BaseController<db_type,view_type> : Controller
     {
         private readonly IBaseService<db_type, view_type> service;

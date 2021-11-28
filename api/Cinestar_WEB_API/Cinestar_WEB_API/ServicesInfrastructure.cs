@@ -14,6 +14,8 @@ namespace Cinestar_WEB_API
             //communication with database services
             services.AddTransient<IBaseService<Korisnik,object>,KorisnikServis>();
             services.AddTransient<IBaseService<Radnik,object>,RadnikService>();
+            services.AddTransient<IBaseService<Grad,object>,GradServis>();
+            services.AddTransient<IBaseService<VrstaRadnika,object>,UlogeServis>();
 
             services.AddSingleton<ApplicationDbContext>();
             //loging
