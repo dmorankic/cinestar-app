@@ -47,8 +47,32 @@ namespace Cinestar_WEB_API.Controllers
             return dodaj;
         }
 
-     
+        [HttpGet]
+        public List<Film> GetAll(int? _id)
+        {
+            return _dbContext.filmovi.Where(x => _id == null || _id == x.id).ToList();
 
-       
+        }
+
+
+        [HttpPost]
+        public ActionResult Update(int id, [FromBody] FilmAddVm x)
+        {
+            Film edit = _dbContext.filmovi.Find(id);
+
+            if (edit == null)
+                return BadRequest("pogresan ID");
+
+            edit.naziv = x._naziv;
+            edit.zanr = x._zanr;
+
+
+            _dbContext.SaveChanges();
+            return Ok(edit);
+        }
+
+
+
+
     }
 }
