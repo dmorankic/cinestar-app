@@ -70,6 +70,26 @@ namespace Cinestar_WEB_API.Controllers
             return Ok(edit);
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            if (_dbContext.filmovi.Count() < 1)
+                return BadRequest("Nije pronadjen ni jedan film");
+
+            Film brisi = _dbContext.filmovi.Find(id);
+
+            if (brisi == null)
+                return BadRequest("pogresan ID");
+
+            DetaljiFilma brisiDet = _dbContext.detaljiFilma.Find(brisi.detaljiFilmaID);
+
+            _dbContext.Remove(brisiDet);
+            _dbContext.Remove(brisi);
+
+            _dbContext.SaveChanges();
+            return Ok(brisi);
+        }
+
 
 
 
