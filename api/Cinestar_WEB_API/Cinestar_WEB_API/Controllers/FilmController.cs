@@ -21,7 +21,7 @@ namespace Cinestar_WEB_API.Controllers
        
 
         [HttpPost("{detaljiFilmaId}")]
-        public Film Add([FromBody] FilmAddVm x,int detaljiFilmaId)
+        public ActionResult Add([FromBody] FilmAddVm x,int detaljiFilmaId)
         {
 
             //DetaljiFilma check = new DetaljiFilma();
@@ -30,6 +30,8 @@ namespace Cinestar_WEB_API.Controllers
             //else
             //    check.id = 0;
 
+            if (_dbContext.detaljiFilma.Find(detaljiFilmaId) == null)
+                return BadRequest("Ne postoje detalji filma pod tim ID-jem");
 
             
 
@@ -44,7 +46,7 @@ namespace Cinestar_WEB_API.Controllers
             };
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();
-            return dodaj;
+            return Ok(dodaj);
         }
 
         [HttpGet]
@@ -82,6 +84,8 @@ namespace Cinestar_WEB_API.Controllers
                 return BadRequest("pogresan ID");
 
             DetaljiFilma brisiDet = _dbContext.detaljiFilma.Find(brisi.detaljiFilmaID);
+
+
 
             _dbContext.Remove(brisiDet);
             _dbContext.Remove(brisi);
