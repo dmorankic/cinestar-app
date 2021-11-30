@@ -54,7 +54,6 @@ namespace Cinestar_WEB_API.Controllers
 
         }
 
-
         [HttpPost]
         public ActionResult Update(int id, [FromBody] FilmAddVm x)
         {
@@ -70,6 +69,8 @@ namespace Cinestar_WEB_API.Controllers
             _dbContext.SaveChanges();
             return Ok(edit);
         }
+
+
 
 
 
