@@ -50,5 +50,53 @@ namespace Cinestar_WEB_API.Controllers
             return _dbContext.projekcije.Where(x => _id == null || _id == x.id).ToList();
 
         }
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            if (_dbContext.projekcije.Count() < 1)
+                return BadRequest("Nije pronadjen ni jedan film");
+
+            Projekcija brisi = _dbContext.projekcije.Find(id);
+
+            if (brisi == null)
+                return BadRequest("pogresan ID");
+
+
+
+
+            _dbContext.Remove(brisi);
+
+            _dbContext.SaveChanges();
+            return Ok(brisi);
+        }
+        [HttpPost]
+        public ActionResult Update(int id, [FromBody] ProjekcijaAddVm x)
+        {
+            Projekcija edit = _dbContext.projekcije.Find(id);
+            VrstaProjekcije editVrsta = _dbContext.vrstaProjekcije.Find(x.vrstaProjekcijeId);
+            Film editFilm = _dbContext.filmovi.Find(x.filmId);
+
+            if (editFilm == null)
+                return BadRequest("pogresan ID filma");
+
+            if (editVrsta==null)
+                return BadRequest("pogresan ID vrste projekcije");
+
+
+            if (edit == null)
+                return BadRequest("pogresan ID");
+
+            edit.dan = x.dan;
+            edit.vrijemePrikazivanja = x.vrijemePrikazivanja;
+            edit.vrstaProjekcijeId = x.vrstaProjekcijeId;
+            edit.vrstaProjekcije = _dbContext.vrstaProjekcije.Find(x.vrstaProjekcijeId);
+            edit.filmId = x.filmId;
+            edit.film = _dbContext.filmovi.Find(x.filmId);
+
+
+
+            _dbContext.SaveChanges();
+            return Ok(edit);
+        }
     }
 }
