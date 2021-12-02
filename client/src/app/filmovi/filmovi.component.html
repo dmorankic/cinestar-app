@@ -1,0 +1,56 @@
+<p>filmovi works!</p>
+
+
+<button class="btn btn-danger" (click)="prikaziFilmove()">Učitaj filmove</button>
+
+<table class="table table-warning">
+  <tr>
+    <th>ID</th>
+    <th>Naziv</th>
+    <th>Žanr</th>
+    <th>Slika</th>
+    <th>Detalji Filma ID</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getFilmPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.naziv}}</td>
+    <td>{{s.zanr}}</td>
+    <td><img class="profilna-slika" src="{{s.slika}}"></td>
+    <td>{{s.detaljiFilmaID}}</td>
+    <td>
+      <button>Obrisi</button>
+      <button (click)="detalji(s)">Detalji</button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<p *ngIf="odabraniFilm != null" style="border: 1px solid blue">
+  student.component.html
+  Naziv<br/>
+  <input [(ngModel)]="odabraniFilm.naziv">
+  Žanr<br>
+  <input [(ngModel)]="odabraniFilm.zanr"><br>
+  Detalji Filma id
+  <input type="number" [(ngModel)]="odabraniFilm.detaljiFilmaID"  >
+  <button (click)="snimi()">Snimi</button>
+</p>
+
+
+<h1>Dodavanje detalja filma</h1>
+<h1>{{trajanje}}</h1>
+
+<h4>Detalji filma</h4>
+<label>Trajanje</label><br>
+<input [(ngModel)]="trajanje" ><br>
+<label>Datum objave(format GGGG-MM-DD)</label><br>
+<input [(ngModel)]="datumObjave" ><br>
+<label>Link za trailer</label><br>
+<input [(ngModel)]="trailer" ><br>
+<button (click)="DodajDetaljeFilma()">Dodaj</button>
+
+<br><br><br>
+<input [(ngModel)]="trajanje" ><br>

@@ -10,6 +10,7 @@ namespace Modeli
         public string ime { get; set; }
         public string prezime { get; set; }
         public DateTime datumRodjenja { get; set; }
+        //public ICollection<Film> Filmovi { get; set; }
 
     }
 

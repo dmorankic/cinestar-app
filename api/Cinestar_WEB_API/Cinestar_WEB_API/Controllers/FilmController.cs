@@ -66,6 +66,7 @@ namespace Cinestar_WEB_API.Controllers
 
             edit.naziv = x._naziv;
             edit.zanr = x._zanr;
+            //edit.detaljiFilmaID = x._detaljiFilmaID;
 
 
             _dbContext.SaveChanges();
