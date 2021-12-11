@@ -9,22 +9,23 @@ import { Worker } from '../Model/Worker';
   providedIn: 'root'
 })
 export class WorkerService {
+  type:string="Radnik/";
 
   constructor(private http:HttpClient) { }
 
   getAll(){
     return this.http
-    .get(aplication_settings.arminURL);
+    .get(aplication_settings.arminURL+this.type);
   }
 
   getById(id:number){
     return this.http
-    .get(aplication_settings.arminURL+id)
+    .get(aplication_settings.arminURL+this.type+id)
   }
 
   insert(worker:Worker){
     return this.http
-    .post(aplication_settings.arminURL,{
+    .post(aplication_settings.arminURL+this.type,{
       ime_prezime: worker.ime_prezime,
       username: worker.username,
       email:  worker.email,
@@ -44,7 +45,7 @@ export class WorkerService {
   update(id:number,worker:Worker){
 
     return this.http
-    .put(aplication_settings.arminURL+id,{
+    .put(aplication_settings.arminURL+this.type+id,{
       ime_prezime: worker.ime_prezime,
       username: worker.username,
       email:  worker.email,
@@ -71,17 +72,17 @@ export class WorkerService {
 
   delete(id:number){
     return this.http
-    .delete(aplication_settings.arminURL+id)
+    .delete(aplication_settings.arminURL+this.type+id)
 
   }
 
   getUloge(){
     return this.http
-    .get(aplication_settings.arminURL);
+    .get(aplication_settings.arminURL+"Uloge");
   }
 
   getGradovi(){
     return this.http
-    .get<Grad[]>(aplication_settings.arminURL);
+    .get<Grad[]>(aplication_settings.arminURL+"Grad");
   }
 }

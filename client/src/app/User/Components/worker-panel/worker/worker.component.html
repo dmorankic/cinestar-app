@@ -105,8 +105,8 @@
 
             <label for="" class="mt-1 text-light fw-bold w-100">Grad</label>
             <select id="grad"  class="w-75 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="grad" (change)="setGrad($event)">
-              <option [value]="o.value-1" *ngFor="let o of gradovi;index as i" >
-                {{this.gradovi[i-1].naziv}}
+              <option [value]="o.value" *ngFor="let o of gradovi;index as i" >
+                {{o.naziv}}
               </option>
             </select>
 

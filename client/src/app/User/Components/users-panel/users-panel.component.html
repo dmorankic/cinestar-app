@@ -6,7 +6,7 @@
     <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="Search(contactForm)">
       <select id="Grad"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="select">
         <option [ngValue]="o.value" *ngFor="let o of options;index as i" [selected]="o.value==1?true:false">
-          {{o.name}}
+          {{o.naziv}}
        </option>
       </select>
       <input type="text" formControlName="searchText" name="searchText" placeholder="Search" class="rounded bg-dark text-light border-0 p-1  me-1" [(ngModel)] = Name>

@@ -9,21 +9,21 @@ import { User } from '../Model/User';
   providedIn: 'root'
 })
 export class UserService {
-
+  type:string="Korisnik/";
   constructor(private http:HttpClient) { }
 
   getAll(){
     return this.http
-    .get(aplication_settings.arminURL);
+    .get(aplication_settings.arminURL+this.type);
 
   }
 
   getById(id:number){
-    return this.http.get(aplication_settings.arminURL+'+id')
+    return this.http.get(aplication_settings.arminURL+this.type+id)
   }
 
   insert(user:User){
-    return this.http.post(aplication_settings.arminURL,{
+    return this.http.post(aplication_settings.arminURL+this.type,{
       ime_prezime: user.ime_prezime,
       username: user.username,
       email:  user.email,
@@ -42,7 +42,7 @@ export class UserService {
   }
   update(id:number,user:User){
 
-    return this.http.put(aplication_settings.arminURL+id,{
+    return this.http.put(aplication_settings.arminURL+this.type+id,{
       ime_prezime: user.ime_prezime,
       username: user.username,
       email:  user.email,
@@ -60,12 +60,12 @@ export class UserService {
   }
 
   delete(id:number){
-    return this.http.delete(aplication_settings.arminURL+id)
+    return this.http.delete(aplication_settings.arminURL+this.type+id)
 
   }
 
   getGradovi(){
-    return this.http.get<Grad[]>(aplication_settings.arminURL);
+    return this.http.get<Grad[]>(aplication_settings.arminURL+"Grad");
   }
 
 
