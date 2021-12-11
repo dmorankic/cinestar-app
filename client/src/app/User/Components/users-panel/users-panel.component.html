@@ -1,0 +1,100 @@
+<div class="container-fluid w-100 h-100 p-0 m-0 d-flex align-items-center justify-content-center mt-5">
+
+  <div class="inputs col-10 h-100 d-flex flex-column  border border-dark rounded  pb-4"
+    style="background: rgba(0,0,0,.3)">
+    <h1 class="align-self-center text-light mt-5">User management</h1>
+    <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="Search(contactForm)">
+      <select id="Grad"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="select">
+        <option [ngValue]="o.value" *ngFor="let o of options;index as i" [selected]="o.value==1?true:false">
+          {{o.name}}
+       </option>
+      </select>
+      <input type="text" formControlName="searchText" name="searchText" placeholder="Search" class="rounded bg-dark text-light border-0 p-1  me-1" [(ngModel)] = Name>
+      <input type="submit" value="Traži" class="rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" >
+    </form>
+    <div
+      class="d-flex flex-xs-column flex-sm-column flex-md-column flex-lg-column flex-xl-row align-items-center justify-content-center p-0 m-0 h-100 mt-3">
+      <div class=" col-sm-12 col-xs-12 col-xxl-6 col-xl-6 col-lg-12">
+        <div class="users-list scroll p-5">
+          <div *ngFor="let user of users$ | filterPipe: contactForm.value.searchText"
+
+            class="user w-100 rounded-2 text-light d-flex flex-row justify-content-center align-items-center text-center mb-3 pt-2"
+            (click)="odaberi(user.id)">
+            <p>{{user?.ime_prezime}}</p>
+            <p class="p-2">|</p>
+            <p>{{user?.email}}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class=" col-sm-12 col-xs-12 col-xxl-6 col-xl-6 col-lg-12">
+        <h1 *ngIf="none" class="text-light text-center">Odaberite korisnika</h1>
+        <h1 *ngIf="none" class="text-light text-center">Broj korisnika : {{count}}</h1>
+        <div class="user-control d-flex justify-content-center align-items-center p-5 h-100" *ngIf="default">
+          <div
+            class="border border-dark rounded d-flex flex-column justify-content-center align-items-center w-100 h-100">
+            <p class="fw-bold fs-4 text-light mb-5">Kontrole za {{user?.username}}</p>
+            <button class="btn btn-dark text-light  col-6 mb-3" (click)="toggle('uredi')">Uredi</button>
+            <button class="btn btn-dark text-light  col-6 mb-3">Provjeri payment</button>
+            <button class="btn btn-dark text-light col-6 mb-3" (click)="remove(user.id)">Obriši</button>
+            <button class="btn btn-dark text-light col-6 mb-3" (click)="toggle('none')">Nazad</button>
+          </div>
+        </div>
+        <div class="user-control d-flex justify-content-center align-items-center pt-4 h-100" *ngIf="uredi">
+          <div
+            class="bg-dark bg-opacity-10 rounded d-flex flex-column justify-content-center align-items-center w-100 h-100">
+            <form #userUpdate="ngForm" ngForm (submit)="update(user.id,userUpdate)"
+              class="col-6 d-flex flex-column justify-content-center align-items-center">
+              <label for="" class=" text-light fw-bold">Username</label>
+              <input minlength="5" maxlength="15" required type="text" #username="ngModel" ngModel name="username" class="form-control bg-dark text-light"
+              [(ngModel)]="user.username">
+              <p class="valid-txt" style="color: red;font-size: 13px" *ngIf="!username.valid && username.touched">Obavezno polje</p>
+              <label for="" class=" text-light fw-bold">Ime prezime</label>
+              <input minlength="5" maxlength="25" required #imePrezime="ngModel" ngModel name="imePrezime" type="text" class="form-control bg-dark text-light"
+              [(ngModel)]="user.ime_prezime">
+              <p class="valid-txt" style="color: red;font-size: 13px" *ngIf="!imePrezime.valid && imePrezime.touched">Obavezno polje</p>
+
+              <label for="" class="text-light fw-bold">Password</label>
+              <div class="d-flex col-12 float-start">
+                <input minlength="5" maxlength="16" required [type]="passcode" #password="ngModel" ngModel name="password" class="form-control  col-12 bg-dark text-light float-start"
+                [(ngModel)]="user.password">
+                <i *ngIf="passcode=='text'" class="fa fa-eye fs-5 mt-3 ms-1  text-light" (click)="passwordToggle()"></i>
+                <i *ngIf="passcode=='password'" class="fa fa-eye-slash fs-5 mt-3 ms-1  text-light" (click)="passwordToggle()"></i>              </div>
+              <p class="valid-txt" style="color: red;font-size: 13px" *ngIf="!password.valid && password.touched">Obavezno polje</p>
+
+              <label  for="" class=" text-light fw-bold">Mail</label>
+              <input email required type="email" #email="ngModel" ngModel name="email" class="form-control bg-dark text-light"
+              [(ngModel)]="user.email">
+              <p class="valid-txt" style="color: red; font-size: 13px" *ngIf="!email.valid && email.touched">Obavezno polje</p>
+
+              <label for="" class=" text-light fw-bold">Broj telefona</label>
+              <input type="tel" required #broj_telefona="ngModel" ngModel name="broj_telefona" class="form-control bg-dark text-light"
+              [(ngModel)]="user.broj_telefona">
+              <p class="valid-txt" style="color: red; font-size: 13px;" *ngIf="!broj_telefona.valid && broj_telefona.touched">Obavezno polje</p>
+
+              <label for="" class=" text-light fw-bold">Confirmed</label>
+              <input type="checkbox" #confirmed="ngModel" ngModel name="confirmed" class="p-1 border-0 bg-dark form-checkbox bg-dark text-dark"
+              [(ngModel)]="user.confirmed">
+              <div class="d-flex flex-row">
+                <input type="submit" class="btn btn-outline-primary m-2 fw-bold" value="Snjimi" />
+                <button type="button" class="btn btn-outline-primary m-2 fw-bold" (click)="toggle('back')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <ng-template *ngIf="payments">
+          <div class="user-control d-flex justify-content-center align-items-center p-5 h-100">
+            <div
+              class="bg-dark bg-opacity-10 rounded d-flex flex-column justify-content-center align-items-center w-100 h-100">
+              <p class="fw-bold fs-4 text-light mb-5">Kontrole</p>
+              <button class="btn btn-dark text-light  col-6 mb-3">Uredi</button>
+              <button class="btn btn-dark text-light  col-6 mb-3">Provjeri payment</button>
+              <button class="btn btn-dark text-light col-6 mb-3">Obriši</button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

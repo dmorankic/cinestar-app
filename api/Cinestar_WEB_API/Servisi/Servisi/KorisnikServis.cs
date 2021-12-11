@@ -24,7 +24,7 @@ namespace Servisi.Servisi
             db_context = _db_context;
         }
 
-        public override async Task<Korisnik> Update(int id, Korisnik obj)
+        public override Korisnik Update(int id, Korisnik obj)
         {
             var set = db_context.Set<Korisnik>();
             var user = set.Find(id);
@@ -39,12 +39,12 @@ namespace Servisi.Servisi
             user.datum_kreiranja_racuna = obj.datum_kreiranja_racuna;
 
 
-            await db_context.SaveChangesAsync();
+            db_context.SaveChanges();
 
             return user;
         }
 
-        public override async Task<Korisnik> Insert(Korisnik obj)
+        public override Korisnik Insert(Korisnik obj)
         {
             var mail = new ConfirmMailKorisnik() { issuedConfCode = "123456" };
 

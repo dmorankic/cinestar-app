@@ -24,14 +24,14 @@ namespace Servisi.Servisi
             db_context = _db_context;
         }
 
-        public override async Task<VrstaRadnika> Update(int id, VrstaRadnika obj)
+        public override VrstaRadnika Update(int id, VrstaRadnika obj)
         {
-            return await base.Update(id, obj);
+            return base.Update(id, obj);
         }
 
-        public override async Task<VrstaRadnika> Insert(VrstaRadnika obj)
+        public override VrstaRadnika Insert(VrstaRadnika obj)
         {
-            return await base.Insert(obj);
+            return base.Insert(obj);
         }
     }
 }

@@ -25,45 +25,48 @@ namespace Servisi.Servisi
             this.logger = _logger;
             db_context = _db_context;
         }
-        public virtual async Task<db_type> Delete(int id)
+        public virtual db_type Delete(int id)
         {
             var set = db_context.Set<db_type>();
             var record = set.Find(id);
-            var result = set.Remove(record);
-            db_context.SaveChanges();
+            if (record != null)
+            {
+                var result = set.Remove(record);
+                db_context.SaveChanges();
+            }
             return record;
         }
 
-        public virtual async Task<IEnumerable<db_type>> GetAll()
+        public virtual IEnumerable<db_type> GetAll()
         {
             var set = db_context.Set<db_type>();
             return set.ToList();
         }
 
-        public virtual async Task<db_type> GetById(int id)
+        public virtual db_type GetById(int id)
         {
             var set = db_context.Set<db_type>();
-            var record = await set.FindAsync(id);
+            var record =  set.Find(id);
             return record;
         }
 
-        public virtual async Task<db_type> Insert(db_type obj)
+        public virtual db_type Insert(db_type obj)
         {
             var set = db_context.Set<db_type>();
             set.Add(obj);
-            await db_context.SaveChangesAsync();
+             db_context.SaveChanges();
             return obj;
         }
 
-        public virtual async Task<db_type> Update(int id, db_type obj)
+        public virtual db_type Update(int id, db_type obj)
         {
             var set = db_context.Set<db_type>();
-            var data = await set.FindAsync(id);
+            var data = set.Find(id);
            
             //requires over
             //data.property = .....
             
-            await db_context.SaveChangesAsync();
+            db_context.SaveChanges();
             return obj;
         }
     }

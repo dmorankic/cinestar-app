@@ -24,14 +24,14 @@ namespace Servisi.Servisi
             db_context = _db_context;
         }
 
-        public override async Task<Grad> Update(int id, Grad obj)
+        public override Grad Update(int id, Grad obj)
         {
-            return await base.Update(id, obj);
+            return base.Update(id, obj);
         }
 
-        public override async Task<Grad> Insert(Grad obj)
+        public override Grad Insert(Grad obj)
         {
-            return await base.Insert(obj);
+            return base.Insert(obj);
         }
     }
 

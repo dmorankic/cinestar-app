@@ -1,7 +1,8 @@
-<nav>
-  <a class="button" routerLink="/filmovi">Filmovi</a> |
-  <a class="button" routerLink="/projekcije">Projekcije</a> |
-
-
-</nav>
-<router-outlet></router-outlet>
+<div class="container-fluid w-100 h-100 p-0 m-0 d-flex flex-column">
+  <div class="container-fluid w-100 col-10 p-0 m-0">
+    <app-management-navigation></app-management-navigation>
+  </div>
+  <div class="container-fluid w-100 col-2 p-0 m-0" >
+    <router-outlet></router-outlet>
+  </div>
+</div>

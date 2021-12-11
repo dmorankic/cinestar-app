@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 namespace Cinestar_WEB_API.Controllers
 {
     [ApiController]
-    [EnableCors("default")]
-
     public class BaseController<db_type,view_type> : Controller
     {
         private readonly IBaseService<db_type, view_type> service;
@@ -19,33 +17,34 @@ namespace Cinestar_WEB_API.Controllers
         }
 
         [HttpGet]
-        public virtual async Task<IEnumerable<db_type>> GetAll()//[FromQuery] TSearch q)
+        public virtual IEnumerable<db_type> GetAll()//[FromQuery] TSearch q)
         {
-            return await service.GetAll();
+            var result = service.GetAll();
+            return result;
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<db_type> GetByID(int id)
+        public virtual db_type GetByID(int id)
         {
-            return await service.GetById(id);
+            return service.GetById(id);
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<db_type> Update(int id,[FromBody] db_type entity)
+        public virtual db_type Update(int id,[FromBody] db_type entity)
         {
-            return await service.Update(id, entity);
+            return service.Update(id, entity);
         }
 
         [HttpPost]
-        public virtual async Task<db_type> Insert([FromBody] db_type entity)
+        public virtual db_type Insert([FromBody] db_type entity)
         {
-            return await service.Insert(entity);
+            return service.Insert(entity);
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<db_type> Delete(int id)
+        public virtual db_type Delete(int id)
         {
-            return await service.Delete(id);
+            return service.Delete(id);
         }
     }
 }

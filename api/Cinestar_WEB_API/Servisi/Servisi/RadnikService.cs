@@ -24,7 +24,7 @@ namespace Servisi.Servisi
             db_context = _db_context;
         }
 
-        public override async Task<Radnik> Update(int id, Radnik _user)
+        public override Radnik Update(int id, Radnik _user)
         {
             var radnik = db_context.radnici.Find(id);
 
@@ -51,12 +51,12 @@ namespace Servisi.Servisi
             radnik.gradId = _user.gradId;
             radnik.grad = db_context.grad.Find(_user.gradId);
 
-            await db_context.SaveChangesAsync();
+            db_context.SaveChanges();
 
             return radnik;
         }
 
-        public override async Task<Radnik> Insert(Radnik user)
+        public override Radnik Insert(Radnik user)
         {
             user.vrstaRadnika = db_context.vrstaRadnika.Find(user.vrstaRadnikaId);
 

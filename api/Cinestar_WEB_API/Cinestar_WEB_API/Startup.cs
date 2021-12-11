@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Cinestar_WEB_API
 {
@@ -30,6 +31,27 @@ namespace Cinestar_WEB_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = "Cookie";
+                config.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("Cookie")
+            .AddOpenIdConnect("oidc", config =>
+            {
+                // base-address of identityserver
+                config.Authority = "https://auth-server.p2098.app.fit.ba/";
+
+                config.ClientId = "web.client";
+
+                config.ClientSecret = "SuperSecretPassword";
+
+                config.SaveTokens = true;
+
+                config.ResponseType = "code";
+
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -63,19 +85,15 @@ namespace Cinestar_WEB_API
             //services registering
             services.AddInfrastructure();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(name: def,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins(
-                                          "http://localhost:4200",
-                                          "p2098.app.fit.ba"
-                                          )
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod(); 
-                                  });
-            });
+            services.AddCors(
+               options => options.AddPolicy(name:"default",x => {
+                   x.WithOrigins("http://localhost:4200")
+                   .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials();
+               })
+               
+           );
 
         }
 
@@ -95,9 +113,12 @@ namespace Cinestar_WEB_API
 
             app.UseRouting();
 
-            app.UseCors(def);
+            app.UseCors("default");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

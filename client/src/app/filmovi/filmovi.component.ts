@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {mojConfig} from "../moj-config";
+import {aplication_settings} from "../aplication_settings";
 import {DetaljiFilmaVM} from "../detalji-filma";
 import {HttpClient} from "@angular/common/http";
 import {FilmEditVM} from "../FilmEditVM";
@@ -33,7 +33,7 @@ export class FilmoviComponent implements OnInit {
   }
   prikaziFilmove() :void
   {
-    this.httpKlijent.get(mojConfig.adresa_servera+ "Film/GetAll").subscribe(x=>{
+    this.httpKlijent.get(aplication_settings.damir_local+ "Film/GetAll").subscribe(x=>{
       this.filmPodaci = x;
     });
   }
@@ -56,7 +56,7 @@ export class FilmoviComponent implements OnInit {
 
 
 
-    this.httpKlijent.post(mojConfig.adresa_servera+ "Film/Update/?id=" + this.odabraniFilm.id, this.edit)
+    this.httpKlijent.post(aplication_settings.damir_local+ "Film/Update/?id=" + this.odabraniFilm.id, this.edit)
       .subscribe((povratnaVrijednost:any) =>{
       alert("uredu..." + povratnaVrijednost.id);
     });
@@ -69,7 +69,7 @@ export class FilmoviComponent implements OnInit {
     this.dodajDetalje._datumObjave=this.datumObjave;
     this.dodajDetalje._trailer=this.trailer;
 
-    this.httpKlijent.post(mojConfig.adresa_servera+ "DetaljiFilma/Add" , this.dodajDetalje).subscribe((povratnaVrijednost:any) =>{
+    this.httpKlijent.post(aplication_settings.damir_local+ "DetaljiFilma/Add" , this.dodajDetalje).subscribe((povratnaVrijednost:any) =>{
       alert("uredu..." + povratnaVrijednost.id);
     });
   }

@@ -8,10 +8,10 @@ namespace Servisi.IServisi
 {
     public interface IBaseService<db_type, view_type>
     {
-        Task<IEnumerable<db_type>> GetAll();
-        Task<db_type> GetById(int id);
-        Task<db_type> Insert(db_type obj);
-        Task<db_type> Update(int id, db_type obj);
-        Task<db_type> Delete(int id);
+        IEnumerable<db_type> GetAll();
+        db_type GetById(int id);
+        db_type Insert(db_type obj);
+        db_type Update(int id, db_type obj);
+        db_type Delete(int id);
     }
 }
