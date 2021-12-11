@@ -19,6 +19,7 @@ import { LoginComponent } from './Auth/Components/Login/login/login.component';
 import { RegisterComponent } from './Auth/Components/Register/register/register.component';
 import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mail.component';
 import { UnathorizedComponent } from './Auth/Components/unathorized/unathorized.component';
+import { PonudeComponent } from './Ponude/ponude/ponude.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { UnathorizedComponent } from './Auth/Components/unathorized/unathorized.
     RegisterComponent,
     ConfirmMailComponent,
     UnathorizedComponent,
+    PonudeComponent,
   ],
   imports: [
     BrowserModule,

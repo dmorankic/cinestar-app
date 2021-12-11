@@ -11,6 +11,9 @@ import { FilterPipe } from '../../Pipes/filter-pipe.pipe';
   styleUrls: ['./users-panel.component.scss']
 })
 export class UsersPanelComponent implements OnInit {
+  workersFiltered:any=[];
+
+  pretragaGrada:any;
   users$:any;
   uredi:boolean=false;
   payments:boolean=false;
@@ -29,6 +32,12 @@ export class UsersPanelComponent implements OnInit {
     });
    }
 
+
+  SearchPoGradu(e:any){
+    this.pretragaGrada=this.options[e.target.value[0]];
+    this.loadUsers(this.pretragaGrada);
+  }
+
   ngOnInit(): void {
     this.loadUsers()
     this.loadGradovi()
@@ -42,10 +51,27 @@ export class UsersPanelComponent implements OnInit {
     this.loadUsers()
     }
 
-  loadUsers(){
+  loadUsers(pretragaGrada:any=null){
     this.userService.getAll().subscribe(x=>{
       this.users$=x;
       this.count=this.users$.length;
+      // if(pretragaGrada!=null)
+      // {
+      //   this.workersFiltered=[]
+      //   this.users$.forEach((item:User) => {
+      //     if(item.==pretragaGrada.value){
+      //       item.grad=this.gradovi[pretragaGrada.value-2]
+      //       item.vrstaRadnika=this.uloge.find((x:any)=>x.value==item.vrstaRadnikaId)
+      //       console.log("GRADOVI ",this.gradovi)
+      //       console.log("item grad ->",item.grad);
+      //       console.log("item gradId ->",item.gradId);
+      //       console.log("pretraga grad ->",pretragaGrada.value);
+      //       this.workersFiltered.push(item);
+      //     }
+      //   });
+      //   this.workers=[];
+      //   this.workers=((this.workersFiltered as unknown) as Worker[]);
+      // }
     });
   }
 
