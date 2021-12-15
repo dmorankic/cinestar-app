@@ -20,8 +20,8 @@ namespace Cinestar_WEB_API.Controllers
         }
        
 
-        [HttpPost("{detaljiFilmaId}")]
-        public ActionResult Add([FromBody] FilmAddVm x,int detaljiFilmaId)
+        [HttpPost]
+        public ActionResult Add([FromBody] FilmAddVm x)
         {
 
             //DetaljiFilma check = new DetaljiFilma();
@@ -30,17 +30,25 @@ namespace Cinestar_WEB_API.Controllers
             //else
             //    check.id = 0;
 
-            if (_dbContext.detaljiFilma.Find(detaljiFilmaId) == null)
+            if (_dbContext.detaljiFilma.Find(x._detaljiFilmaId) == null)
                 return BadRequest("Ne postoje detalji filma pod tim ID-jem");
 
-            
+            List<Film> provjera = _dbContext.filmovi.
+                Where(y => y.detaljiFilmaID == x._detaljiFilmaId).ToList();
+            if (provjera.Count > 0 )
+                return BadRequest("Vec postoji film sa tim ID-em detalja filma");
 
+            if(string.IsNullOrEmpty(x._naziv)|| string.IsNullOrEmpty(x._zanr))
+                return BadRequest("Provjerite unos naziva i zanra");
+
+            DetaljiFilma det = _dbContext.detaljiFilma.Find(x._detaljiFilmaId);
 
             Film dodaj = new Film()
             {
                 naziv = x._naziv,
                 zanr = x._zanr,
-                detaljiFilmaID = detaljiFilmaId
+                detaljiFilma=det,
+                detaljiFilmaID = x._detaljiFilmaId
                 //,slika=x._slika
 
             };
@@ -59,14 +67,23 @@ namespace Cinestar_WEB_API.Controllers
         [HttpPost]
         public ActionResult Update(int id, [FromBody] FilmAddVm x)
         {
+            if (string.IsNullOrEmpty(x._naziv) || string.IsNullOrEmpty(x._zanr))
+                return BadRequest("Provjerite unos naziva i zanra");
+
             Film edit = _dbContext.filmovi.Find(id);
 
             if (edit == null)
                 return BadRequest("pogresan ID");
 
+            List<Film> provjera = _dbContext.filmovi.
+                Where(y => y.detaljiFilmaID == x._detaljiFilmaId).ToList();
+            if (provjera.Count > 0 && provjera[0].id!=id)
+                return BadRequest("Vec postoji film sa tim ID-em detalja filma");
+
             edit.naziv = x._naziv;
             edit.zanr = x._zanr;
-            //edit.detaljiFilmaID = x._detaljiFilmaID;
+            edit.detaljiFilmaID = x._detaljiFilmaId;
+           
 
 
             _dbContext.SaveChanges();

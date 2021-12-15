@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 
@@ -20,6 +21,7 @@ import { RegisterComponent } from './Auth/Components/Register/register/register.
 import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mail.component';
 import { UnathorizedComponent } from './Auth/Components/unathorized/unathorized.component';
 import { PonudeComponent } from './Ponude/ponude/ponude.component';
+import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
 
 
 @NgModule({
@@ -38,12 +40,13 @@ import { PonudeComponent } from './Ponude/ponude/ponude.component';
     ConfirmMailComponent,
     UnathorizedComponent,
     PonudeComponent,
+    DetaljiFilmaComponent,
   ],
   imports: [
     BrowserModule,
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
+    AppRoutingModule,
     FormsModule,
     CommonModule,
     ReactiveFormsModule

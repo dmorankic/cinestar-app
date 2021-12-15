@@ -1,10 +1,11 @@
-<p>filmovi works!</p>
 
 
-<button class="btn btn-danger" (click)="prikaziFilmove()">Učitaj filmove</button>
 
-<table class="table table-warning">
-  <tr>
+<!--<button class="btn btn-danger" (click)="prikaziFilmove()">Učitaj filmove</button>-->
+
+<H1>Filmovi</H1>
+<table class="table table-hover table-dark uza">
+  <tr >
     <th>ID</th>
     <th>Naziv</th>
     <th>Žanr</th>
@@ -18,39 +19,81 @@
     <td>{{s.naziv}}</td>
     <td>{{s.zanr}}</td>
     <td><img class="profilna-slika" src="{{s.slika}}"></td>
-    <td>{{s.detaljiFilmaID}}</td>
+    <td >{{s.detaljiFilmaID}}</td>
     <td>
-      <button>Obrisi</button>
-      <button (click)="detalji(s)">Detalji</button>
+      <button class="btn btn-light">Obrisi</button>
+      <button class="btn btn-light odmakni" (click)="detalji(s)">Uredi</button>
 
     </td>
   </tr>
   </tbody>
 </table>
 
-<p *ngIf="odabraniFilm != null" style="border: 1px solid blue">
-  student.component.html
-  Naziv<br/>
-  <input [(ngModel)]="odabraniFilm.naziv">
-  Žanr<br>
-  <input [(ngModel)]="odabraniFilm.zanr"><br>
-  Detalji Filma id
-  <input type="number" [(ngModel)]="odabraniFilm.detaljiFilmaID"  >
-  <button (click)="snimi()">Snimi</button>
-</p>
+<button type="button" class="btn btn-light" (click)="seDodaje()">Dodaj novi film</button>
+
+<div *ngIf="odabraniFilm != null && prikaziDodavanje" class="uzad">
+  <h1>Uređivanje filma</h1>
+  <form>
+    <div class="form-group">
+      <label for="naziv1">Naziv filma</label>
+      <input [(ngModel)]="odabraniFilm.naziv" [ngModelOptions]="{standalone: true}"
+             type="email" class="form-control" id="naziv1" aria-describedby="emailHelp" placeholder="Unesite naziv filma">
+    </div>
+    <div class="form-group">
+      <label for="zanr1">Žanr</label>
+      <input  [(ngModel)]="odabraniFilm.zanr" [ngModelOptions]="{standalone: true}"
+              type="email" class="form-control" id="zanr1" aria-describedby="emailHelp" placeholder="Unesite žanr">
+    </div>
+    <div class="form-group">
+      <label for="slika1">Detalji filma ID</label>
+      <input [(ngModel)]="odabraniFilm.detaljiFilmaID" [ngModelOptions]="{standalone: true}"
+        type="number" class="form-control" id="slika1" aria-describedby="emailHelp" placeholder="Unesite žanr">
+
+    </div>
+
+    <br>
+    <button type="submit" (click)="snimi()" class="btn btn-light">Sačuvaj</button>
+  </form>
+
+</div>
 
 
-<h1>Dodavanje detalja filma</h1>
-<h1>{{trajanje}}</h1>
 
-<h4>Detalji filma</h4>
-<label>Trajanje</label><br>
-<input [(ngModel)]="trajanje" ><br>
-<label>Datum objave(format GGGG-MM-DD)</label><br>
-<input [(ngModel)]="datumObjave" ><br>
-<label>Link za trailer</label><br>
-<input [(ngModel)]="trailer" ><br>
-<button (click)="DodajDetaljeFilma()">Dodaj</button>
 
-<br><br><br>
-<input [(ngModel)]="trajanje" ><br>
+<button routerLink="/DetaljiFilma" >Detalji filma</button>
+
+
+<div *ngIf="dodaje" class="uzad">
+<h1>Dodavanje filma</h1>
+  <form>
+    <div class="form-group">
+      <label for="naziv">Naziv filma</label>
+      <input [(ngModel)]="add._naziv" [ngModelOptions]="{standalone: true}"
+             type="email" class="form-control" id="naziv" aria-describedby="emailHelp" placeholder="Unesite naziv filma">
+    </div>
+    <div class="form-group">
+      <label for="zanr">Žanr</label>
+      <input  [(ngModel)]="add._zanr" [ngModelOptions]="{standalone: true}"
+        type="email" class="form-control" id="zanr" aria-describedby="emailHelp" placeholder="Unesite žanr">
+    </div>
+    <div class="form-group">
+      <label for="slika">Slika</label>
+      <input  (change)="onFileChange($event)" type="file" class="form-control" id="slika" aria-describedby="emailHelp" placeholder="Unesite žanr">
+      <img src="{{imageSrc}}" *ngIf="imageSrc" style="height: 300px; width:300px">
+    </div>
+
+    <div class="form-group">
+      <label for="detaljiFilma">Detalji filma ID</label>
+      <input type="number" [(ngModel)]="add._detaljiFilmaId" [ngModelOptions]="{standalone: true}"
+              class="form-control" id="detaljiFilma" aria-describedby="emailHelp" placeholder="Unesite ID detalja filma">
+    </div>
+    <br>
+    <button type="submit" (click)="DodajFilm()" class="btn btn-light">Dodaj</button>
+  </form>
+
+
+
+</div>
+
+<app-detalji-filma *ngIf="prikaziDetalje"></app-detalji-filma>
+

@@ -9,7 +9,7 @@ namespace Modeli.ViewModels
         public string _naziv { get; set; }
         public string _zanr { get; set; }
         //public byte[] _slika { get; set; }
-        //public int _detaljiFilmaID { get; set; }
+        public int _detaljiFilmaId { get; set; }
 
         //public string _trajanje { get; set; }
         //public DateTime _datumObjave { get; set; }
