@@ -22,6 +22,7 @@ import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mai
 import { UnathorizedComponent } from './Auth/Components/unathorized/unathorized.component';
 import { PonudeComponent } from './Ponude/ponude/ponude.component';
 import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
+import { GlumciComponent } from './glumci/glumci.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
     UnathorizedComponent,
     PonudeComponent,
     DetaljiFilmaComponent,
+    GlumciComponent,
   ],
   imports: [
     BrowserModule,

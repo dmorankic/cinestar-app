@@ -4,6 +4,32 @@
 <!--<button class="btn btn-danger" (click)="prikaziFilmove()">Učitaj filmove</button>-->
 
 <H1>Filmovi</H1>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light uzad smanji">
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Glumci">Glumci</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="DetaljiFilma">Detalji filma</a>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-light" (click)="seDodaje()">Dodaj novi film</button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
 <table class="table table-hover table-dark uza">
   <tr >
     <th>ID</th>
@@ -29,7 +55,7 @@
   </tbody>
 </table>
 
-<button type="button" class="btn btn-light" (click)="seDodaje()">Dodaj novi film</button>
+<!--<button type="button" class="btn btn-light" (click)="seDodaje()">Dodaj novi film</button>-->
 
 <div *ngIf="odabraniFilm != null && prikaziDodavanje" class="uzad">
   <h1>Uređivanje filma</h1>
@@ -60,7 +86,9 @@
 
 
 
-<button routerLink="/DetaljiFilma" >Detalji filma</button>
+<!--<button routerLink="/DetaljiFilma" >Idi na upravljanje Detaljima filma</button>
+<button routerLink="/Glumci" >Idi na upravljanje glumcima</button>-->
+
 
 
 <div *ngIf="dodaje" class="uzad">

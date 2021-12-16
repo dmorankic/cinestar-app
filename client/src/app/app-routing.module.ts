@@ -13,6 +13,7 @@ import { ProfileComponent } from './User/Components/profile/profile.component';
 import { UsersPanelComponent } from './User/Components/users-panel/users-panel.component';
 import { WorkerComponent } from './User/Components/worker-panel/worker/worker.component';
 import {DetaljiFilmaComponent} from "./detalji-filma/detalji-filma.component";
+import {GlumciComponent} from "./glumci/glumci.component";
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path:'Confirm/:id',component:ConfirmMailComponent },
   { path:'Ponude',component:PonudeComponent },
   { path:'DetaljiFilma',component:DetaljiFilmaComponent },
+  { path:'Glumci',component:GlumciComponent },
 ];
 
 @NgModule({
