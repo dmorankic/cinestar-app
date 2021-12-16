@@ -21,7 +21,7 @@
     <td><img class="profilna-slika" src="{{s.slika}}"></td>
     <td >{{s.detaljiFilmaID}}</td>
     <td>
-      <button class="btn btn-light">Obrisi</button>
+      <button (click)="obrisiFilm(s)" class="btn btn-light">Obrisi</button>
       <button class="btn btn-light odmakni" (click)="detalji(s)">Uredi</button>
 
     </td>

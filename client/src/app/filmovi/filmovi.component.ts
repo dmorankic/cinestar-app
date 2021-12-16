@@ -181,7 +181,14 @@ export class FilmoviComponent implements OnInit {
   }
 
 
-
-
+  obrisiFilm(s:any) {
+    this.httpKlijent.post(aplication_settings.damir_local+"Film/Delete?id="+s.id,null).subscribe((pov:any)=>{
+      const index = this.filmPodaci.indexOf(s);
+      if (index > -1) {
+        this.filmPodaci.splice(index, 1);
+      }
+      alert("Izbrisan film ID:"+pov.id);
+    });
+  }
 }
 
