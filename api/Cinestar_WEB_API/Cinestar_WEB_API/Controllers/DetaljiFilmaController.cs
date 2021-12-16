@@ -5,6 +5,7 @@ using Modeli.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Cinestar_WEB_API.Controllers
@@ -19,8 +20,21 @@ namespace Cinestar_WEB_API.Controllers
             this._dbContext = dbContext;
         }
         [HttpPost]
-        public DetaljiFilma Add([FromBody] DetaljiFilmaAddVm x)
+        public ActionResult Add([FromBody] DetaljiFilmaAddVm x)
         {
+
+            if (string.IsNullOrEmpty(x._trailer) || string.IsNullOrEmpty(x._trajanje))
+                return BadRequest("Provjerite trailer i trajanje filma pa pokušajte ponovo");
+
+            string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
+
+            if (!Regex.IsMatch(x._datumObjave.ToString(), reg))
+                return BadRequest("Neispravan format datuma " + x._datumObjave);
+
+            
+
+
+
             DetaljiFilma dodaj = new DetaljiFilma()
             {
                 trajanje = x._trajanje,
@@ -29,7 +43,7 @@ namespace Cinestar_WEB_API.Controllers
             };
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();
-            return dodaj;
+            return Ok(dodaj);
         }
 
 
@@ -64,6 +78,16 @@ namespace Cinestar_WEB_API.Controllers
 
             if (edit == null)
                 return BadRequest("pogresan ID");
+
+
+            if (string.IsNullOrEmpty(x._trailer) || string.IsNullOrEmpty(x._trajanje))
+                return BadRequest("Provjerite trailer i trajanje filma pa pokušajte ponovo");
+
+            string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
+
+            if (!Regex.IsMatch(x._datumObjave.ToString(), reg))
+                return BadRequest("Neispravan format datuma " + x._datumObjave);
+
 
             edit.trajanje = x._trajanje;
             edit.datumObjave = x._datumObjave;

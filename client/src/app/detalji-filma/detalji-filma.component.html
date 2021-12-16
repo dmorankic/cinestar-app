@@ -1,0 +1,108 @@
+
+
+<h1>Detalji filma</h1>
+<button class="btn btn-info dugmic" (click)="PrikaziDodavanje()">Dodaj detalje za film</button>
+
+
+<table id="podd" class="table table-hover table-dark uza" *ngIf="prikaziTable">
+  <tr >
+    <th>ID</th>
+    <th>Trajanje</th>
+    <th>Datum objave</th>
+    <th>Trailer</th>
+    <th>Trailer ID</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr  *ngFor="let s of getDetaljiPodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.trajanje}}</td>
+    <td>{{s.datumObjave}}</td>
+    <td>{{s.trailer}}</td>
+    <td>{{s.trailerID}}</td>
+    <td>
+      <button (click)="obrisiDetalje(s)">Obrisi</button>
+      <button (click)="detalji(s)">Uredi</button>
+
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+<div *ngIf="prikaziUredjivanje" class="uzad">
+  <h1>Uređivanje detalja Filma</h1><br>
+
+
+
+  <form>
+    <div class="form-group">
+      <label for="idd">ID</label>
+      <input [(ngModel)]="this.odabraniPodaci.id" [ngModelOptions]="{standalone: true} " disabled
+             type="email" class="form-control" id="idd" aria-describedby="emailHelp" placeholder="Unesite trajanje filma">
+    </div>
+
+    <div class="form-group">
+      <label for="naziv1">Trajanje filma</label>
+      <input [(ngModel)]="this.odabraniPodaci.trajanje" [ngModelOptions]="{standalone: true}"
+             type="email" class="form-control" id="naziv1" aria-describedby="emailHelp" placeholder="Unesite trajanje filma">
+    </div>
+    <div class="form-group">
+      <label for="zanr1">Datum objave(format GGGG-MM-DD) </label>
+      <input  [(ngModel)]="this.odabraniPodaci.datumObjave" [ngModelOptions]="{standalone: true}"
+              type="email" class="form-control" id="zanr1" aria-describedby="emailHelp" placeholder="Unesite datum objave">
+    </div>
+    <div class="form-group">
+      <label for="slika1">Trailer</label>
+      <input  [(ngModel)]="this.odabraniPodaci.trailer" [ngModelOptions]="{standalone: true}"
+              type="email" class="form-control" id="slika1" aria-describedby="emailHelp" placeholder="Unesite link trailera">
+
+    </div>
+    <br>
+    <button type="submit" (click)="urediDetalje()" class="btn btn-light">Sačuvaj</button>
+    <button  type="submit" (click)="sakrijUredjivanje()" class="btn btn-light desni">Odustani</button>
+
+  </form>
+
+
+
+
+
+
+
+
+
+</div>
+
+<div *ngIf="prikaziDodavanje" class="uzad">
+  <h1>Dodavanje detalja filma</h1>
+
+  <form>
+    <div class="form-group">
+      <label for="naziv">Trajanje filma</label>
+      <input [(ngModel)]="this.addDetalji._trajanje" [ngModelOptions]="{standalone: true}"
+             type="email" class="form-control" id="naziv" aria-describedby="emailHelp" placeholder="Unesite trajanje filma">
+    </div>
+    <div class="form-group">
+      <label for="zanr">Datum objave(format GGGG-MM-DD) </label>
+      <input  [(ngModel)]="this.addDetalji._datumObjave" [ngModelOptions]="{standalone: true}"
+              type="email" class="form-control" id="zanr" aria-describedby="emailHelp" placeholder="Unesite datum objave">
+    </div>
+    <div class="form-group">
+      <label for="slika">Trailer</label>
+      <input  [(ngModel)]="this.addDetalji._trailer" [ngModelOptions]="{standalone: true}"
+              type="email" class="form-control" id="slika" aria-describedby="emailHelp" placeholder="Unesite link trailera">
+
+    </div>
+    <br>
+    <button type="submit" (click)="DodajDetaljeFilma()" class="btn btn-light">Dodaj</button>
+    <button  type="submit" (click)="sakrijDodavanje()" class="btn btn-light desni">Odustani</button>
+
+  </form>
+
+</div>
+
+<button routerLink="/Film" >Nazad na filmove</button>
+
