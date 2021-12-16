@@ -38,6 +38,7 @@ export class GlumciComponent implements OnInit {
   }
 
   DodajGlumca() {
+
     const userKeyRegExp = /^\d{4}[-]\d{2}[-]\d{2}$/;
     const valid = userKeyRegExp.test(this.add._datumRodj);
     if(!valid )
@@ -64,5 +65,16 @@ export class GlumciComponent implements OnInit {
     this.prikaziGlumce();
 
     this.prikaziDodavanje=false;
+  }
+
+  obrisiGlumca(s:any) {
+    
+    this.httpKlijent.post(aplication_settings.damir_local+"Glumac/Delete?id="+s.id,null).subscribe((pov:any)=>{
+      const index = this.glumacPodaci.indexOf(s);
+      if (index > -1) {
+        this.glumacPodaci.splice(index, 1);
+      }
+      alert("Izbrisan glumac ID:"+pov.id);
+    });
   }
 }
