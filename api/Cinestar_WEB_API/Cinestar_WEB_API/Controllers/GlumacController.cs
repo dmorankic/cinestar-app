@@ -23,12 +23,12 @@ namespace Cinestar_WEB_API.Controllers
         public ActionResult Add([FromBody]GlumacAddVm x)
         {
             if (string.IsNullOrEmpty(x._ime) || string.IsNullOrEmpty(x._prezime))
-                return BadRequest("Provjerite trailer i trajanje filma pa pokušajte ponovo");
+                return BadRequest("Provjerite ime i prezime glumca pa pokušajte ponovo");
 
             string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
 
             if (!Regex.IsMatch(x._datumRodj.ToString(), reg))
-                return BadRequest("Neispravan format datuma " + x._datumRodj);
+                return BadRequest("Neispravan format datuma rodjenja" + x._datumRodj);
 
             Glumac dodaj = new Glumac()
             {
@@ -81,6 +81,14 @@ namespace Cinestar_WEB_API.Controllers
 
             if (edit == null)
                 return BadRequest("pogresan ID");
+
+            if (string.IsNullOrEmpty(x._ime) || string.IsNullOrEmpty(x._prezime))
+                return BadRequest("Provjerite ime i prezime glumca pa pokušajte ponovo");
+
+            string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
+
+            if (!Regex.IsMatch(x._datumRodj.ToString(), reg))
+                return BadRequest("Neispravan format datuma rodjenja " + x._datumRodj);
 
             edit.ime = x._ime;
             edit.prezime = x._prezime;

@@ -19,7 +19,7 @@
     <td >{{s.datumRodjenja}}</td>
     <td>
       <button (click)="obrisiGlumca(s)" class="btn btn-light">Obrisi</button>
-      <button class="btn btn-light odmakni" >Uredi</button>
+      <button (click)="urediGlumca(s)" class="btn btn-light odmakni" >Uredi</button>
 
     </td>
   </tr>
@@ -35,14 +35,14 @@
              type="text" class="form-control" id="ime"  placeholder="Unesite ime glumca">
     </div>
     <div class="form-group">
-      <label for="prezime">Prezime</label>
+      <label for="prezime">Prezime glumca</label>
       <input  [(ngModel)]="add._prezime" [ngModelOptions]="{standalone: true}"
               type="text" class="form-control" id="prezime"  placeholder="Unesite prezime glumca">
     </div>
 
 
     <div class="form-group">
-      <label for="datumRodj">Detalji filma ID</label>
+      <label for="datumRodj">Datum Rodjenja glumca</label>
       <input type="text" [(ngModel)]="add._datumRodj" [ngModelOptions]="{standalone: true}"
              class="form-control" id="datumRodj"  placeholder="Unesite datum rodjenja glumca">
     </div>
@@ -51,5 +51,32 @@
   </form>
 
 
+
+</div>
+
+
+<div *ngIf="odabraniGlumac != null && prikaziUredjivanje" class="uzad">
+  <h1>Uređivanje glumca</h1>
+  <form>
+    <div class="form-group">
+      <label for="imeE">Ime glumca</label>
+      <input [(ngModel)]="odabraniGlumac.ime" [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="imeE"  >
+    </div>
+    <div class="form-group">
+      <label for="prezimeE">Prezime glumca</label>
+      <input  [(ngModel)]="odabraniGlumac.prezime" [ngModelOptions]="{standalone: true}"
+              type="text" class="form-control" id="prezimeE"  >
+    </div>
+    <div class="form-group">
+      <label for="datRodjE">Datum Rodjenja glumca</label>
+      <input [(ngModel)]="odabraniGlumac.datumRodjenja" [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="datRodjE" >
+
+    </div>
+
+    <br>
+    <button type="submit" (click)="snimi()" class="btn btn-light">Sačuvaj</button>
+  </form>
 
 </div>

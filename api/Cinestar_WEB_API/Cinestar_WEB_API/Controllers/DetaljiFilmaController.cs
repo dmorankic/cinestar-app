@@ -29,7 +29,7 @@ namespace Cinestar_WEB_API.Controllers
             string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
 
             if (!Regex.IsMatch(x._datumObjave.ToString(), reg))
-                return BadRequest("Neispravan format datuma " + x._datumObjave);
+                return BadRequest("Neispravan format datuma objave" + x._datumObjave);
 
             
 
@@ -86,7 +86,7 @@ namespace Cinestar_WEB_API.Controllers
             string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
 
             if (!Regex.IsMatch(x._datumObjave.ToString(), reg))
-                return BadRequest("Neispravan format datuma " + x._datumObjave);
+                return BadRequest("Neispravan format datuma objave" + x._datumObjave);
 
 
             edit.trajanje = x._trajanje;

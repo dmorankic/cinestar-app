@@ -13,6 +13,8 @@ export class GlumciComponent implements OnInit {
   private glumacPodaci: any;
    prikaziDodavanje: boolean=false;
   add:glumacAddVm={_ime:'',_prezime:'',_datumRodj:''};
+   odabraniGlumac: any= null;
+   prikaziUredjivanje:boolean=true;
 
   constructor(private httpKlijent: HttpClient) {
 
@@ -68,7 +70,7 @@ export class GlumciComponent implements OnInit {
   }
 
   obrisiGlumca(s:any) {
-    
+
     this.httpKlijent.post(aplication_settings.damir_local+"Glumac/Delete?id="+s.id,null).subscribe((pov:any)=>{
       const index = this.glumacPodaci.indexOf(s);
       if (index > -1) {
@@ -76,5 +78,53 @@ export class GlumciComponent implements OnInit {
       }
       alert("Izbrisan glumac ID:"+pov.id);
     });
+  }
+
+  urediGlumca(s:any) {
+
+    this.prikaziUredjivanje=true;
+    this.odabraniGlumac = s;
+    this.odabraniGlumac.datumRodjenja=this.odabraniGlumac.datumRodjenja.substr(0,10);
+
+  }
+
+  snimi() {
+
+    this.add._ime = this.odabraniGlumac.ime;
+    this.add._prezime = this.odabraniGlumac.prezime;
+    this.add._datumRodj=this.odabraniGlumac.datumRodjenja;
+
+
+
+    const userKeyRegExp = /^\d{4}[-]\d{2}[-]\d{2}$/;
+    const valid = userKeyRegExp.test(this.add._datumRodj);
+    if(!valid )
+    {
+      alert("Neispravan format datuma rodjenja");
+      return;
+    }
+    else if(this.add._ime.length<1)
+    {
+      alert("Polje za naziv filma je prazno");
+      return;
+    }
+    else if( this.add._prezime.length<1)
+    {
+      alert("Polje za žanr je prazno");
+      return;
+    }
+
+
+
+
+    this.httpKlijent.post(aplication_settings.damir_local + "Glumac/Update/?id=" + this.odabraniGlumac.id, this.add)
+      .subscribe((povratnaVrijednost: any) => {
+          alert("uredu..." + povratnaVrijednost.id);
+        },error =>{ alert( error.error);}
+      );
+
+    this.prikaziGlumce();
+
+    this.prikaziUredjivanje=false;
   }
 }
