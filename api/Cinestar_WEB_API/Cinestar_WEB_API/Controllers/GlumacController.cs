@@ -5,6 +5,7 @@ using Modeli.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Cinestar_WEB_API.Controllers
@@ -19,8 +20,16 @@ namespace Cinestar_WEB_API.Controllers
             this._dbContext = dbContext;
         }
         [HttpPost]
-        public Glumac Add([FromBody]GlumacAddVm x)
+        public ActionResult Add([FromBody]GlumacAddVm x)
         {
+            if (string.IsNullOrEmpty(x._ime) || string.IsNullOrEmpty(x._prezime))
+                return BadRequest("Provjerite trailer i trajanje filma pa pokušajte ponovo");
+
+            string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
+
+            if (!Regex.IsMatch(x._datumRodj.ToString(), reg))
+                return BadRequest("Neispravan format datuma " + x._datumRodj);
+
             Glumac dodaj = new Glumac()
             {
                 ime = x._ime,
@@ -29,7 +38,7 @@ namespace Cinestar_WEB_API.Controllers
             };
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();
-            return dodaj;
+            return Ok(dodaj);
         }
         //[HttpPost]
         //public Glumac Add(string _ime,string _prezime,DateTime _datumRodj)

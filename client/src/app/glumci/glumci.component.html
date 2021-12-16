@@ -1,5 +1,7 @@
 <H1>Glumci</H1>
 <button routerLink="/Film" >Idi nazad na film</button>
+<button (click)="dodavanje()" >Novi glumac</button>
+
 
 <table class="table table-hover table-dark uzad">
   <tr >
@@ -23,3 +25,31 @@
   </tr>
   </tbody>
 </table>
+
+<div *ngIf="prikaziDodavanje" class="uzad">
+  <h1>Dodavanje glumca</h1>
+  <form>
+    <div class="form-group">
+      <label for="ime">Ime glumca</label>
+      <input [(ngModel)]="add._ime" [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="ime"  placeholder="Unesite ime glumca">
+    </div>
+    <div class="form-group">
+      <label for="prezime">Prezime</label>
+      <input  [(ngModel)]="add._prezime" [ngModelOptions]="{standalone: true}"
+              type="text" class="form-control" id="prezime"  placeholder="Unesite prezime glumca">
+    </div>
+
+
+    <div class="form-group">
+      <label for="datumRodj">Detalji filma ID</label>
+      <input type="text" [(ngModel)]="add._datumRodj" [ngModelOptions]="{standalone: true}"
+             class="form-control" id="datumRodj"  placeholder="Unesite datum rodjenja glumca">
+    </div>
+    <br>
+    <button type="submit" (click)="DodajGlumca()" class="btn btn-light">Dodaj</button>
+  </form>
+
+
+
+</div>
