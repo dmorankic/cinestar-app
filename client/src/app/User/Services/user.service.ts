@@ -14,16 +14,16 @@ export class UserService {
 
   getAll(){
     return this.http
-    .get(aplication_settings.arminURL+this.type);
+    .get(aplication_settings.cinestar__plesk__server+this.type);
 
   }
 
   getById(id:number){
-    return this.http.get(aplication_settings.arminURL+this.type+id)
+    return this.http.get(aplication_settings.cinestar__plesk__server+this.type+id)
   }
 
   insert(user:User){
-    return this.http.post(aplication_settings.arminURL+this.type,{
+    return this.http.post(aplication_settings.cinestar__plesk__server+this.type,{
       ime_prezime: user.ime_prezime,
       username: user.username,
       email:  user.email,
@@ -42,7 +42,7 @@ export class UserService {
   }
   update(id:number,user:User){
 
-    return this.http.put(aplication_settings.arminURL+this.type+id,{
+    return this.http.put(aplication_settings.cinestar__plesk__server+this.type+id,{
       ime_prezime: user.ime_prezime,
       username: user.username,
       email:  user.email,
@@ -60,12 +60,12 @@ export class UserService {
   }
 
   delete(id:number){
-    return this.http.delete(aplication_settings.arminURL+this.type+id)
+    return this.http.delete(aplication_settings.cinestar__plesk__server+this.type+id)
 
   }
 
   getGradovi(){
-    return this.http.get<Grad[]>(aplication_settings.arminURL+"Grad");
+    return this.http.get<Grad[]>(aplication_settings.cinestar__plesk__server+"Grad");
   }
 
 

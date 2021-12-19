@@ -1,8 +1,9 @@
-<div class="container-fluid w-100 h-100 p-0 m-0 d-flex flex-column">
-  <div class="container-fluid w-100 col-10 p-0 m-0">
-    <app-management-navigation></app-management-navigation>
+<div class="container-fluid w-100 h-100 p-0 m-0 d-flex flex-column justify-content-center align-items-center">
+  <div class="container-fluid w-100 col-10 p-0 m-0" style="height:6%">
+    <app-management-navigation *ngIf="management"></app-management-navigation>
+    <app-client-nav *ngIf="!management"></app-client-nav>
   </div>
-  <div class="container-fluid w-100 col-2 p-0 m-0" >
+  <div class="container-fluid w-100 col-2 p-0 m-0"  style="height:94%">
     <router-outlet></router-outlet>
   </div>
 </div>

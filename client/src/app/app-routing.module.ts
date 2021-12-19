@@ -14,6 +14,9 @@ import { UsersPanelComponent } from './User/Components/users-panel/users-panel.c
 import { WorkerComponent } from './User/Components/worker-panel/worker/worker.component';
 import {DetaljiFilmaComponent} from "./detalji-filma/detalji-filma.component";
 import {GlumciComponent} from "./glumci/glumci.component";
+import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
+import { ClientHomeComponent } from './Components/home/client/client-home/client-home.component';
+import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details/client-movie-details.component';
 
 
 const routes: Routes = [
@@ -31,6 +34,10 @@ const routes: Routes = [
   { path:'Ponude',component:PonudeComponent },
   { path:'DetaljiFilma',component:DetaljiFilmaComponent },
   { path:'Glumci',component:GlumciComponent },
+  { path: 'Statistics', component: DashboardComponent },
+  { path: 'cinehome', component: ClientHomeComponent },
+  { path: 'movie/:id', component: ClientMovieDetailsComponent },
+
 ];
 
 @NgModule({

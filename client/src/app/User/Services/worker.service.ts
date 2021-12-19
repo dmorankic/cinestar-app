@@ -15,17 +15,17 @@ export class WorkerService {
 
   getAll(){
     return this.http
-    .get(aplication_settings.arminURL+this.type);
+    .get(aplication_settings.cinestar__plesk__server+this.type);
   }
 
   getById(id:number){
     return this.http
-    .get(aplication_settings.arminURL+this.type+id)
+    .get(aplication_settings.cinestar__plesk__server+this.type+id)
   }
 
   insert(worker:Worker){
     return this.http
-    .post(aplication_settings.arminURL+this.type,{
+    .post(aplication_settings.cinestar__plesk__server+this.type,{
       ime_prezime: worker.ime_prezime,
       username: worker.username,
       email:  worker.email,
@@ -45,7 +45,7 @@ export class WorkerService {
   update(id:number,worker:Worker){
 
     return this.http
-    .put(aplication_settings.arminURL+this.type+id,{
+    .put(aplication_settings.cinestar__plesk__server+this.type+id,{
       ime_prezime: worker.ime_prezime,
       username: worker.username,
       email:  worker.email,
@@ -72,17 +72,17 @@ export class WorkerService {
 
   delete(id:number){
     return this.http
-    .delete(aplication_settings.arminURL+this.type+id)
+    .delete(aplication_settings.cinestar__plesk__server+this.type+id)
 
   }
 
   getUloge(){
     return this.http
-    .get(aplication_settings.arminURL+"Uloge");
+    .get(aplication_settings.cinestar__plesk__server+"Uloge");
   }
 
   getGradovi(){
     return this.http
-    .get<Grad[]>(aplication_settings.arminURL+"Grad");
+    .get<Grad[]>(aplication_settings.cinestar__plesk__server+"Grad");
   }
 }

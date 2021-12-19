@@ -1,0 +1,38 @@
+<div class="container-fluid w-100 h-100 p-0 m-0 bg-dark d-flex">
+  <div class="left h-100 col-2 bg-warning p-0 m-0 d-flex flex-column justify-content-center align-items-center">
+    <div class="h-50 d-flex justify-content-center align-items-center border border-dark">
+      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
+    </div>
+    <div class="h-50  d-flex justify-content-center align-items-center border  border-dark">
+      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
+    </div>
+  </div>
+
+  <div class="mid h-100 col-8 flex-column p-0 m-0 d-flex justify-content-center align-items-center" >
+
+    <div class="top w-100  bg-info p-0 m-0 d-flex justify-content-center align-items-center"  style="height: 60%;">
+      <p>Slajder sa trailerima i slikama novh filmova i trenutno dostupnih u kinima</p>
+    </div>
+
+    <div class="bottom  w-100  bg-danger p-0 m-0 d-flex justify-content-center align-items-center" style="height: 40%;">
+      <div class="col-2 m-2 border d-flex justify-content-center align-items-cneter flex-column" *ngFor="let film of filmovi" style="height: 90%;"  [routerLink]="['/movie', film.id]">
+        <div class="w-100" style="height: 75%;">
+          <p class="text-center">Nema slike za {{film.naziv}}</p>
+        </div>
+        <div class="bg-dark w-100 bg-opacity-25 "  style="height: 25%;">
+          <p class="text-center">{{film.naziv}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="left h-100 col-2 bg-warning p-0 m-0 d-flex flex-column justify-content-center align-items-center">
+    <div class="h-50 d-flex justify-content-center align-items-center border border-dark">
+      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
+    </div>
+    <div class="h-50  d-flex justify-content-center align-items-center border  border-dark">
+      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
+    </div>
+  </div>
+</div>

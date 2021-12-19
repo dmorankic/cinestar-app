@@ -20,7 +20,7 @@ export class GlumciComponent implements OnInit {
 
   }
   prikaziGlumce(): void {
-    this.httpKlijent.get(aplication_settings.damir_local + "Glumac/GetAll").subscribe(x => {
+    this.httpKlijent.get(aplication_settings.cinestar__plesk__server_standard_endpoints + "Glumac/GetAll").subscribe(x => {
       this.glumacPodaci = x;
     });
   }
@@ -60,7 +60,7 @@ export class GlumciComponent implements OnInit {
     }
 
 
-    this.httpKlijent.post(aplication_settings.damir_local + "Glumac/Add", this.add).subscribe((povratnaVrijednost: any) => {
+    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints + "Glumac/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
 
@@ -71,7 +71,7 @@ export class GlumciComponent implements OnInit {
 
   obrisiGlumca(s:any) {
 
-    this.httpKlijent.post(aplication_settings.damir_local+"Glumac/Delete?id="+s.id,null).subscribe((pov:any)=>{
+    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints+"Glumac/Delete?id="+s.id,null).subscribe((pov:any)=>{
       const index = this.glumacPodaci.indexOf(s);
       if (index > -1) {
         this.glumacPodaci.splice(index, 1);
@@ -117,7 +117,7 @@ export class GlumciComponent implements OnInit {
 
 
 
-    this.httpKlijent.post(aplication_settings.damir_local + "Glumac/Update/?id=" + this.odabraniGlumac.id, this.add)
+    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints + "Glumac/Update/?id=" + this.odabraniGlumac.id, this.add)
       .subscribe((povratnaVrijednost: any) => {
           alert("uredu..." + povratnaVrijednost.id);
         },error =>{ alert( error.error);}

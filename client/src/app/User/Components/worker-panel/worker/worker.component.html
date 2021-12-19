@@ -1,16 +1,16 @@
 <div class="container-fluid w-100 h-100 p-0 m-0 d-flex align-items-center justify-content-center ">
 
-  <div class="inputs col-12 h-100 d-flex flex-column  border border-dark rounded  "
+  <div class="inputs col-10 mt-3  h-100 d-flex flex-column  border border-dark rounded  "
     style="background: rgba(0,0,0,.3)">
     <h1 class="align-self-center text-light mt-5">Worker management</h1>
     <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="Search(contactForm)">
-      <select id="Grad" (click)="loadGradovi()"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" (change)="SearchPoGradu($event)" formControlName="pretragaGrada">
+      <select id="Grad" (click)="loadGradovi()"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" (change)="SearchPoGradu($event)" [(ngModel)]="city" formControlName="pretragaGrada">
         <option [value]="i" *ngFor="let o of gradovi;index as i">
           {{o.naziv}}
         </option>
       </select>
-      <input type="text" formControlName="searchText" name="searchText" placeholder="Refresh" class="rounded bg-dark text-light border-0 p-1  me-1" [(ngModel)] = Name (onClick)="refresh()">
-      <input type="submit" value="Traži" class="btn rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" >
+      <input type="text" formControlName="searchText" name="searchText" placeholder="Trazi" class="rounded bg-dark text-light border-0 p-1  me-1" [(ngModel)] = Name (keyup)="refresh()">
+      <input type="submit" value="Ocisti filtere" class="btn rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" >
       <button class="btn rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" (click)="toggle('dodaj')">Dodaj</button>
     </form>
     <div
@@ -26,7 +26,6 @@
             <p>{{worker?.email}}</p>
           </div>
         </div>
-
       </div>
 
       <div class=" col-sm-12 col-xs-12 col-xxl-6 col-xl-6 col-lg-12">
@@ -34,7 +33,7 @@
         <h1 *ngIf="none" class="text-light text-center">Broj korisnika : {{count}}</h1>
         <div class="user-control d-flex justify-content-center align-items-center p-5 h-100" *ngIf="default">
           <div
-            class="border border-dark rounded d-flex flex-column justify-content-center align-items-center w-100 h-100">
+            class="rounded m-5 bg-light bg-opacity-10 d-flex flex-column justify-content-center align-items-center w-100 h-100">
             <p class="fw-bold fs-4 text-light mb-5">Kontrole za {{worker?.username}}</p>
             <button class="btn btn-dark text-light  col-6 mb-3" (click)="toggle('uredi')">Uredi</button>
             <button class="btn btn-dark text-light col-6 mb-3" (click)="remove(worker.id)">Obriši</button>
@@ -43,7 +42,9 @@
         </div>
         <div class="scroll" *ngIf="uredi">
           <div
-            class="bg-dark bg-opacity-10 rounded d-flex flex-column justify-content-center align-items-center w-100 ">
+            class="bg-light bg-opacity-10  rounded d-flex flex-column justify-content-center align-items-center w-100 ">
+            <button class="btn position-absolute bg-light bg-opacity-50 align-self-baseline ms-3" (click)="toggle('back')">Go back</button>
+
             <form [formGroup]="urediForma" (ngSubmit)="update(worker.id,urediForma)"
             class="col-6 d-flex flex-column justify-content-center align-items-center">
             <label for="" class=" text-light fw-bold">Username</label>
@@ -112,14 +113,15 @@
 
 
             <div class="d-flex flex-row ">
-              <input type="submit" class="btn btn-outline-primary m-2 fw-bold" value="Uredi" />
-              <button type="button" class="btn btn-outline-primary m-2 fw-bold" (click)="toggle('back')">Cancel</button>
+              <input type="submit" class="btn btn-outline-primary m-2 fw-bold" value="Spremi promjene" />
             </div>
           </form>
           </div>
         </div>
           <div *ngIf="dodaj" class=" scroll">
             <div class="bg-dark bg-opacity-10 rounded d-flex flex-column justify-content-center align-items-center p-0 m-0 w-100">
+              <button class="btn position-absolute bg-light bg-opacity-50 align-self-baseline ms-3" (click)="toggle('back')">Go back</button>
+
             <form [formGroup]="dodajForm" (ngSubmit)="insert(dodajForm)"
               class="col-6 d-flex flex-column justify-content-center align-items-center">
               <label for="" class=" text-light fw-bold">Username</label>
@@ -183,8 +185,7 @@
 
 
               <div class="d-flex flex-row ">
-                <input type="submit" class="btn btn-outline-primary m-2 fw-bold" value="Dodaj" />
-                <button type="button" class="btn btn-outline-primary m-2 fw-bold" (click)="toggle('back')">Cancel</button>
+                <input type="submit" class="btn btn-outline-primary m-2 fw-bold" value="Dodaj radnika" />
               </div>
             </form>
           </div>

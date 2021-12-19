@@ -4,13 +4,13 @@
     style="background: rgba(0,0,0,.3)">
     <h1 class="align-self-center text-light mt-5">User management</h1>
     <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="Search(contactForm)">
-      <select id="Grad"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="select" (change)="SearchPoGradu($event)">
+      <select id="Grad"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="select" [(ngModel)]="city" (click)="SearchPoGradu($event)">
         <option [ngValue]="i" *ngFor="let o of options;index as i">
           {{o.naziv}}
        </option>
       </select>
       <input type="text" formControlName="searchText" name="searchText" placeholder="Search" class="rounded bg-dark text-light border-0 p-1  me-1" [(ngModel)] = Name>
-      <input type="submit" value="Traži" class="rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" >
+      <input type="submit" value="Ocisti filtere" class="btn rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" >
     </form>
     <div
       class="d-flex flex-xs-column flex-sm-column flex-md-column flex-lg-column flex-xl-row align-items-center justify-content-center p-0 m-0 h-100 mt-3">

@@ -1,0 +1,21 @@
+<div class="container-fluid h-100 w-100 d-flex flex-column p-0 m-0 bg-dark bg-opacity-25">
+  <div class="container col-12 h-50 ">
+    <div class="canvas  col-12 h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+      <p-chart type="bar" class=" align-self-center h-75 w-75" [data]="data" ></p-chart>
+      <button type="button" class="rounded border-0 p-2 bg-dark text-light fw-bold" pButton (click)="update($event)">Update</button>
+
+    </div>
+  </div>
+  <div class="container col-12 h-50 ">
+    <div class="canvas col-12 h-100 w-100 d-flex justify-content-center align-items-center">
+      <div class="col-6   h-100 d-flex justify-content-center align-items-center">
+        <p-chart type="doughnut" [data]="data"  class=" w-100 h-100"></p-chart>
+        <!-- <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart> -->
+      </div>
+      <div class="col-6  h-100 d-flex justify-content-center align-items-center">
+        <p-chart type="pie"  class=" w-100 h-100" [data]="data"></p-chart>
+
+      </div>
+     </div>
+  </div>
+</div>

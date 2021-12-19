@@ -12,7 +12,7 @@ import { FilterPipe } from '../../Pipes/filter-pipe.pipe';
 })
 export class UsersPanelComponent implements OnInit {
   workersFiltered:any=[];
-
+  city:any;
   pretragaGrada:any;
   users$:any;
   uredi:boolean=false;
@@ -34,8 +34,20 @@ export class UsersPanelComponent implements OnInit {
 
 
   SearchPoGradu(e:any){
-    this.pretragaGrada=this.options[e.target.value[0]];
-    this.loadUsers(this.pretragaGrada);
+    if(this.pretragaGrada=="NOT_CHANGED")
+    {
+      this.pretragaGrada = null;
+      return;
+    }
+    else if(this.pretragaGrada==e.target.value[0]){
+      this.loadUsers();
+      return;
+    }
+    else if(this.pretragaGrada!="NOT_CHANGED" || this.pretragaGrada!=this.options[e.target.value[0]]){
+      this.pretragaGrada=this.options[e.target.value[0]];
+      this.loadUsers(this.pretragaGrada);
+      this.pretragaGrada = "NOT_CHANGED";
+    }
   }
 
   ngOnInit(): void {
@@ -44,11 +56,9 @@ export class UsersPanelComponent implements OnInit {
   }
 
   Search(form: FormGroup){
-
-    if(form.value.searchText!='null'){
-
-    }
-    this.loadUsers()
+    this.city="";
+       this.Name="";
+       this.loadUsers()
     }
 
   loadUsers(pretragaGrada:any=null){

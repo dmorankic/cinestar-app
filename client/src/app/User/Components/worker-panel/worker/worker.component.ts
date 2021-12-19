@@ -19,6 +19,8 @@ export class WorkerComponent implements OnInit {
   spol:any;
   uloga:any;
 
+
+  city:any;
   selectedValue:any;
   contactForm:FormGroup;
   dodajForm:any;
@@ -73,11 +75,9 @@ export class WorkerComponent implements OnInit {
   }
 
   Search(form: FormGroup){
-
-    if(form.value.searchText!='null'){
-
-    }
-    this.loadUsers()
+    this.city="";
+       this.Name="";
+       this.loadUsers()
     }
 
     async loadUsers(pretragaGrada:any=null){
@@ -92,10 +92,7 @@ export class WorkerComponent implements OnInit {
           if(item.gradId==pretragaGrada.value){
             item.grad=this.gradovi[pretragaGrada.value-2]
             item.vrstaRadnika=this.uloge.find((x:any)=>x.value==item.vrstaRadnikaId)
-            console.log("GRADOVI ",this.gradovi)
-            console.log("item grad ->",item.grad);
-            console.log("item gradId ->",item.gradId);
-            console.log("pretraga grad ->",pretragaGrada.value);
+
             this.workersFiltered.push(item);
           }
         });
@@ -271,8 +268,22 @@ export class WorkerComponent implements OnInit {
   }
 
   SearchPoGradu(e:any){
-    this.pretragaGrada=this.gradovi[e.target.value[0]];
-    this.loadUsers(this.pretragaGrada);
+
+    if(this.pretragaGrada=="NOT_CHANGED")
+    {
+      this.pretragaGrada = null;
+      return;
+    }
+    else if(this.pretragaGrada==e.target.value[0]){
+      this.loadUsers();
+      return;
+    }
+    else if(this.pretragaGrada!="NOT_CHANGED" || this.pretragaGrada!=this.gradovi[e.target.value[0]]){
+      this.pretragaGrada=this.gradovi[e.target.value[0]];
+      this.loadUsers(this.pretragaGrada);
+      this.pretragaGrada = "NOT_CHANGED";
+    }
+
   }
 
 

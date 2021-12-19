@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import {ChartModule} from 'primeng/chart';
 
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
@@ -23,6 +24,15 @@ import { UnathorizedComponent } from './Auth/Components/unathorized/unathorized.
 import { PonudeComponent } from './Ponude/ponude/ponude.component';
 import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
 import { GlumciComponent } from './glumci/glumci.component';
+import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
+import { MidComponent } from './bi-dashboard/mid/mid.component';
+import { LeftComponent } from './bi-dashboard/left/left.component';
+import { RightComponent } from './bi-dashboard/right/right.component';
+import { NavComponent } from './bi-dashboard/nav/nav.component';
+import { ClientNavComponent } from './Components/klijent-nav/client-nav/client-nav.component';
+import { MainNavComponent } from './Components/Main-Nav/main-nav/main-nav.component';
+import { ClientHomeComponent } from './Components/home/client/client-home/client-home.component';
+import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details/client-movie-details.component';
 
 
 @NgModule({
@@ -43,6 +53,15 @@ import { GlumciComponent } from './glumci/glumci.component';
     PonudeComponent,
     DetaljiFilmaComponent,
     GlumciComponent,
+    DashboardComponent,
+    MidComponent,
+    LeftComponent,
+    RightComponent,
+    NavComponent,
+    ClientNavComponent,
+    MainNavComponent,
+    ClientHomeComponent,
+    ClientMovieDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +70,7 @@ import { GlumciComponent } from './glumci/glumci.component';
     AppRoutingModule,
     FormsModule,
     CommonModule,
+    ChartModule,
     ReactiveFormsModule
   ],
   providers: [],
