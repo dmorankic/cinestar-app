@@ -15,6 +15,7 @@ export class GlumciComponent implements OnInit {
   add:glumacAddVm={_ime:'',_prezime:'',_datumRodj:''};
    odabraniGlumac: any= null;
    prikaziUredjivanje:boolean=true;
+   ime: string='';
 
   constructor(private httpKlijent: HttpClient) {
 
@@ -32,7 +33,12 @@ export class GlumciComponent implements OnInit {
   getGlumacPodaci() {
     if (this.glumacPodaci == null)
       return [];
-    return this.glumacPodaci;
+    return this.glumacPodaci.filter((x:any)=>x.ime.length==0 || (x.ime + " " +x.prezime).toLowerCase().startsWith(
+     this.ime.toLowerCase())
+     || (x.prezime + " " +x.ime).toLowerCase().startsWith(this.ime.toLowerCase())
+    );
+
+
   }
 
   dodavanje() {

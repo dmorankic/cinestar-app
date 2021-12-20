@@ -112,7 +112,7 @@ namespace Cinestar_WEB_API.Controllers
             return Ok(brisi);
         }
 
-
+        
 
 
 

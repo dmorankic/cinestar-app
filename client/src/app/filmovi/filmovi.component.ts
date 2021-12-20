@@ -8,6 +8,7 @@ import {FilmEditVM} from "../FilmEditVM";
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import{DodajFilmVM} from "../Modeli/FilmAddVm";
+import{glumacFilmAddVm} from "../Modeli/GlumacFilmAddVm";
 
 
 @Component({
@@ -25,11 +26,12 @@ export class FilmoviComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
+  glumacFilmAdd:glumacFilmAddVm={glumacId:0,filmId:0};
   trajanje: string = '208min';
   datumObjave: string = '2021-02-02';
   trailer: string = 'jajajjja';
 
-
+  nazivFilma:string;
 
   router: Router;
 
@@ -38,11 +40,19 @@ export class FilmoviComponent implements OnInit {
   edit: FilmEditVM = {_naziv: '', _zanr: '',_detaljiFilmaId:0};
   add:DodajFilmVM={_naziv:'',_zanr:'',_detaljiFilmaId:0};
 
+  glumacPodaci: any;
   filmPodaci: any;
   odabraniFilm: any = null;
   prikaziDetalje: boolean = false;
   dodaje: boolean = false;
   prikaziDodavanje: boolean=true;
+  ime: string='';
+  filmID:number;
+  glumacID:number=0;
+  prikaziFilmGlumci:boolean=false;
+  dodajeGlumca: boolean=false;
+
+
 
 
 
@@ -67,7 +77,10 @@ export class FilmoviComponent implements OnInit {
   getFilmPodaci() {
     if (this.filmPodaci == null)
       return [];
-    return this.filmPodaci;
+    return this.filmPodaci.filter((x:any)=>x.naziv.length==0 || (x.naziv).toLowerCase().startsWith(
+        this.ime.toLowerCase())
+
+    );
   }
 
   detalji(s: any) {
@@ -189,6 +202,55 @@ export class FilmoviComponent implements OnInit {
       }
       alert("Izbrisan film ID:"+pov.id);
     });
+  }
+
+  prikaziGlumce(s:any) {
+      this.filmID=s.id;
+      this.nazivFilma=s.naziv;
+    this.httpKlijent.get(aplication_settings.damir_local + "GlumacFilm/GetGlumciZaFilm?filmId="+s.id).subscribe(x => {
+      this.glumacPodaci = x;
+    });
+      this.prikaziFilmGlumci=true;
+  }
+  getGlumacPodaci(){
+    if (this.glumacPodaci == null)
+      return [];
+    return this.glumacPodaci;
+  }
+
+  ukloniSaFilma(s:any,filmId:any) {
+
+
+
+    this.httpKlijent.post(aplication_settings.damir_local + "GlumacFilm/DeleteGlumciZaFilm?filmId="+filmId+"&glumacId="+s.id,null).subscribe((x:any) => {
+      const index = this.glumacPodaci.indexOf(s);
+      if (index > -1) {
+        this.glumacPodaci.splice(index, 1);
+      }
+      alert("Glumac ID "+x.glumacId+" uspjesno uklonjen sa filma");
+    });
+  }
+
+  dodajNaFilm(filmID: number) {
+    this.dodajeGlumca=true;
+  }
+
+  DodajGlumcaNaFilm() {
+
+    if(this.glumacID!=0 && this.filmID!=0)
+    {
+      this.glumacFilmAdd.filmId=this.filmID;
+      this.glumacFilmAdd.glumacId=this.glumacID;
+    }
+    else
+    {
+      alert("Provjerite unos ID-a za glumca");
+    }
+
+
+    this.httpKlijent.post(aplication_settings.damir_local + "GlumacFilm/Add",this.glumacFilmAdd).subscribe((x:any) => {
+      alert("Glumac ID "+x.glumacId+" uspjesno dodan na film ID"+x.filmId);
+    },error =>{ alert( error.error);});
   }
 }
 

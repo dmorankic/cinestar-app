@@ -2,7 +2,10 @@
 <button routerLink="/Film" >Idi nazad na film</button>
 <button (click)="dodavanje()" >Novi glumac</button>
 
+<p>
 
+  <input type="text" class="form-control uzadd"  [(ngModel)]="ime" placeholder="Traži glumce po imenu ili prezimenu">
+</p>
 <table class="table table-hover table-dark uzad">
   <tr >
     <th>ID</th>
@@ -19,7 +22,7 @@
     <td >{{s.datumRodjenja}}</td>
     <td>
       <button (click)="obrisiGlumca(s)" class="btn btn-light">Obrisi</button>
-      <button (click)="urediGlumca(s)" class="btn btn-light odmakni" >Uredi</button>
+      <button  (click)="urediGlumca(s)" class="btn btn-light odmakni" >Uredi</button>
 
     </td>
   </tr>
