@@ -1,1 +1,28 @@
-<p>projekcije works!</p>
+<H1>Projekcije</H1>
+
+<table class="table table-hover table-dark uzad">
+  <tr >
+    <th>ID</th>
+    <th>Dan</th>
+    <th>Vrijeme prikazivanja</th>
+    <th>Vrsta projekcije</th>
+    <th>Film</th>
+
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getProjekcijePodaci(); let i=index" [attr.data-index]="i">
+    <td>{{s.id}}</td>
+    <td>{{s.dan}}</td>
+    <td>{{s.vrijemePrikazivanja}}</td>
+    <td >{{s.vrstaProjekcije.dimenzija}}</td>
+    <td >{{s.film.naziv}}</td>
+
+    <td>
+      <button  class="btn btn-light">Obrisi</button>
+      <button   class="btn btn-light"  style="margin-left: 10px">Uredi</button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>

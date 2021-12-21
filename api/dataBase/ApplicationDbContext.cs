@@ -53,7 +53,7 @@ namespace dataBase
         {
             modelBuilder.Entity<Korisnik>().ToTable("Korisnik");
             modelBuilder.Entity<Radnik>().ToTable("Radnik");
-
+            
         }
     }
 }

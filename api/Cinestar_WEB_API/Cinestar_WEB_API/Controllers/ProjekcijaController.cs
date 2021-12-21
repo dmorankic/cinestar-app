@@ -1,5 +1,6 @@
 ﻿using dataBase;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Modeli;
 using Modeli.ViewModels;
 using System;
@@ -29,6 +30,8 @@ namespace Cinestar_WEB_API.Controllers
             VrstaProjekcije pom = _dbContext.vrstaProjekcije.Find(x.vrstaProjekcijeId);
             Film pomFilm = _dbContext.filmovi.Find(x.filmId);
 
+            
+
             Projekcija nova = new Projekcija()/////POPRAVITI DETALJIFILMA
             {
                 dan=x.dan,
@@ -47,7 +50,11 @@ namespace Cinestar_WEB_API.Controllers
         [HttpGet]
         public List<Projekcija> GetAll(int? _id)
         {
-            return _dbContext.projekcije.Where(x => _id == null || _id == x.id).ToList();
+            
+            return _dbContext.projekcije.Include(x => x.vrstaProjekcije)
+                .Include(x => x.film)
+                .Where(x => _id == null || _id == x.id).ToList();
+            
 
         }
         [HttpPost]
