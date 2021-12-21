@@ -82,6 +82,10 @@ export class DetaljiFilmaComponent implements OnInit {
       alert("uredu..." + povratnaVrijednost.id);
     });
     this.prikaziUredjivanje=false;
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local+ "DetaljiFilma/GetAll").subscribe(x=>{
+      this.detaljiPodaci = x;
+    });},1000)
   }
 
   DodajDetaljeFilma()
@@ -109,9 +113,15 @@ export class DetaljiFilmaComponent implements OnInit {
       alert("uredu..." + povratnaVrijednost.id);
     });
 
-    this.ucitajDetalje();
     this.prikaziDodavanje=false;
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local+ "DetaljiFilma/GetAll").subscribe(x=>{
+      this.detaljiPodaci = x;
+    });},1000);
+
   }
+
+
 
   PrikaziDodavanje() {
     this.prikaziDodavanje=true;

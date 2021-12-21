@@ -1,7 +1,7 @@
 
 
 <h1>Detalji filma</h1>
-<button class="btn btn-info dugmic" (click)="PrikaziDodavanje()">Dodaj detalje za film</button>
+
 
 
 <table id="podd" class="table table-hover table-dark uza" *ngIf="prikaziTable">
@@ -29,7 +29,7 @@
   </tr>
   </tbody>
 </table>
-
+<button type="button" class="btn btn-light " id="dodajButton"  (click)="PrikaziDodavanje()">Dodaj detalje za film</button>
 
 
 <div *ngIf="prikaziUredjivanje" class="uzad">
@@ -104,5 +104,5 @@
 
 </div>
 
-<button routerLink="/Film" >Nazad na filmove</button>
+
 

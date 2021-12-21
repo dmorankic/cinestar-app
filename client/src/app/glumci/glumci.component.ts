@@ -70,9 +70,14 @@ export class GlumciComponent implements OnInit {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
 
-    this.prikaziGlumce();
-
     this.prikaziDodavanje=false;
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Glumac/GetAll").subscribe(x => {
+      this.glumacPodaci = x;
+    });},1000) ;
+
+
+
   }
 
   obrisiGlumca(s:any) {

@@ -188,9 +188,12 @@ export class FilmoviComponent implements OnInit {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
 
-    this.prikaziFilmove();
+
 
     this.dodaje=false;
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Film/GetAll").subscribe(x => {
+      this.filmPodaci = x;
+    });},1000);
   }
 
 
@@ -251,6 +254,12 @@ export class FilmoviComponent implements OnInit {
     this.httpKlijent.post(aplication_settings.damir_local + "GlumacFilm/Add",this.glumacFilmAdd).subscribe((x:any) => {
       alert("Glumac ID "+x.glumacId+" uspjesno dodan na film ID"+x.filmId);
     },error =>{ alert( error.error);});
+    this.dodajeGlumca=false;
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "GlumacFilm/GetGlumciZaFilm?filmId="+this.filmID).subscribe(x => {
+      this.glumacPodaci = x;
+    });},1000);
+
+
   }
 }
 

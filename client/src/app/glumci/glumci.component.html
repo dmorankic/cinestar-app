@@ -1,6 +1,6 @@
 <H1>Glumci</H1>
-<button routerLink="/Film" >Idi nazad na film</button>
-<button (click)="dodavanje()" >Novi glumac</button>
+
+
 
 <p>
 
@@ -29,6 +29,8 @@
   </tbody>
 </table>
 
+<button class="btn btn-light" id="dodajButton" (click)="dodavanje()" >Novi glumac</button>
+
 <div *ngIf="prikaziDodavanje" class="uzad">
   <h1>Dodavanje glumca</h1>
   <form>
@@ -51,6 +53,8 @@
     </div>
     <br>
     <button type="submit" (click)="DodajGlumca()" class="btn btn-light">Dodaj</button>
+    <button type="submit" style="margin-left: 10px" (click)="prikaziDodavanje=false" class="btn btn-light">Odustani</button>
+
   </form>
 
 
@@ -80,6 +84,8 @@
 
     <br>
     <button type="submit" (click)="snimi()" class="btn btn-light">Sačuvaj</button>
+    <button type="submit" style="margin-left: 10px" (click)="prikaziUredjivanje=false" class="btn btn-light">Odustani</button>
+
   </form>
 
 </div>
