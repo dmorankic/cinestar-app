@@ -55,4 +55,14 @@ export class PonudeComponent implements OnInit {
       this.ponudePodaci = x;
     });},1000) ;
   }
+
+  obrisiPonudu(s:any) {
+    this.httpKlijent.delete(aplication_settings.arminURL+"Ponuda/"+s.id).subscribe((pov:any)=>{
+      const index = this.ponudePodaci.indexOf(s);
+      if (index > -1) {
+        this.ponudePodaci.splice(index, 1);
+      }
+      alert("Izbrisana ponuda ID:"+pov.id);
+    });
+  }
 }
