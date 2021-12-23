@@ -13,6 +13,8 @@ export class ProjekcijeComponent implements OnInit {
    vrstaProjekcijeNaziv:any;
   prikaziDodavanje: boolean=false;
   add:ProjekcijaAddVm={dan:'',vrijemePrikazivanja:'',vrstaProjekcijeId:0,filmId:0};
+   prikaziUredjivanje: boolean=false;
+   odabranaProjekcija: any;
   constructor(private httpKlijent: HttpClient) {
 
   }
@@ -72,5 +74,37 @@ export class ProjekcijeComponent implements OnInit {
       }
       alert("Izbrisana projekcija ID:"+pov.id);
     });
+  }
+
+  urediProjekciju(s:any) {
+    this.prikaziUredjivanje=true;
+    this.odabranaProjekcija = s;
+  }
+
+  snimi() {
+    if(this.odabranaProjekcija.dan.length<1)
+    {
+      alert("Polje za dan je prazno");
+      return;
+    }
+
+
+    this.httpKlijent.post(aplication_settings.damir_local + "Projekcija/Update/?id=" + this.odabranaProjekcija.id, this.odabranaProjekcija)
+      .subscribe((povratnaVrijednost: any) => {
+          alert("uredu..." + povratnaVrijednost.id);
+        },error =>{
+        if(error.error.title=="One or more validation errors occurred.")
+          alert( error.error.title);
+        else
+          alert(error.error);
+
+      }
+      );
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Projekcija/GetAll").subscribe(x => {
+      this.projekcijePodaci = x;
+    });},1000) ;
+
+    this.prikaziUredjivanje=false;
   }
 }

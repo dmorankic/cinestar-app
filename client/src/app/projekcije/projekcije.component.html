@@ -20,7 +20,7 @@
 
     <td>
       <button  class="btn btn-light" (click)="obrisiProjekciju(s)">Obrisi</button>
-      <button   class="btn btn-light"  style="margin-left: 10px">Uredi</button>
+      <button  (click)="urediProjekciju(s)" class="btn btn-light"  style="margin-left: 10px">Uredi</button>
 
     </td>
   </tr>
@@ -61,5 +61,40 @@
   </form>
 
 
+
+</div>
+
+
+<div *ngIf="odabranaProjekcija != null && prikaziUredjivanje" class="uzad">
+  <h1>Uređivanje projekcije</h1>
+  <form>
+    <div class="form-group">
+      <label for="imeE">Dan</label>
+      <input [(ngModel)]="odabranaProjekcija.dan" [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="imeE"  >
+    </div>
+    <div class="form-group">
+      <label for="prezimeE">Datum i vrijeme</label>
+      <input  [(ngModel)]="odabranaProjekcija.vrijemePrikazivanja" [ngModelOptions]="{standalone: true}"
+              type="text" class="form-control" id="prezimeE"  >
+    </div>
+    <div class="form-group">
+      <label >ID vrste projekcije</label>
+      <input [(ngModel)]="odabranaProjekcija.vrstaProjekcijeId" [ngModelOptions]="{standalone: true}"
+             type="number" class="form-control"  >
+
+    </div>
+    <div class="form-group">
+      <label >ID filma</label>
+      <input [(ngModel)]="odabranaProjekcija.filmId" [ngModelOptions]="{standalone: true}"
+             type="number" class="form-control"  >
+
+    </div>
+
+    <br>
+    <button type="submit" (click)="snimi()" class="btn btn-light">Sačuvaj</button>
+    <button type="submit" style="margin-left: 10px" (click)="prikaziUredjivanje=false" class="btn btn-light">Odustani</button>
+
+  </form>
 
 </div>
