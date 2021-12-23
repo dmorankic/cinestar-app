@@ -1,3 +1,29 @@
-<div class="container-fluid w-100 h-100 d-flex align-items-center justify-content-center">
-  <h1 class="fw-bold text-light">Evo ti i komponenta za ponude spremna</h1>
-</div>
+<H1>Ponude</H1>
+
+
+<table class="table table-hover table-dark uzad">
+  <tr >
+    <th>ID</th>
+    <th>Vrsta ponude</th>
+    <th>Pocetak ponude</th>
+    <th>Kraj ponude</th>
+    <th>Radnik ID</th>
+    <th>Akcija</th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getPonudePodaci()">
+    <td>{{s.id}}</td>
+    <td>{{s.vrsta_ponude}}</td>
+    <td>{{s.pocetakPonude}}</td>
+    <td >{{s.krajPonude}}</td>
+    <td >{{s.radnikId}}</td>
+
+    <td>
+      <button  class="btn btn-light">Obrisi</button>
+      <button   class="btn btn-light odmakni" >Uredi</button>
+
+    </td>
+  </tr>
+  </tbody>
+</table>
+
