@@ -27,3 +27,41 @@
   </tbody>
 </table>
 
+<button class="btn btn-light" id="dodajButton" (click)="dodavanje()" >Nova ponuda</button>
+
+
+
+<div *ngIf="prikaziDodavanje" class="uzad">
+  <h1>Dodavanje ponude</h1>
+  <form>
+    <div class="form-group">
+      <label >Vrsta ponude</label>
+      <input [(ngModel)]="add.vrsta_ponude" [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control"   placeholder="Unesite vrstu ponude">
+    </div>
+    <div class="form-group">
+      <label >Datum pocetka ponude</label>
+      <input  [(ngModel)]="add.pocetakPonude" [ngModelOptions]="{standalone: true}"
+              type="datetime-local" class="form-control"   placeholder="Unesite datum pocetka ponude">
+    </div>
+
+
+    <div class="form-group">
+      <label >Trajanje ponude</label>
+      <input type="number" [(ngModel)]="add.trajanjePonude" [ngModelOptions]="{standalone: true}"
+             class="form-control"   placeholder="Unesite trajanje ponude u danima">
+    </div>
+    <div class="form-group">
+      <label >ID radnika</label>
+      <input type="number" [(ngModel)]="add.radnikId" [ngModelOptions]="{standalone: true}"
+             class="form-control"   placeholder="Unesite ID radnika">
+    </div>
+    <br>
+    <button type="submit" (click)="DodajPonudu()" class="btn btn-light">Dodaj</button>
+    <button type="submit" style="margin-left: 10px" (click)="prikaziDodavanje=false" class="btn btn-light">Odustani</button>
+
+  </form>
+
+
+
+</div>
