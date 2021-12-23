@@ -63,4 +63,14 @@ export class ProjekcijeComponent implements OnInit {
       this.projekcijePodaci = x;
     });},1000) ;
   }
+
+  obrisiProjekciju(s:any) {
+    this.httpKlijent.post(aplication_settings.damir_local+"Projekcija/Delete?id="+s.id,null).subscribe((pov:any)=>{
+      const index = this.projekcijePodaci.indexOf(s);
+      if (index > -1) {
+        this.projekcijePodaci.splice(index, 1);
+      }
+      alert("Izbrisana projekcija ID:"+pov.id);
+    });
+  }
 }

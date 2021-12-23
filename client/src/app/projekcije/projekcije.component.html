@@ -11,7 +11,7 @@
     <th>Akcija</th>
   </tr>
   <tbody>
-  <tr *ngFor="let s of getProjekcijePodaci(); let i=index" [attr.data-index]="i">
+  <tr *ngFor="let s of getProjekcijePodaci()">
     <td>{{s.id}}</td>
     <td>{{s.dan}}</td>
     <td>{{s.vrijemePrikazivanja}}</td>
@@ -19,7 +19,7 @@
     <td >{{s.film.naziv}}</td>
 
     <td>
-      <button  class="btn btn-light">Obrisi</button>
+      <button  class="btn btn-light" (click)="obrisiProjekciju(s)">Obrisi</button>
       <button   class="btn btn-light"  style="margin-left: 10px">Uredi</button>
 
     </td>
