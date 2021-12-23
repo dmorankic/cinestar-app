@@ -30,6 +30,8 @@ namespace Cinestar_WEB_API.Controllers
             VrstaProjekcije pom = _dbContext.vrstaProjekcije.Find(x.vrstaProjekcijeId);
             Film pomFilm = _dbContext.filmovi.Find(x.filmId);
 
+            if (pom == null || pomFilm == null)
+                return BadRequest("Neispravan unos ID-a za film ili vrstu projekcije");
             
 
             Projekcija nova = new Projekcija()/////POPRAVITI DETALJIFILMA
