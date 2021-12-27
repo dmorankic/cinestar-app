@@ -26,12 +26,14 @@ namespace Servisi.Servisi
 
         public override Proizvod Insert(Proizvod obj)
         { 
-            var stavkaPonude = db_context.stavkaPonude.Find(obj.stavkaPonudeId);
+            var Ponuda = db_context.ponuda.Find(obj.ponudaId);
 
-            if (stavkaPonude == null)
-                return new Proizvod() { naziv = "error | stavka ponude nije nađena" };
+            if (Ponuda == null)
+                return new Proizvod() { naziv = "error |  ponuda nije nađena" };
 
-            obj.stavkaPonude = stavkaPonude;
+            obj.ponude = Ponuda;
+
+            
 
             db_context.SaveChanges();
 
@@ -44,14 +46,14 @@ namespace Servisi.Servisi
 
             var proizvod = set.Find(id);
 
-            proizvod.stavkaPonudeId = obj.stavkaPonudeId;
+            proizvod.ponudaId = obj.ponudaId;
 
-            var stavkaPonude = db_context.stavkaPonude.Find(obj.stavkaPonudeId);
+            var Ponuda = db_context.ponuda.Find(obj.ponudaId);
 
-            if (stavkaPonude == null)
-                return new Proizvod() { naziv = "error | stavka ponude nije nađena" };
+            if (Ponuda == null)
+                return new Proizvod() { naziv = "error |  ponuda nije nađena" };
 
-            obj.stavkaPonude = stavkaPonude;
+            obj.ponude = Ponuda;
 
             proizvod.naziv = obj.naziv;
 

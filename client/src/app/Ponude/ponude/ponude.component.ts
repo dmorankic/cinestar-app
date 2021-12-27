@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {aplication_settings} from "../../aplication_settings";
 import{ponudaAddVm} from "../../Modeli/PonudaAddVm";
+import { Router } from '@angular/router';
+
+import{pipe} from "rxjs";
+
+
 
 @Component({
   selector: 'app-ponude',
@@ -12,8 +17,13 @@ export class PonudeComponent implements OnInit {
    ponudePodaci: any;
    prikaziDodavanje: boolean=false;
    add:ponudaAddVm={vrsta_ponude:'',pocetakPonude:'',trajanjePonude:0,radnikId:0};
+  prikaziStavke: boolean=false;
+  stavkePodaci:any;
 
-  constructor(private httpKlijent: HttpClient) {
+
+
+
+  constructor(private httpKlijent: HttpClient,private router: Router) {
 
   }
   private prikaziPonude() {
@@ -24,6 +34,7 @@ export class PonudeComponent implements OnInit {
   ngOnInit(): void {
     this.prikaziPonude();
   }
+
 
   getPonudePodaci() {
     if (this.ponudePodaci == null)
@@ -64,5 +75,22 @@ export class PonudeComponent implements OnInit {
       }
       alert("Izbrisana ponuda ID:"+pov.id);
     });
+  }
+
+  UcitajStavke(s:any) {
+
+
+    this.router.navigate(['/Stavke',s.id]);
+    /*this.prikaziStavke=true;
+    this.httpKlijent.get(aplication_settings.damir_local+"VrstaProjekcije/GetStavke?_id="+s.id)
+      .subscribe((pov:any)=>{
+      this.stavkePodaci=pov;
+    });*/
+  }
+
+  getStavkePodaci() {
+    if (this.stavkePodaci == null)
+      return [];
+    return this.stavkePodaci;
   }
 }

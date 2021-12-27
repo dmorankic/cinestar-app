@@ -14,6 +14,7 @@ import { UsersPanelComponent } from './User/Components/users-panel/users-panel.c
 import { WorkerComponent } from './User/Components/worker-panel/worker/worker.component';
 import {DetaljiFilmaComponent} from "./detalji-filma/detalji-filma.component";
 import {GlumciComponent} from "./glumci/glumci.component";
+import {StavkeComponent} from "./stavke/stavke.component";
 
 
 const routes: Routes = [
@@ -31,6 +32,9 @@ const routes: Routes = [
   { path:'Ponude',component:PonudeComponent },
   { path:'DetaljiFilma',component:DetaljiFilmaComponent },
   { path:'Glumci',component:GlumciComponent },
+  { path:'Stavke/:id',component:StavkeComponent },
+  { path:'Stavke',component:StavkeComponent },
+
 ];
 
 @NgModule({

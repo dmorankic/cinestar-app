@@ -21,6 +21,8 @@
     <td>
       <button (click)="obrisiPonudu(s)"  class="btn btn-light">Obrisi</button>
       <button   class="btn btn-light odmakni" >Uredi</button>
+      <button   class="btn btn-light odmakni" (click)="UcitajStavke(s)" >Stavke</button>
+
 
     </td>
   </tr>
@@ -65,3 +67,33 @@
 
 
 </div>
+
+
+
+<table *ngIf="prikaziStavke" class="table table-hover table-dark uzad">
+  <tr >
+    <th>ID</th>
+    <!--<th>Vrsta ponude</th>
+    <th>Pocetak ponude</th>
+    <th>Kraj ponude</th>
+    <th>Radnik ID</th>
+    <th>Akcija</th>-->
+  </tr>
+  <tbody>
+  <tr *ngFor="let s of getStavkePodaci()">
+    <td>{{s.id}}</td>
+    <!--<td>{{s.vrsta_ponude}}</td>
+    <td>{{s.pocetakPonude}}</td>
+    <td >{{s.krajPonude}}</td>
+    <td >{{s.radnikId}}</td>
+
+    <td>
+      <button (click)="obrisiPonudu(s)"  class="btn btn-light">Obrisi</button>
+      <button   class="btn btn-light odmakni" >Uredi</button>
+      <button   class="btn btn-light odmakni" (click)="UcitajStavke()" >Stavke</button>
+
+
+    </td>-->
+  </tr>
+  </tbody>
+</table>

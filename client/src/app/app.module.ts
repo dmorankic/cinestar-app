@@ -23,6 +23,7 @@ import { UnathorizedComponent } from './Auth/Components/unathorized/unathorized.
 import { PonudeComponent } from './Ponude/ponude/ponude.component';
 import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
 import { GlumciComponent } from './glumci/glumci.component';
+import { StavkeComponent } from './stavke/stavke.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { GlumciComponent } from './glumci/glumci.component';
     PonudeComponent,
     DetaljiFilmaComponent,
     GlumciComponent,
+    StavkeComponent,
   ],
   imports: [
     BrowserModule,
