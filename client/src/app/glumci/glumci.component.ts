@@ -46,38 +46,13 @@ export class GlumciComponent implements OnInit {
   }
 
   DodajGlumca() {
-
-    const userKeyRegExp = /^\d{4}[-]\d{2}[-]\d{2}$/;
-    const valid = userKeyRegExp.test(this.add._datumRodj);
-    if(!valid )
-    {
-      alert("Neispravan format datuma objave");
-      return;
-    }
-    else if(this.add._ime.length<1)
-    {
-      alert("Polje za ime glumca je prazno");
-      return;
-    }
-    else if(this.add._prezime.length<1)
-    {
-      alert("Polje za prezime glumca je prazno");
-      return;
-    }
-
-
     this.httpKlijent.post(aplication_settings.damir_local + "Glumac/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
 
     this.prikaziDodavanje=false;
 
-    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Glumac/GetAll").subscribe(x => {
-      this.glumacPodaci = x;
-    });},1000) ;
-
-
-
+    setTimeout(()=>this.prikaziGlumce(),1000) ;
   }
 
   obrisiGlumca(s:any) {
@@ -92,41 +67,15 @@ export class GlumciComponent implements OnInit {
   }
 
   urediGlumca(s:any) {
-
     this.prikaziUredjivanje=true;
     this.odabraniGlumac = s;
     this.odabraniGlumac.datumRodjenja=this.odabraniGlumac.datumRodjenja.substr(0,10);
-
   }
 
   snimi() {
-
     this.add._ime = this.odabraniGlumac.ime;
     this.add._prezime = this.odabraniGlumac.prezime;
     this.add._datumRodj=this.odabraniGlumac.datumRodjenja;
-
-
-
-    const userKeyRegExp = /^\d{4}[-]\d{2}[-]\d{2}$/;
-    const valid = userKeyRegExp.test(this.add._datumRodj);
-    if(!valid )
-    {
-      alert("Neispravan format datuma rodjenja");
-      return;
-    }
-    else if(this.add._ime.length<1)
-    {
-      alert("Polje za naziv filma je prazno");
-      return;
-    }
-    else if( this.add._prezime.length<1)
-    {
-      alert("Polje za žanr je prazno");
-      return;
-    }
-
-
-
 
     this.httpKlijent.post(aplication_settings.damir_local + "Glumac/Update/?id=" + this.odabraniGlumac.id, this.add)
       .subscribe((povratnaVrijednost: any) => {
@@ -134,8 +83,18 @@ export class GlumciComponent implements OnInit {
         },error =>{ alert( error.error);}
       );
 
-    this.prikaziGlumce();
+    setTimeout(()=>this.prikaziGlumce(),1000);
 
     this.prikaziUredjivanje=false;
+  }
+
+  onSubmit() {
+
+  }
+
+  checkEmpty() {
+   // var btn= document.querySelector('#clsButton') as HTMLButtonElement;
+
+   //setTimeout(()=>!(this.odabraniGlumac.ime.isEmpty() || this.odabraniGlumac.prezime.isEmpty()),1000);
   }
 }

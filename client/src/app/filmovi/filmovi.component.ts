@@ -26,6 +26,7 @@ export class FilmoviComponent implements OnInit {
     fileSource: new FormControl('', [Validators.required])
   });
 
+  detaljiP:boolean=false;
   glumacFilmAdd:glumacFilmAddVm={glumacId:0,filmId:0};
   trajanje: string = '208min';
   datumObjave: string = '2021-02-02';
@@ -37,8 +38,8 @@ export class FilmoviComponent implements OnInit {
 
   imageSrc: string;
   dodajDetalje: DetaljiFilmaVM = {_trajanje: '', _trailer: '', _datumObjave: ''};
-  edit: FilmEditVM = {_naziv: '', _zanr: '',_detaljiFilmaId:0};
-  add:DodajFilmVM={_naziv:'',_zanr:'',_detaljiFilmaId:0};
+  edit: FilmEditVM = {_naziv: '', _zanr: '',_detaljiFilmaId:0,_slikaUrl:''};
+  add:DodajFilmVM={_naziv:'',_zanr:'',_detaljiFilmaId:0,_slikaUrl:''};
 
   glumacPodaci: any;
   filmPodaci: any;
@@ -51,6 +52,12 @@ export class FilmoviComponent implements OnInit {
   glumacID:number=0;
   prikaziFilmGlumci:boolean=false;
   dodajeGlumca: boolean=false;
+
+  filmZaBrisanje:any;
+  modalFilmNaziv:string;
+  newDetaljiId:number;
+  newFilmId:number;
+  addDetalji:DetaljiFilmaVM={_trajanje:'',_trailer:'',_datumObjave:''};
 
 
 
@@ -90,11 +97,9 @@ export class FilmoviComponent implements OnInit {
   }
 
   snimi() {
-    //this.odabraniStudent
-
     this.edit._zanr = this.odabraniFilm.zanr;
     this.edit._naziv = this.odabraniFilm.naziv;
-    this.edit._detaljiFilmaId=this.odabraniFilm.detaljiFilmaID;
+    this.edit._slikaUrl=this.odabraniFilm.slikaUrl;
 
     if(this.edit._naziv.length<1)
     {
@@ -106,11 +111,7 @@ export class FilmoviComponent implements OnInit {
       alert("Polje za žanr je prazno");
       return;
     }
-    else if( this.edit._detaljiFilmaId < 1)
-    {
-      alert("Pogrešan ID detalja filma");
-      return;
-    }
+
 
 
 
@@ -120,21 +121,41 @@ export class FilmoviComponent implements OnInit {
   },error =>{ alert( error.error);}
   );
 
-    this.prikaziFilmove();
-
+    this.refreshFilmovi();
     this.prikaziDodavanje=false;
+  }
+
+  dodajDetaljeNaFilm(){
+    this.httpKlijent.post(aplication_settings.damir_local+'Film/AddDetalji?filmId='+this.newFilmId+'&detaljiId='+this.newDetaljiId,null)
+      .subscribe((pov:any)=>{
+
+      });
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Film/GetAll").subscribe(x => {
+      this.filmPodaci = x;
+    });},1000);
+
+
+
   }
 
   DodajDetaljeFilma() {
 
 
-    this.dodajDetalje._trajanje = this.trajanje;
-    this.dodajDetalje._datumObjave = this.datumObjave;
-    this.dodajDetalje._trailer = this.trailer;
 
-    this.httpKlijent.post(aplication_settings.damir_local + "DetaljiFilma/Add", this.dodajDetalje).subscribe((povratnaVrijednost: any) => {
-      alert("uredu..." + povratnaVrijednost.id);
+
+    this.httpKlijent.post(aplication_settings.damir_local + "DetaljiFilma/Add", this.addDetalji).subscribe((povratnaVrijednost: any) => {
+
+      this.newDetaljiId=povratnaVrijednost.id;
+
+      this.dodajDetaljeNaFilm();
     });
+
+
+
+
+
+
   }
 
 
@@ -166,28 +187,9 @@ export class FilmoviComponent implements OnInit {
 
 
   DodajFilm() {
-
-
-    if(this.add._naziv.length<1)
-    {
-      alert("Polje za naziv filma je prazno");
-      return;
-    }
-    else if(this.add._zanr.length<1)
-    {
-      alert("Polje za žanr je prazno");
-      return;
-    }
-    else if( this.add._detaljiFilmaId < 1)
-    {
-      alert("Pogrešan ID detalja filma");
-      return;
-    }
-
     this.httpKlijent.post(aplication_settings.damir_local + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
-
 
 
     this.dodaje=false;
@@ -260,6 +262,14 @@ export class FilmoviComponent implements OnInit {
     });},1000);
 
 
+  }
+
+
+   refreshFilmovi() {
+
+    setTimeout(()=>this.httpKlijent.get(aplication_settings.damir_local + "Film/GetAll").subscribe(x => {
+      this.filmPodaci = x;
+    }),1000);
   }
 }
 

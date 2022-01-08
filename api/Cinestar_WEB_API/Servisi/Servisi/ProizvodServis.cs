@@ -33,7 +33,7 @@ namespace Servisi.Servisi
 
             obj.ponude = Ponuda;
 
-            
+            db_context.proizvod.Add(obj);
 
             db_context.SaveChanges();
 

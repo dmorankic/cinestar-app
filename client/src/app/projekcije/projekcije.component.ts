@@ -46,24 +46,13 @@ export class ProjekcijeComponent implements OnInit {
   }
 
   dodajProjekciju(){
-
-   if(this.add.dan.length<1)
-    {
-      alert("Polje za dan je prazno");
-      return;
-    }
-
-
-
-    this.httpKlijent.post(aplication_settings.damir_local + "Projekcija/Add", this.add).subscribe((povratnaVrijednost: any) => {
+        this.httpKlijent.post(aplication_settings.damir_local + "Projekcija/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
 
     this.prikaziDodavanje=false;
 
-    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Projekcija/GetAll").subscribe(x => {
-      this.projekcijePodaci = x;
-    });},1000) ;
+    setTimeout(()=>{this.prikaziProjekcije()},1000) ;
   }
 
   obrisiProjekciju(s:any) {
@@ -82,14 +71,7 @@ export class ProjekcijeComponent implements OnInit {
   }
 
   snimi() {
-    if(this.odabranaProjekcija.dan.length<1)
-    {
-      alert("Polje za dan je prazno");
-      return;
-    }
-
-
-    this.httpKlijent.post(aplication_settings.damir_local + "Projekcija/Update/?id=" + this.odabranaProjekcija.id, this.odabranaProjekcija)
+        this.httpKlijent.post(aplication_settings.damir_local + "Projekcija/Update/?id=" + this.odabranaProjekcija.id, this.odabranaProjekcija)
       .subscribe((povratnaVrijednost: any) => {
           alert("uredu..." + povratnaVrijednost.id);
         },error =>{
@@ -101,9 +83,7 @@ export class ProjekcijeComponent implements OnInit {
       }
       );
 
-    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local + "Projekcija/GetAll").subscribe(x => {
-      this.projekcijePodaci = x;
-    });},1000) ;
+    setTimeout(()=>{this.projekcijePodaci()},1000) ;
 
     this.prikaziUredjivanje=false;
   }

@@ -77,15 +77,11 @@ export class PonudeComponent implements OnInit {
     });
   }
 
-  UcitajStavke(s:any) {
+  ucitajProizvode(s:any) {
 
 
-    this.router.navigate(['/Stavke',s.id]);
-    /*this.prikaziStavke=true;
-    this.httpKlijent.get(aplication_settings.damir_local+"VrstaProjekcije/GetStavke?_id="+s.id)
-      .subscribe((pov:any)=>{
-      this.stavkePodaci=pov;
-    });*/
+    this.router.navigate(['/Proizvod',s.id]);
+
   }
 
   getStavkePodaci() {

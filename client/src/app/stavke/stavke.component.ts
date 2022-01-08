@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import {HttpClient} from "@angular/common/http";
 import{aplication_settings} from "../aplication_settings";
+import {Pokusaj} from "../Modeli/Pokusaj";
 
 @Component({
   selector: 'app-stavke',
@@ -12,6 +13,9 @@ export class StavkeComponent implements OnInit {
   stavkePodaci:any;
   id: number;
   private sub: any;
+  name:string;
+  hilfe:Pokusaj={name:' '};
+
   constructor(private route:ActivatedRoute,private httpKlijent: HttpClient) { }
 
   ngOnInit() {

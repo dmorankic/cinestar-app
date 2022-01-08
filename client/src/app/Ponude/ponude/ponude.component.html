@@ -13,15 +13,15 @@
   <tbody>
   <tr *ngFor="let s of getPonudePodaci()">
     <td>{{s.id}}</td>
-    <td>{{s.vrsta_ponude}}</td>
-    <td>{{s.pocetakPonude}}</td>
-    <td >{{s.krajPonude}}</td>
+    <td>{{s.vrsta_ponude }}</td>
+    <td>{{s.pocetakPonude | date}}</td>
+    <td >{{s.krajPonude| date}}</td>
     <td >{{s.radnikId}}</td>
 
     <td>
       <button (click)="obrisiPonudu(s)"  class="btn btn-light">Obrisi</button>
       <button   class="btn btn-light odmakni" >Uredi</button>
-      <button   class="btn btn-light odmakni" (click)="UcitajStavke(s)" >Stavke</button>
+      <button   class="btn btn-light odmakni" (click)="ucitajProizvode(s)" >Proizvodi</button>
 
 
     </td>

@@ -24,6 +24,9 @@ import { PonudeComponent } from './Ponude/ponude/ponude.component';
 import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
 import { GlumciComponent } from './glumci/glumci.component';
 import { StavkeComponent } from './stavke/stavke.component';
+import { ProizvodComponent } from './proizvod/proizvod.component';
+import { DatepipeComponent } from './datepipe/datepipe.component';
+import {DatePipe} from "@angular/common";
 
 
 @NgModule({
@@ -45,6 +48,9 @@ import { StavkeComponent } from './stavke/stavke.component';
     DetaljiFilmaComponent,
     GlumciComponent,
     StavkeComponent,
+    ProizvodComponent,
+    DatepipeComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,7 @@ import { StavkeComponent } from './stavke/stavke.component';
     CommonModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

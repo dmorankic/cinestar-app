@@ -41,10 +41,23 @@ h1{
 #dodajButton{
   position: relative;
   top: 0px;
-  left: 1380px;
+  left: 1370px;
+  margin-bottom: 10px;
 }
 #dodajButton2{
   position: relative;
   top: 0px;
   left: 1196px;
+}
+#dodajButton3{
+  position: relative;
+  top: 0px;
+  left:387px;
+}
+.upozorenje{
+  color: red;
+}
+.profilna-slika{
+  height: 100px;
+  width: 100px;
 }

@@ -15,6 +15,8 @@ import { WorkerComponent } from './User/Components/worker-panel/worker/worker.co
 import {DetaljiFilmaComponent} from "./detalji-filma/detalji-filma.component";
 import {GlumciComponent} from "./glumci/glumci.component";
 import {StavkeComponent} from "./stavke/stavke.component";
+import {ProizvodComponent} from "./proizvod/proizvod.component";
+import {DatepipeComponent} from "./datepipe/datepipe.component";
 
 
 const routes: Routes = [
@@ -34,6 +36,9 @@ const routes: Routes = [
   { path:'Glumci',component:GlumciComponent },
   { path:'Stavke/:id',component:StavkeComponent },
   { path:'Stavke',component:StavkeComponent },
+  { path:'Proizvod/:id',component:ProizvodComponent },
+  { path:'Proizvod',component:ProizvodComponent },
+  { path:'Datepipe',component:DatepipeComponent },
 
 ];
 
