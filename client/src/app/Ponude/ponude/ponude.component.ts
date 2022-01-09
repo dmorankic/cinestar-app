@@ -17,8 +17,11 @@ export class PonudeComponent implements OnInit {
    ponudePodaci: any;
    prikaziDodavanje: boolean=false;
    add:ponudaAddVm={vrsta_ponude:'',pocetakPonude:'',trajanjePonude:0,radnikId:0};
-  prikaziStavke: boolean=false;
+   edit:ponudaAddVm={vrsta_ponude:'',pocetakPonude:'',trajanjePonude:0,radnikId:0};
+  odabranaPonuda:any;
   stavkePodaci:any;
+  prikaziUredjivanje: boolean=false;
+
 
 
 
@@ -49,22 +52,13 @@ export class PonudeComponent implements OnInit {
 
   DodajPonudu() {
 
-    if(this.add.vrsta_ponude.length<1)
-    {
-      alert("Polje za vrstu ponude je prazno");
-      return;
-    }
-
-
     this.httpKlijent.post(aplication_settings.arminURL + "Ponuda", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error.title);});
 
     this.prikaziDodavanje=false;
 
-    setTimeout(()=>{this.httpKlijent.get(aplication_settings.arminURL + "Ponuda").subscribe(x => {
-      this.ponudePodaci = x;
-    });},1000) ;
+    setTimeout(()=>{this.prikaziPonude()},1000) ;
   }
 
   obrisiPonudu(s:any) {
@@ -78,15 +72,36 @@ export class PonudeComponent implements OnInit {
   }
 
   ucitajProizvode(s:any) {
-
-
     this.router.navigate(['/Proizvod',s.id]);
-
   }
 
   getStavkePodaci() {
     if (this.stavkePodaci == null)
       return [];
     return this.stavkePodaci;
+  }
+
+  uredi(s:any) {
+    this.odabranaPonuda=s;
+    this.prikaziUredjivanje=true;
+  }
+
+  snimi() {
+      this.edit.vrsta_ponude=this.odabranaPonuda.vrsta_ponude;
+    this.edit.pocetakPonude=this.odabranaPonuda.pocetakPonude;
+    this.edit.trajanjePonude=this.odabranaPonuda.trajanjePonude;
+    this.edit.radnikId=this.odabranaPonuda.radnikId;
+
+
+    this.httpKlijent.put(aplication_settings.arminURL + "Ponuda/"+this.odabranaPonuda.id, this.edit)
+      .subscribe((povratnaVrijednost: any) => {
+
+        },error =>{ alert( error.error);}
+      );
+
+    setTimeout(()=>this.prikaziPonude(),1000);
+
+    this.prikaziUredjivanje=false;
+
   }
 }

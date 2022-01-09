@@ -68,9 +68,7 @@ export class ProizvodComponent implements OnInit {
       alert("Uspjesno dodan proizvod");
     });
 
-    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local+"VrstaProjekcije/GetProizvodi?_id="+this.id).subscribe(x => {
-      this.proizvodPodaci = x;
-    });},1000) ;
+    setTimeout(()=>{this.UcitajProizvode()},1000) ;
   }
 
   obrisiProizvod(s:any) {
