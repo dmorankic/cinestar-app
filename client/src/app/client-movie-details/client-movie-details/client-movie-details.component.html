@@ -1,1 +1,11 @@
-<p>client-movie-details works!</p>
+<div class="container-fluid w-100 h-100 p-0 m-0 col-12 d-flex flex-column scroll" style="background-color: #FFCB0B;">
+  <div class="container w-100 h-50 p-0 m-0 d-flex justify-content-center"  style="text-align:center;">
+    <iframe [src]='url' class="embed-responsive-item d-flex justify-content-center"  [style.width]="!isYt?'880px':!dontDisplayTrailer?'100%':'0px'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <div class="h-25 bg-dark bg-opacity-25 w-100 fw-bold text-light">
+    <p>Deskripcija filma :</p>
+    <p>psa aut autem fugit doloribus veniam in non voluptatibus. A unde tempore et iure atque exercitationem culpa. Consequatur eaque non modi ullam at ut. Maiores qui et quidem. Eveniet nemo et aliquid nisi nisi. Nesciunt incidunt laudantium et voluptas</p>
+    <p>Naziv filma: {{movie[0].naziv}}</p>
+    <p>Žanr : {{movie[0].zanr}}</p>
+  </div>
+</div>

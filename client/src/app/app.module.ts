@@ -26,8 +26,6 @@ import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
 import { GlumciComponent } from './glumci/glumci.component';
 import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
 import { MidComponent } from './bi-dashboard/mid/mid.component';
-import { LeftComponent } from './bi-dashboard/left/left.component';
-import { RightComponent } from './bi-dashboard/right/right.component';
 import { NavComponent } from './bi-dashboard/nav/nav.component';
 import { ClientNavComponent } from './Components/klijent-nav/client-nav/client-nav.component';
 import { MainNavComponent } from './Components/Main-Nav/main-nav/main-nav.component';
@@ -37,6 +35,11 @@ import { StavkeComponent } from './stavke/stavke.component';
 import { ProizvodComponent } from './proizvod/proizvod.component';
 import { DatepipeComponent } from './datepipe/datepipe.component';
 import {DatePipe} from "@angular/common";
+import { MoviesPanelComponent } from './client-movies/movies-panel/movies-panel.component';
+import { TableComponent } from './bi-dashboard/table/table.component';
+import { BuyTicketsComponent } from './buy-tickets/buy-tickets.component';
+import { BuySnacksModalComponent } from './buy-snacks-modal/buy-snacks-modal.component';
+import { StavkaComponent } from './buy-snacks-modal/stavka/stavka.component';
 
 
 @NgModule({
@@ -59,8 +62,6 @@ import {DatePipe} from "@angular/common";
     GlumciComponent,
     DashboardComponent,
     MidComponent,
-    LeftComponent,
-    RightComponent,
     NavComponent,
     ClientNavComponent,
     MainNavComponent,
@@ -69,6 +70,11 @@ import {DatePipe} from "@angular/common";
     StavkeComponent,
     ProizvodComponent,
     DatepipeComponent,
+    MoviesPanelComponent,
+    TableComponent,
+    BuyTicketsComponent,
+    BuySnacksModalComponent,
+    StavkaComponent,
   ],
   imports: [
     BrowserModule,

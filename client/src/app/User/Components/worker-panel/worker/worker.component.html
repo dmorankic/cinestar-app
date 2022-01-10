@@ -1,10 +1,10 @@
 <div class="container-fluid w-100 h-100 p-0 m-0 d-flex align-items-center justify-content-center ">
 
-  <div class="inputs col-10 mt-3  h-100 d-flex flex-column  border border-dark rounded  "
+  <div class="inputs col-9  h-75 d-flex flex-column  border border-dark rounded  "
     style="background: rgba(0,0,0,.3)">
     <h1 class="align-self-center text-light mt-5">Worker management</h1>
-    <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="Search(contactForm)">
-      <select id="Grad" (click)="loadGradovi()"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" (change)="SearchPoGradu($event)" [(ngModel)]="city" formControlName="pretragaGrada">
+    <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="clearFilters(contactForm)">
+      <select id="Grad" (click)="SearchPoGradu($event)"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" (change)="SearchPoGradu($event)" [(ngModel)]="city" formControlName="pretragaGrada">
         <option [value]="i" *ngFor="let o of gradovi;index as i">
           {{o.naziv}}
         </option>
@@ -43,7 +43,7 @@
         <div class="scroll" *ngIf="uredi">
           <div
             class="bg-light bg-opacity-10  rounded d-flex flex-column justify-content-center align-items-center w-100 ">
-            <button class="btn position-absolute bg-light bg-opacity-50 align-self-baseline ms-3" (click)="toggle('back')">Go back</button>
+            <button class="btn position-absolute bg-light bg-opacity-50 align-self-baseline ms-3" (click)="toggle('back')">Nazad</button>
 
             <form [formGroup]="urediForma" (ngSubmit)="update(worker.id,urediForma)"
             class="col-6 d-flex flex-column justify-content-center align-items-center">

@@ -1,4 +1,4 @@
-<div class="container-fluid h-100 w-100 d-flex flex-column p-0 m-0 bg-dark bg-opacity-25">
+<!-- <div class="container-fluid h-100 w-100 d-flex flex-column p-0 m-0 bg-dark bg-opacity-25">
   <div class="container col-12 h-50 ">
     <div class="canvas  col-12 h-100 w-100 d-flex flex-column justify-content-center align-items-center">
       <p-chart type="bar" class=" align-self-center h-75 w-75" [data]="data" ></p-chart>
@@ -9,8 +9,7 @@
   <div class="container col-12 h-50 ">
     <div class="canvas col-12 h-100 w-100 d-flex justify-content-center align-items-center">
       <div class="col-6   h-100 d-flex justify-content-center align-items-center">
-        <p-chart type="doughnut" [data]="data"  class=" w-100 h-100"></p-chart>
-        <!-- <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart> -->
+       <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
       </div>
       <div class="col-6  h-100 d-flex justify-content-center align-items-center">
         <p-chart type="pie"  class=" w-100 h-100" [data]="data"></p-chart>
@@ -18,4 +17,17 @@
       </div>
      </div>
   </div>
-</div>
+</div> -->
+<!-- <button class="btn btn-dark text-light" (click)="update()">Update</button> -->
+  <div class="canvas col-12 h-100 w-100 d-flex justify-content-center align-items-center">
+    <div class="h-100 ms-5 d-flex justify-content-center align-items-center mt-5" style="width:30%">
+      <p-chart type="bar"  class=" w-100 h-100" [data]="data"></p-chart>
+    </div>
+    <div class="h-100 d-flex justify-content-center align-items-center mt-5" style="width:30%">
+      <p-chart type="line"  class=" w-100 h-100" [data]="data"></p-chart>
+    </div>
+    <div class="h-100 me-5 d-flex justify-content-center align-items-center mt-5" style="width:30%">
+      <p-chart type="line"  class=" w-100 h-100" [data]="data"></p-chart>
+    </div>
+   </div>
+

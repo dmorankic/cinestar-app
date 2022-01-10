@@ -1,4 +1,5 @@
 import {HttpHeaders} from "@angular/common/http";
+import { InterceptorService } from "./Auth/Services/interceptor.service";
 
 
 export class aplication_settings{
@@ -8,6 +9,9 @@ export class aplication_settings{
   static cinestar__plesk__server_standard_endpoints = "https://cinestar-api.p2098.app.fit.ba/";
   static auth_server = "https://auth-server.p2098.app.fit.ba";
 
+  static routesAuth:string[]=['Login','Register'];
+  static routesKlijent:string[]=['movies','cinehome','buy-tickets'];
+
   static http_opcije= {
     headers: new HttpHeaders({"Content-Type":"application/json"})
   };
@@ -16,6 +20,9 @@ export class aplication_settings{
     return this.armin_local;
   }
 
+  // private static interceptorService: InterceptorService;
+
+  // static get intercept(){ return this.interceptorService==null?new InterceptorService:this.interceptorService }
 }
 
 

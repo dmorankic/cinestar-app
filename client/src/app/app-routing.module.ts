@@ -20,12 +20,13 @@ import { ClientMovieDetailsComponent } from './client-movie-details/client-movie
 import { DatepipeComponent } from './datepipe/datepipe.component';
 import { ProizvodComponent } from './proizvod/proizvod.component';
 import { StavkeComponent } from './stavke/stavke.component';
+import { MoviesPanelComponent } from './client-movies/movies-panel/movies-panel.component';
+import { BuyTicketsComponent } from './buy-tickets/buy-tickets.component';
 
 
 const routes: Routes = [
   {path: 'Film', component: FilmoviComponent},
   {path: 'Projekcija', component: ProjekcijeComponent},
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path:'Profile',component:ProfileComponent , canActivate:[GuardService]},
   { path:'Users',component:UsersPanelComponent },
   { path:'Worker',component:WorkerComponent },
@@ -45,6 +46,8 @@ const routes: Routes = [
   { path:'Proizvod/:id',component:ProizvodComponent },
   { path:'Proizvod',component:ProizvodComponent },
   { path:'Datepipe',component:DatepipeComponent },
+  { path: 'movies', component: MoviesPanelComponent },
+  { path: 'buy-tickets', component: BuyTicketsComponent },
 
 ];
 
@@ -52,4 +55,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+}

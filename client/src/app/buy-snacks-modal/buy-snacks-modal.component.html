@@ -1,0 +1,31 @@
+<div id="myModal" class="modal" >
+
+  <!-- Modal content -->
+  <div class="modal-content" style="width: 1200px;">
+    <span (click)="hideModal()" class="ms-auto fs-1">&times;</span>
+   <div class="modal-body w-100 h-100 p-0 m-0  d-flex " >
+    <div class="col-6 d-flex flex-column  h-100">
+      <div class="col-12 h-50 bg-black">
+        <img src="../../assets/cinestar.png" width="100%" height="100%" alt="">
+      </div>
+      <div class="col-12 h-50 bg-light" style="width: 100%!important;">
+        <div class="container-fluid p-0 m-0 h-100  w-100 bg-light  d-flex flex-column justify-content-center align-items-center">
+          <div class="container-fluid p-0 m-0  w-100 bg-light  d-flex flex-column justify-content-center align-items-center scroll"
+          >
+          <div class="container-fluid ticket col-11 bg-dark mb-1" *ngFor="let ticket of tickets" style="height: 50px;">
+          </div>
+          </div>
+          <div class="buttons d-flex w-100 h-25 ms-3 mt-2">
+            <button class="btn btn-info text-light me-3 fw-bold" (click)="hideModal()">Nazad</button>
+            <button class="btn btn-info text-light fw-bold">Potvrdi</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 scroll scroll-stavke p-0 m-0 ">
+      <app-stavka *ngFor="let stavka of stavke"></app-stavka>
+    </div>
+   </div>
+  </div>
+
+</div>

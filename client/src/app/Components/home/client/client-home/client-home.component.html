@@ -1,38 +1,35 @@
-<div class="container-fluid w-100 h-100 p-0 m-0 bg-dark d-flex">
-  <div class="left h-100 col-2 bg-warning p-0 m-0 d-flex flex-column justify-content-center align-items-center">
-    <div class="h-50 d-flex justify-content-center align-items-center border border-dark">
-      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
-    </div>
-    <div class="h-50  d-flex justify-content-center align-items-center border  border-dark">
-      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
-    </div>
-  </div>
 
-  <div class="mid h-100 col-8 flex-column p-0 m-0 d-flex justify-content-center align-items-center" >
+  <div class="mid w-100 h-100 col-12 flex-column p-0 m-0 d-flex justify-content-center align-items-center" style="background-color:#FFCB0B">
 
-    <div class="top w-100  bg-info p-0 m-0 d-flex justify-content-center align-items-center"  style="height: 60%;">
-      <p>Slajder sa trailerima i slikama novh filmova i trenutno dostupnih u kinima</p>
-    </div>
-
-    <div class="bottom  w-100  bg-danger p-0 m-0 d-flex justify-content-center align-items-center" style="height: 40%;">
-      <div class="col-2 m-2 border d-flex justify-content-center align-items-cneter flex-column" *ngFor="let film of filmovi" style="height: 90%;"  [routerLink]="['/movie', film.id]">
-        <div class="w-100" style="height: 75%;">
-          <p class="text-center">Nema slike za {{film.naziv}}</p>
+    <div class="top w-100  p-0 m-0 d-flex justify-content-center align-items-center"  style="height: 60%; background-color:#ecc228">
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner img-fluid" >
+          <img src="{{currentBanner}}" style="height:550px" class="img-fluid  rounded-3" alt="...">
         </div>
-        <div class="bg-dark w-100 bg-opacity-25 "  style="height: 25%;">
-          <p class="text-center">{{film.naziv}}</p>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden" (click)="previous()">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden" (click)="Next()">Next</span>
+        </button>
+        </div>    </div>
+
+    <div class="bottom  w-100  p-0 m-0 d-flex justify-content-center align-items-center" style="height: 40%; background-color: #FFCB0B;">
+      <div class="col-2 m-2 border d-flex justify-content-center align-items-cneter flex-column" *ngFor="let film of filmovi" style="height: 90%;"  [routerLink]="['/movie', film.id]">
+
+        <div class="card bg-dark text-light col-12 h-100 d-flex align-items-center justify-content-center" [routerLink]="['/movie', film.id]" style="overflow: hidden;" >
+          <!-- <img class="card-img-top" src={{film?.slika}} alt="Card image cap"> -->
+          <!--<app-film-preview *ngIf="display" [data]="film.video" [id]="film.id.toString()"></app-film-preview> -->
+          <div class="card-body col-12 w-100 d-flex align-items-center justify-content-center flex-column" [ngStyle]="{
+            'background-image':'url(' + film.slikaUrl + ')'}">
+            <div class="mt-auto float-end border border-danger">
+              <p class="card-title ">{{film?.naziv}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
-
-  <div class="left h-100 col-2 bg-warning p-0 m-0 d-flex flex-column justify-content-center align-items-center">
-    <div class="h-50 d-flex justify-content-center align-items-center border border-dark">
-      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
-    </div>
-    <div class="h-50  d-flex justify-content-center align-items-center border  border-dark">
-      <p class="text-center">Mjesto za marketing i promociju filmova i ponuda</p>
-    </div>
-  </div>
-</div>

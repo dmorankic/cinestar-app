@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { filter, Observable, of,pipe } from 'rxjs';
 import { User } from '../../Model/User';
 import { UserService } from '../../Services/user.service';
 import { FilterPipe } from '../../Pipes/filter-pipe.pipe';
+import { Grad } from '../../Model/General';
 
 @Component({
   selector: 'app-users-panel',
@@ -11,20 +12,24 @@ import { FilterPipe } from '../../Pipes/filter-pipe.pipe';
   styleUrls: ['./users-panel.component.scss']
 })
 export class UsersPanelComponent implements OnInit {
-  workersFiltered:any=[];
+  usersFiltered:any=[];
   city:any;
+  grad:any;
+  spol:any;
   pretragaGrada:any;
   users$:any;
   uredi:boolean=false;
-  payments:boolean=false;
   default:boolean=false;
   none=true;
   user:any;
   count:number=0;
   contactForm:FormGroup;
+  urediForma:any;
   options:any;
   Name:string=''
   passcode:string='password';
+  spolovi:any=[{naziv:"M",value:0},{naziv:"Ž",value:1}]
+
   constructor(private userService:UserService,private fb:FormBuilder) {
     this.contactForm=fb.group({
       select:[null],
@@ -39,11 +44,7 @@ export class UsersPanelComponent implements OnInit {
       this.pretragaGrada = null;
       return;
     }
-    else if(this.pretragaGrada==e.target.value[0]){
-      this.loadUsers();
-      return;
-    }
-    else if(this.pretragaGrada!="NOT_CHANGED" || this.pretragaGrada!=this.options[e.target.value[0]]){
+    else if(this.pretragaGrada!="NOT_CHANGED" ){
       this.pretragaGrada=this.options[e.target.value[0]];
       this.loadUsers(this.pretragaGrada);
       this.pretragaGrada = "NOT_CHANGED";
@@ -51,6 +52,7 @@ export class UsersPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createForm()
     this.loadUsers()
     this.loadGradovi()
   }
@@ -62,26 +64,19 @@ export class UsersPanelComponent implements OnInit {
     }
 
   loadUsers(pretragaGrada:any=null){
-    this.userService.getAll().subscribe(x=>{
+      this.users$=null;
+      this.userService.getAll().subscribe(x=>{
       this.users$=x;
       this.count=this.users$.length;
-      // if(pretragaGrada!=null)
-      // {
-      //   this.workersFiltered=[]
-      //   this.users$.forEach((item:User) => {
-      //     if(item.==pretragaGrada.value){
-      //       item.grad=this.gradovi[pretragaGrada.value-2]
-      //       item.vrstaRadnika=this.uloge.find((x:any)=>x.value==item.vrstaRadnikaId)
-      //       console.log("GRADOVI ",this.gradovi)
-      //       console.log("item grad ->",item.grad);
-      //       console.log("item gradId ->",item.gradId);
-      //       console.log("pretraga grad ->",pretragaGrada.value);
-      //       this.workersFiltered.push(item);
-      //     }
-      //   });
-      //   this.workers=[];
-      //   this.workers=((this.workersFiltered as unknown) as Worker[]);
-      // }
+      if(pretragaGrada!=null)
+      {
+        this.usersFiltered=[]
+        this.users$.forEach((item:Worker) => {
+            this.usersFiltered.push(item);
+        });
+        this.users$=[];
+        this.users$=((this.usersFiltered as unknown) as Worker[]);
+      }
     });
   }
 
@@ -93,25 +88,17 @@ export class UsersPanelComponent implements OnInit {
 
   toggle(action:string){
     if(action=='back'){
-      this.payments=false;
       this.uredi=false;
       this.default=true;
     }
 
     if(action=='uredi'){
-      this.payments=false;
       this.uredi=true;
       this.default=false;
     }
 
-    if(action=='payments'){
-      this.payments=true;
-      this.uredi=false;
-      this.default=false;
-    }
 
     if(action=='none'){
-      this.payments=false;
       this.uredi=false;
       this.default=false;
       this.none=true;
@@ -120,9 +107,16 @@ export class UsersPanelComponent implements OnInit {
   odaberi(id:number){
     this.userService.getById(id).subscribe(x=>{
       this.user=x;
-      console.log(this.user)
       this.none=false;
       this.default=true;
+      this.getUrediForm.username.setValue(this.user.username);
+      this.getUrediForm.ime_prezime.setValue(this.user.ime_prezime);
+      this.getUrediForm.password.setValue(this.user.password);
+      this.getUrediForm.email.setValue(this.user.email);
+      this.getUrediForm.broj_telefona.setValue(this.user.broj_telefona);
+      this.getUrediForm.confirmed.setValue(this.user.confirmed);
+      this.urediForma.controls.spol.setValue(this.user.spol);
+      this.getUrediForm.grad.setValue(this.user.grad);
     });
     this.toggle('back')
   }
@@ -145,5 +139,42 @@ export class UsersPanelComponent implements OnInit {
 
   passwordToggle(){
     this.passcode=this.passcode=="password"?'text':'password';
+  }
+
+  setGrad(e:any=null,city:Grad|null=null){
+    if(e!=null){
+      this.grad=this.options[e.target.value[0]];
+      console.log(this.grad);
+    }else{
+      this.grad=city;
+    }
+  }
+
+  setSpol(e:any=null,gender:string|null=null){
+    if(e!=null){
+      this.spol=this.spolovi[e.target.value[0]];
+      console.log(this.spol);
+    }else{
+      this.spol=gender;
+    }
+  }
+
+  createForm(){
+    this.urediForma=this.fb.group({
+      username: [new FormControl(),Validators.required],
+      broj_telefona: [new FormControl(''),Validators.required],
+      email: [new FormControl(''),Validators.required],
+      password: [new FormControl(''),Validators.required],
+      ime_prezime: [new FormControl(''),Validators.required],
+      grad:[new FormControl(this.options),Validators.required],
+      spol:[new FormControl(this.spolovi),Validators.required],
+      b_date:[new FormControl(),Validators.required],
+      confirmed:[new FormControl(),Validators.required],
+    })
+  }
+
+
+  get getUrediForm(){
+    return this.urediForma.controls;
   }
 }

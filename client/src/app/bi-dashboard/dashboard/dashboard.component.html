@@ -1,16 +1,23 @@
-<div class="container-fluid d-flex flex-column w-100 h-100 p-0 m-0 parent">
-  <div class="container-fluid bg-dark bg-opacity-75  top">
-     <app-nav></app-nav>
+<div class="container-fluid d-flex flex-column w-100 h-100 p-0 m-0 parent scroll">
+  <div class="container-fluid p-0 m-0 bg-dark bg-opacity-10" style="height: 5%!important;">
+  <app-nav></app-nav>
+</div>
+<div class="container-fluid d-flex flex-column w-100 h-100 p-0 m-0" style="height: 95%!important;">
+
+
+ <div class="container-fluid p-0 m-0" style="height: 50%!important;">
+   <app-mid></app-mid>
+ </div>
+ <div class="container-fluid p-0 m-0 d-flex justify-content-between" style="height: 45%!important;">
+  <div class="col-3 ms-5">
+    <app-table [data]="topUsers" [dataName]="'Top Korisnici'"></app-table>
   </div>
-  <div class="container-fluid d-flex flex-lg-column flex-xl-row flex-md-column flex-sm-column flex-xs-column other" >
-    <div class="container bg-light bg-opacity-50  col-xxl-3  col-xl-3 col-lg-12 col-md-12 col-sm-12 col-xs-12 h-100">
-      <app-left></app-left>
-    </div>
-    <div class="container  col-xxl-6  col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 h-100">
-      <app-mid></app-mid>
-    </div>
-    <div class="container bg-light bg-opacity-50 col-xxl-3 col-xl-3 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxs-12 h-100">
-      <app-right></app-right>
-    </div>
+  <div class="col-3 ">
+    <app-table [data]="topCinema " [dataName]="'Najposjecenija Kina'"></app-table>
   </div>
+  <div class="col-3  me-5">
+    <app-table [data]="topMovies " [dataName]="'Najgledaniji Filmovi'"></app-table>
+  </div>
+</div>
+</div>
 </div>

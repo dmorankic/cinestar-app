@@ -23,8 +23,8 @@ export class WorkerComponent implements OnInit {
   city:any;
   selectedValue:any;
   contactForm:FormGroup;
-  dodajForm:any;
-  urediForma:any;
+  dodajForm:FormGroup;
+  urediForma:FormGroup;
   worker:any;
   count:number=0;
   workers:any;
@@ -55,7 +55,6 @@ export class WorkerComponent implements OnInit {
    }
   ngOnInit(): void {
     this.loadUsers()
-    this.loadUloge()
     this.dodajForm=this.fb.group({
       username: [new FormControl(''),Validators.required],
       strucnaSprema: [new FormControl(''),Validators.required],
@@ -71,10 +70,10 @@ export class WorkerComponent implements OnInit {
       b_date:[new FormControl(),Validators.required],
       plata:[new FormControl(),Validators.required],
     })
-
+    this.createForm();
   }
 
-  Search(form: FormGroup){
+  clearFilters(form: FormGroup){
     this.city="";
        this.Name="";
        this.loadUsers()
@@ -103,6 +102,7 @@ export class WorkerComponent implements OnInit {
   }
 
   async loadGradovi(){
+    this.gradovi=[];
     if(this.gradovi.length==0){
       this.workerService.getGradovi().subscribe(x=>{
         const somthing = x;
@@ -118,15 +118,15 @@ export class WorkerComponent implements OnInit {
 
   async loadUloge(){
     this.workerService.getUloge().subscribe(x=>{
-      const somthing = x;
-      for (let i = 0; i < (somthing as Uloga[]).length; i++) {
+      for (let i = 0; i < (x as Uloga[]).length; i++) {
         this.uloge.push({
-          naziv:(somthing as Uloga[])[i].naziv,
-          value:(somthing as Uloga[])[i].id
-
+          naziv:(x as Uloga[])[i].naziv,
+          value:(x as Uloga[])[i].id
        });
       }
-    })
+    }
+
+    )
   }
 
   toggle(action:string){
@@ -138,8 +138,6 @@ export class WorkerComponent implements OnInit {
     }
 
     if(action=='uredi'){
-
-      this.loadForm()
       this.dodaj=false;
       this.uredi=true;
       this.default=false;
@@ -164,11 +162,13 @@ export class WorkerComponent implements OnInit {
   odaberi(id:number){
     this.workerService.getById(id).subscribe(x=>{
       this.worker=x;
+      console.log(this.worker)
       this.none=false;
       this.default=true;
       this.setUloga(null,(x as Worker).vrstaRadnika);
       this.setSpol(null,(x as Worker).spol);
       this.setGrad(null,(x as Worker).grad);
+      this.loadWorker();
     });
     this.toggle('back')
   }
@@ -223,7 +223,6 @@ export class WorkerComponent implements OnInit {
     (worker as Worker).b_date=form.value.b_date;
     (worker as Worker).jmbg=form.value.jmbg;
     //alert(form.value.strucnaSprema)
-    console.log(worker);
     this.workerService.insert(worker as Worker).subscribe(x=>{
       this.loadUsers()
       form.reset()
@@ -238,7 +237,7 @@ export class WorkerComponent implements OnInit {
   }
 
   get getUrediForm(){
-    return this.dodajForm.controls;
+    return this.urediForma.controls;
   }
 
   setGrad(e:any=null,city:Grad|null=null){
@@ -268,17 +267,12 @@ export class WorkerComponent implements OnInit {
   }
 
   SearchPoGradu(e:any){
-
     if(this.pretragaGrada=="NOT_CHANGED")
     {
       this.pretragaGrada = null;
       return;
     }
-    else if(this.pretragaGrada==e.target.value[0]){
-      this.loadUsers();
-      return;
-    }
-    else if(this.pretragaGrada!="NOT_CHANGED" || this.pretragaGrada!=this.gradovi[e.target.value[0]]){
+    else if(this.pretragaGrada!="NOT_CHANGED" ){
       this.pretragaGrada=this.gradovi[e.target.value[0]];
       this.loadUsers(this.pretragaGrada);
       this.pretragaGrada = "NOT_CHANGED";
@@ -287,7 +281,7 @@ export class WorkerComponent implements OnInit {
   }
 
 
-  loadForm(){
+  createForm(){
     this.urediForma=this.fb.group({
       username: [new FormControl(''),Validators.required],
       strucnaSprema: [new FormControl(''),Validators.required],
@@ -303,19 +297,21 @@ export class WorkerComponent implements OnInit {
       b_date:[new FormControl(),Validators.required],
       plata:[new FormControl(),Validators.required],
     })
+  }
 
-    this.urediForma.controls.username.setValue(this.worker.username);
-    this.urediForma.controls.ime_prezime.setValue(this.worker.ime_prezime);
-    this.urediForma.controls.email.setValue(this.worker.email);
-    this.urediForma.controls.broj_telefona.setValue(this.worker.broj_telefona);
-    this.urediForma.controls.strucnaSprema.setValue(this.worker.strucnaSprema);
-    this.urediForma.controls.spol.setValue(this.worker.spol);
-    this.urediForma.controls.datum_uposlenja.setValue(this.worker.datum_uposlenja);
-    this.urediForma.controls.b_date.setValue(this.worker.b_date);
-    this.urediForma.controls.plata.setValue(this.worker.plata);
-    this.urediForma.controls.jmbg.setValue(this.worker.jmbg);
-    this.urediForma.controls.uloga.setValue(this.worker.vrstaRadnikaId);
-    this.urediForma.controls.grad.setValue(this.worker.gradId);
-    this.urediForma.controls.password.setValue(this.worker.password);
+  loadWorker(){
+    this.getUrediForm.username.setValue(this.worker.username);
+    this.getUrediForm.ime_prezime.setValue(this.worker.ime_prezime);
+    this.getUrediForm.email.setValue(this.worker.email);
+    this.getUrediForm.broj_telefona.setValue(this.worker.broj_telefona);
+    this.getUrediForm.strucnaSprema.setValue(this.worker.strucnaSprema);
+    this.getUrediForm.spol.setValue(this.worker.spol);
+    this.getUrediForm.datum_uposlenja.setValue(this.worker.datum_uposlenja);
+    this.getUrediForm.b_date.setValue(this.worker.b_date);
+    this.getUrediForm.plata.setValue(this.worker.plata);
+    this.getUrediForm.jmbg.setValue(this.worker.jmbg);
+    this.getUrediForm.uloga.setValue(this.worker.vrstaRadnikaId);
+    this.getUrediForm.grad.setValue(this.worker.gradId);
+    this.getUrediForm.password.setValue(this.worker.password);
   }
 }
