@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Cinestar_WEB_API.HubConfig;
 
 namespace Cinestar_WEB_API
 {
@@ -85,15 +86,23 @@ namespace Cinestar_WEB_API
             //services registering
             services.AddInfrastructure();
 
-            services.AddCors(
-               options => options.AddPolicy(name:"default",x => {
-                   x.WithOrigins("http://localhost:4200")
-                   .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials();
-               })
-               
-           );
+            //signal r
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
+            services.AddCors(opt =>
+            {
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();                    
+                });
+            });
+
+
 
         }
 
@@ -109,11 +118,11 @@ namespace Cinestar_WEB_API
 
 
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseCors();
 
             app.UseRouting();
 
-            app.UseCors("default");
 
             app.UseAuthentication();
 
@@ -122,6 +131,7 @@ namespace Cinestar_WEB_API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChartsHub>("/dashboard");
             });
         }
     }

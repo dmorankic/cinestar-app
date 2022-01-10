@@ -97,7 +97,15 @@ namespace dataBase.Migrations
                     b.Property<float>("rating")
                         .HasColumnType("real");
 
+<<<<<<< Updated upstream
                     b.Property<string>("slika")
+                        .HasColumnType("nvarchar(max)");
+=======
+                    b.Property<byte[]>("slikaByte")
+                        .HasColumnType("varbinary(max)");
+>>>>>>> Stashed changes
+
+                    b.Property<string>("slikaUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("zanr")
@@ -175,13 +183,13 @@ namespace dataBase.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("Racunid")
-                        .HasColumnType("int");
-
                     b.Property<float>("cijena")
                         .HasColumnType("real");
 
                     b.Property<int>("projekcijaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("racunId")
                         .HasColumnType("int");
 
                     b.Property<int>("sjedisteId")
@@ -189,9 +197,9 @@ namespace dataBase.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Racunid");
-
                     b.HasIndex("projekcijaId");
+
+                    b.HasIndex("racunId");
 
                     b.HasIndex("sjedisteId");
 
@@ -588,13 +596,15 @@ namespace dataBase.Migrations
 
             modelBuilder.Entity("Modeli.Karta", b =>
                 {
-                    b.HasOne("Modeli.Racun", null)
-                        .WithMany("k")
-                        .HasForeignKey("Racunid");
-
                     b.HasOne("Modeli.Projekcija", "projekcija")
                         .WithMany()
                         .HasForeignKey("projekcijaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Modeli.Racun", "racun")
+                        .WithMany()
+                        .HasForeignKey("racunId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -605,6 +615,8 @@ namespace dataBase.Migrations
                         .IsRequired();
 
                     b.Navigation("projekcija");
+
+                    b.Navigation("racun");
 
                     b.Navigation("sjediste");
                 });
@@ -779,11 +791,6 @@ namespace dataBase.Migrations
                         .IsRequired();
 
                     b.Navigation("vrstaRadnika");
-                });
-
-            modelBuilder.Entity("Modeli.Racun", b =>
-                {
-                    b.Navigation("k");
                 });
 #pragma warning restore 612, 618
         }

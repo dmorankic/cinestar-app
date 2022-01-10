@@ -12,6 +12,8 @@ namespace Modeli
         public Projekcija projekcija { get; set; }
         public int sjedisteId { get; set; }
         public Sjediste sjediste { get; set; }
+        public int? racunId { get; set; }
+        public Racun racun { get; set; }
 
     }
 }

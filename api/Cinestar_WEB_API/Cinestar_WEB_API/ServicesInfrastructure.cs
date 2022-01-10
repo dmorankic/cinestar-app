@@ -39,6 +39,11 @@ namespace Cinestar_WEB_API
             //register auth services
             services.AddSingleton<IAuthService, AuthService>();
 
+            //dashboardDataManager
+
+            services.AddSingleton<DashboardDataManager>();
+
+
             return services;
         }
     }

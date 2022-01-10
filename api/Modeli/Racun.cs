@@ -18,6 +18,5 @@ namespace Modeli
         //izdat korisniku
         public int korisnikId { get; set; }
         public Korisnik korisnik { get; set; }
-        public List<Karta> k { get; set; }
     }
 }
