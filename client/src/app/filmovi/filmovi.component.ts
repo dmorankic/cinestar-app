@@ -76,7 +76,7 @@ export class FilmoviComponent implements OnInit {
   }
 
   prikaziFilmove(): void {
-    this.httpKlijent.get(aplication_settings.cinestar__plesk__server_standard_endpoints + "Film/GetAll").subscribe(x => {
+    this.httpKlijent.get(aplication_settings.damir_local + "Film/GetAll").subscribe(x => {
       this.filmPodaci = x;
     });
   }
@@ -115,7 +115,7 @@ export class FilmoviComponent implements OnInit {
 
 
 
-    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints + "Film/Update/?id=" + this.odabraniFilm.id, this.edit)
+    this.httpKlijent.post(aplication_settings.damir_local + "Film/Update/?id=" + this.odabraniFilm.id, this.edit)
       .subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
   },error =>{ alert( error.error);}
@@ -143,17 +143,12 @@ export class FilmoviComponent implements OnInit {
 
 
 
-<<<<<<< HEAD
-    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints + "DetaljiFilma/Add", this.dodajDetalje).subscribe((povratnaVrijednost: any) => {
-      alert("uredu..." + povratnaVrijednost.id);
-=======
 
     this.httpKlijent.post(aplication_settings.damir_local + "DetaljiFilma/Add", this.addDetalji).subscribe((povratnaVrijednost: any) => {
 
       this.newDetaljiId=povratnaVrijednost.id;
 
       this.dodajDetaljeNaFilm();
->>>>>>> 1c00566746ddaffcfa7b0e02553a06bd85ca5fa8
     });
 
 
@@ -192,29 +187,7 @@ export class FilmoviComponent implements OnInit {
 
 
   DodajFilm() {
-<<<<<<< HEAD
-
-
-    if(this.add._naziv.length<1)
-    {
-      alert("Polje za naziv filma je prazno");
-      return;
-    }
-    else if(this.add._zanr.length<1)
-    {
-      alert("Polje za žanr je prazno");
-      return;
-    }
-    else if( this.add._detaljiFilmaId < 1)
-    {
-      alert("Pogrešan ID detalja filma");
-      return;
-    }
-
-    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
-=======
     this.httpKlijent.post(aplication_settings.damir_local + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
->>>>>>> 1c00566746ddaffcfa7b0e02553a06bd85ca5fa8
       alert("uredu..." + povratnaVrijednost.id);
     },error =>{ alert( error.error);});
 
@@ -227,7 +200,7 @@ export class FilmoviComponent implements OnInit {
 
 
   obrisiFilm(s:any) {
-    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints+"Film/Delete?id="+s.id,null).subscribe((pov:any)=>{
+    this.httpKlijent.post(aplication_settings.damir_local+"Film/Delete?id="+s.id,null).subscribe((pov:any)=>{
       const index = this.filmPodaci.indexOf(s);
       if (index > -1) {
         this.filmPodaci.splice(index, 1);
@@ -299,4 +272,3 @@ export class FilmoviComponent implements OnInit {
     }),1000);
   }
 }
-
