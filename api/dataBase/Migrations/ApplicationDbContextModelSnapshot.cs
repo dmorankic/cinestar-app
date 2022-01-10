@@ -88,14 +88,17 @@ namespace dataBase.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("detaljiFilmaID")
+                    b.Property<int?>("detaljiFilmaID")
                         .HasColumnType("int");
 
                     b.Property<string>("naziv")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("slika")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<float>("rating")
+                        .HasColumnType("real");
+
+                    b.Property<string>("slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("zanr")
                         .HasColumnType("nvarchar(max)");
@@ -280,15 +283,15 @@ namespace dataBase.Migrations
                     b.Property<string>("naziv")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ponudaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("porcija")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("stavkaPonudeId")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
-                    b.HasIndex("stavkaPonudeId");
+                    b.HasIndex("ponudaId");
 
                     b.ToTable("proizvod");
                 });
@@ -559,9 +562,7 @@ namespace dataBase.Migrations
                 {
                     b.HasOne("Modeli.DetaljiFilma", "detaljiFilma")
                         .WithMany()
-                        .HasForeignKey("detaljiFilmaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("detaljiFilmaID");
 
                     b.Navigation("detaljiFilma");
                 });
@@ -643,13 +644,11 @@ namespace dataBase.Migrations
 
             modelBuilder.Entity("Modeli.Proizvod", b =>
                 {
-                    b.HasOne("Modeli.StavkaPonude", "stavkaPonude")
+                    b.HasOne("Modeli.Ponuda", "ponude")
                         .WithMany()
-                        .HasForeignKey("stavkaPonudeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ponudaId");
 
-                    b.Navigation("stavkaPonude");
+                    b.Navigation("ponude");
                 });
 
             modelBuilder.Entity("Modeli.Projekcija", b =>

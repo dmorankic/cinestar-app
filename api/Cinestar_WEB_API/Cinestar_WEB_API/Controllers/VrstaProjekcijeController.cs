@@ -40,6 +40,19 @@ namespace Cinestar_WEB_API.Controllers
             return _dbContext.vrstaProjekcije.Where(x => _id == null || _id == x.id).ToList();
 
         }
+        [HttpGet]
+        public List<StavkaPonude> GetStavke(int _id)
+        {
+            return _dbContext.stavkaPonude.Where(x => x.ponudaId==_id).ToList();
+
+        }
+
+        [HttpGet]
+        public List<Proizvod> GetProizvodi(int _id)
+        {
+            return _dbContext.proizvod.Where(x => x.ponudaId == _id).ToList();
+
+        }
 
         [HttpPost]
         public ActionResult Update(int id, [FromBody] VrstaProjekcijeAddVm x)

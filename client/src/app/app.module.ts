@@ -33,6 +33,10 @@ import { ClientNavComponent } from './Components/klijent-nav/client-nav/client-n
 import { MainNavComponent } from './Components/Main-Nav/main-nav/main-nav.component';
 import { ClientHomeComponent } from './Components/home/client/client-home/client-home.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details/client-movie-details.component';
+import { StavkeComponent } from './stavke/stavke.component';
+import { ProizvodComponent } from './proizvod/proizvod.component';
+import { DatepipeComponent } from './datepipe/datepipe.component';
+import {DatePipe} from "@angular/common";
 
 
 @NgModule({
@@ -62,6 +66,9 @@ import { ClientMovieDetailsComponent } from './client-movie-details/client-movie
     MainNavComponent,
     ClientHomeComponent,
     ClientMovieDetailsComponent,
+    StavkeComponent,
+    ProizvodComponent,
+    DatepipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,7 @@ import { ClientMovieDetailsComponent } from './client-movie-details/client-movie
     ChartModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

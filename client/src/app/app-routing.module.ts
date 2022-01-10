@@ -17,6 +17,9 @@ import {GlumciComponent} from "./glumci/glumci.component";
 import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
 import { ClientHomeComponent } from './Components/home/client/client-home/client-home.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details/client-movie-details.component';
+import { DatepipeComponent } from './datepipe/datepipe.component';
+import { ProizvodComponent } from './proizvod/proizvod.component';
+import { StavkeComponent } from './stavke/stavke.component';
 
 
 const routes: Routes = [
@@ -37,6 +40,11 @@ const routes: Routes = [
   { path: 'Statistics', component: DashboardComponent },
   { path: 'cinehome', component: ClientHomeComponent },
   { path: 'movie/:id', component: ClientMovieDetailsComponent },
+  { path:'Stavke/:id',component:StavkeComponent },
+  { path:'Stavke',component:StavkeComponent },
+  { path:'Proizvod/:id',component:ProizvodComponent },
+  { path:'Proizvod',component:ProizvodComponent },
+  { path:'Datepipe',component:DatepipeComponent },
 
 ];
 

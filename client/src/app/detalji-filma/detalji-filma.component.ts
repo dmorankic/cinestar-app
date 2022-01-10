@@ -3,12 +3,13 @@ import {DetaljiFilmaVM} from "../detalji-filma";
 import {HttpClient} from "@angular/common/http";
 import {aplication_settings} from "../aplication_settings";
 import { Router } from '@angular/router';
-
+import{DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-detalji-filma',
   templateUrl: './detalji-filma.component.html',
-  styleUrls: ['./detalji-filma.component.scss']
+  styleUrls: ['./detalji-filma.component.scss'],
+  providers: [DatePipe]
 })
 export class DetaljiFilmaComponent implements OnInit {
 
@@ -23,7 +24,7 @@ export class DetaljiFilmaComponent implements OnInit {
 
   odabraniPodaci: any=null;
   prikaziDodavanje: boolean=false;
-  constructor(private httpKlijent: HttpClient) { }
+  constructor(private httpKlijent: HttpClient,public date: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -56,23 +57,6 @@ export class DetaljiFilmaComponent implements OnInit {
 
   urediDetalje() {
 
-    const userKeyRegExp = /^\d{4}[-]\d{2}[-]\d{2}$/;
-    const valid = userKeyRegExp.test(this.odabraniPodaci.datumObjave);
-    if(!valid )
-    {
-      alert("Neispravan format datuma objave");
-      return;
-    }
-    else if( this.odabraniPodaci.trailer.length<1 )
-    {
-      alert("Niste unijeli podatke za trailer");
-      return;
-    }
-    else if( this.odabraniPodaci.trajanje.length<1 )
-    {
-      alert("Niste unijeli podatke za trajanje");
-      return;
-    }
 
     this.editDetalji._trajanje=this.odabraniPodaci.trajanje;
     this.editDetalji._datumObjave=this.odabraniPodaci.datumObjave;
@@ -82,6 +66,10 @@ export class DetaljiFilmaComponent implements OnInit {
       alert("uredu..." + povratnaVrijednost.id);
     });
     this.prikaziUredjivanje=false;
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local+ "DetaljiFilma/GetAll").subscribe(x=>{
+      this.detaljiPodaci = x;
+    });},1000)
   }
 
   DodajDetaljeFilma()
@@ -109,9 +97,15 @@ export class DetaljiFilmaComponent implements OnInit {
       alert("uredu..." + povratnaVrijednost.id);
     });
 
-    this.ucitajDetalje();
     this.prikaziDodavanje=false;
+
+    setTimeout(()=>{this.httpKlijent.get(aplication_settings.damir_local+ "DetaljiFilma/GetAll").subscribe(x=>{
+      this.detaljiPodaci = x;
+    });},1000);
+
   }
+
+
 
   PrikaziDodavanje() {
     this.prikaziDodavanje=true;

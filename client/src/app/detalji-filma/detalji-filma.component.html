@@ -1,7 +1,7 @@
 
 
 <h1>Detalji filma</h1>
-<button class="btn btn-info dugmic" (click)="PrikaziDodavanje()">Dodaj detalje za film</button>
+
 
 
 <table id="podd" class="table table-hover table-dark uza" *ngIf="prikaziTable">
@@ -17,21 +17,102 @@
   <tr  *ngFor="let s of getDetaljiPodaci()">
     <td>{{s.id}}</td>
     <td>{{s.trajanje}}</td>
-    <td>{{s.datumObjave}}</td>
+    <td>{{date.transform(s.datumObjave,'mediumDate')}}</td>
     <td>{{s.trailer}}</td>
     <td>{{s.trailerID}}</td>
     <td>
-      <button (click)="obrisiDetalje(s)">Obrisi</button>
-      <button (click)="detalji(s)">Uredi</button>
+      <!--<button class="btn btn-light" (click)="obrisiDetalje(s)">Obrisi</button>-->
+      <button class="btn btn-light desni" type="button" data-bs-toggle="modal" data-bs-target="#edit" (click)="detalji(s)">Uredi</button>
 
 
     </td>
   </tr>
   </tbody>
 </table>
+<!--
+<button type="button" class="btn btn-light " id="dodajButton"  (click)="PrikaziDodavanje()">Dodaj detalje za film</button>
+-->
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 *ngIf="prikaziUredjivanje" class="modal-title" id="editLabel">Uređivanje detalja Filma ID {{odabraniPodaci.id}}</h5>
+        <button *ngIf="prikaziUredjivanje" [disabled]="odabraniPodaci.trajanje=='' "
+                type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="prikaziUredjivanje" >
+          <form>
+            <!--
+            <div class="form-group">
+              <label for="id_edit">ID</label>
+              <input [(ngModel)]="this.odabraniPodaci.id" [ngModelOptions]="{standalone: true} " disabled
+                     type="text" class="form-control" id="id_edit"  placeholder="Unesite trajanje filma">
+            </div>
+              -->
+            <div class="form-group">
+              <label for="naziv_edit">Trajanje filma</label>
+              <input [(ngModel)]="this.odabraniPodaci.trajanje" [ngModelOptions]="{standalone: true}"
+                required #naziv_edit="ngModel"    type="text" class="form-control" id="naziv_edit"  name="naziv_edit" placeholder="Unesite trajanje filma">
+
+              <div *ngIf="naziv_edit.invalid && (naziv_edit.dirty || naziv_edit.touched)"
+                   class=" upozorenje">
+
+                <div *ngIf="naziv_edit.errors?.['required']">
+                  *Obavezno polje.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="zanr_edit">Datum objave(format GGGG-MM-DD) </label>
+              <input  [(ngModel)]="this.odabraniPodaci.datumObjave" [ngModelOptions]="{standalone: true}"
+                required name="zanr_edit" #zanr_edit="ngModel"
+                      type="date" class="form-control" id="zanr_edit"  placeholder="Unesite datum objave">
+              <div *ngIf="zanr_edit.invalid && (zanr_edit.dirty || zanr_edit.touched)"
+                   class=" upozorenje">
+
+                <div *ngIf="zanr_edit.errors?.['required']">
+                  *Obavezno polje.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="trailer">Trailer</label>
+              <input  [(ngModel)]="this.odabraniPodaci.trailer" [ngModelOptions]="{standalone: true}"
+                      type="email" class="form-control" id="trailer"  placeholder="Unesite link trailera">
+
+            </div>
+            <br>
+            <!--<button type="submit" (click)="urediDetalje()" class="btn btn-light">Sačuvaj</button>-->
+
+
+          </form>
+
+
+
+
+
+
+
+
+          <button type="button" class="btn btn-primary" id="dodajButton" [disabled]="!naziv_edit.valid
+|| !zanr_edit.valid" (click)="urediDetalje()" data-bs-dismiss="modal">Sačuvaj</button>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
 <div *ngIf="prikaziUredjivanje" class="uzad">
   <h1>Uređivanje detalja Filma</h1><br>
 
@@ -75,7 +156,11 @@
 
 
 </div>
+-->
 
+
+
+<!--
 <div *ngIf="prikaziDodavanje" class="uzad">
   <h1>Dodavanje detalja filma</h1>
 
@@ -103,6 +188,6 @@
   </form>
 
 </div>
+-->
 
-<button routerLink="/Film" >Nazad na filmove</button>
 

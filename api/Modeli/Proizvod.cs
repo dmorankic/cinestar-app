@@ -12,7 +12,7 @@ namespace Modeli
         public double cijena { get; set; }
 
         //potjece iz stavke ponude
-        public int stavkaPonudeId { get; set; }
-        public StavkaPonude stavkaPonude { get; set; }
+        public int? ponudaId { get; set; }
+        public Ponuda ponude { get; set; }
     }
 }

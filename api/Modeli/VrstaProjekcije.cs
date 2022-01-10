@@ -6,7 +6,7 @@ namespace Modeli
 {
     public class VrstaProjekcije
     {
-        public int id { get; set; }
-        public string dimenzija { get; set; }
+        public  int id { get; set; }
+        public  string dimenzija { get; set; }
     }
 }

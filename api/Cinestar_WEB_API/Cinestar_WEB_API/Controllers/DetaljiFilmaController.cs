@@ -23,15 +23,16 @@ namespace Cinestar_WEB_API.Controllers
         public ActionResult Add([FromBody] DetaljiFilmaAddVm x)
         {
 
-            if (string.IsNullOrEmpty(x._trailer) || string.IsNullOrEmpty(x._trajanje))
-                return BadRequest("Provjerite trailer i trajanje filma pa pokušajte ponovo");
+            if ( string.IsNullOrEmpty(x._trajanje))
+                return BadRequest("Provjerite  trajanje filma pa pokušajte ponovo");
 
             string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
 
             if (!Regex.IsMatch(x._datumObjave.ToString(), reg))
                 return BadRequest("Neispravan format datuma objave" + x._datumObjave);
 
-            
+            if (string.IsNullOrEmpty(x._trailer))
+                x._trailer ="Nije unijet link trailera";
 
 
 
@@ -80,8 +81,8 @@ namespace Cinestar_WEB_API.Controllers
                 return BadRequest("pogresan ID");
 
 
-            if (string.IsNullOrEmpty(x._trailer) || string.IsNullOrEmpty(x._trajanje))
-                return BadRequest("Provjerite trailer i trajanje filma pa pokušajte ponovo");
+            if ( string.IsNullOrEmpty(x._trajanje))
+                return BadRequest("Provjerite  trajanje filma pa pokušajte ponovo");
 
             string reg = @"^\d{2}[-][A-Z][a-z]{2}[-]\d{2}";
 
@@ -91,7 +92,10 @@ namespace Cinestar_WEB_API.Controllers
 
             edit.trajanje = x._trajanje;
             edit.datumObjave = x._datumObjave;
-            edit.trailer = x._trailer;
+            if (!string.IsNullOrEmpty(x._trailer))
+                edit.trailer = x._trailer;
+            else
+                edit.trailer = "Nije unijet link trailera";
 
             _dbContext.SaveChanges();
             return Ok(edit);

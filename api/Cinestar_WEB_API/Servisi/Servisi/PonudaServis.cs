@@ -42,6 +42,7 @@ namespace Servisi.Servisi
         public override Ponuda Update(int id, Ponuda obj)
         {
             var ponuda = db_context.ponuda.Find(id);
+            ponuda.vrsta_ponude = obj.vrsta_ponude;
             ponuda.krajPonude = obj.krajPonude;
             ponuda.pocetakPonude = obj.pocetakPonude;
             ponuda.trajanjePonude = obj.trajanjePonude;
@@ -49,8 +50,12 @@ namespace Servisi.Servisi
             {
                 ponuda.radnikId = obj.radnikId;
                 var radnik = db_context.radnici.Find(obj.radnikId);
-                radnik.grad = db_context.grad.Find(obj.radnik.gradId);
-                radnik.vrstaRadnika = db_context.vrstaRadnika.Find(obj.radnik.vrstaRadnikaId);
+                //radnik.grad = db_context.grad.Find(obj.radnik.gradId);
+                radnik.grad = db_context.grad.Find(radnik.gradId);
+
+                //radnik.vrstaRadnika = db_context.vrstaRadnika.Find(obj.radnik.vrstaRadnikaId);
+                radnik.vrstaRadnika = db_context.vrstaRadnika.Find(radnik.vrstaRadnikaId);
+
                 ponuda.radnik = radnik;
 
             }
