@@ -97,13 +97,8 @@ namespace dataBase.Migrations
                     b.Property<float>("rating")
                         .HasColumnType("real");
 
-<<<<<<< Updated upstream
-                    b.Property<string>("slika")
-                        .HasColumnType("nvarchar(max)");
-=======
                     b.Property<byte[]>("slikaByte")
                         .HasColumnType("varbinary(max)");
->>>>>>> Stashed changes
 
                     b.Property<string>("slikaUrl")
                         .HasColumnType("nvarchar(max)");
@@ -189,7 +184,7 @@ namespace dataBase.Migrations
                     b.Property<int>("projekcijaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("racunId")
+                    b.Property<int?>("racunId")
                         .HasColumnType("int");
 
                     b.Property<int>("sjedisteId")
@@ -295,6 +290,9 @@ namespace dataBase.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("porcija")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("slikaUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
@@ -604,9 +602,7 @@ namespace dataBase.Migrations
 
                     b.HasOne("Modeli.Racun", "racun")
                         .WithMany()
-                        .HasForeignKey("racunId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("racunId");
 
                     b.HasOne("Modeli.Sjediste", "sjediste")
                         .WithMany()

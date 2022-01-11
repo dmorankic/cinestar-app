@@ -22,7 +22,7 @@ namespace Cinestar_WEB_API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var timerManager = new TimerManager(() => hub.Clients.All.SendAsync("transferchartdata", ApplicationDbContext.GetData()));
+            //var timerManager = new TimerManager(() => hub.Clients.All.SendAsync("transferchartdata", ApplicationDbContext.GetData()));
             var data = dashboardDataManager.prepareReport();
             await hub.Clients.All.SendAsync("NewCallRecived", data);
 

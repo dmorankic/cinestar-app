@@ -10,8 +10,8 @@ using dataBase;
 namespace dataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211124144929_baza")]
-    partial class baza
+    [Migration("20220111154612_slikaURL_2")]
+    partial class slikaURL_2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,14 +90,20 @@ namespace dataBase.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("detaljiFilmaID")
+                    b.Property<int?>("detaljiFilmaID")
                         .HasColumnType("int");
 
                     b.Property<string>("naziv")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("slika")
+                    b.Property<float>("rating")
+                        .HasColumnType("real");
+
+                    b.Property<byte[]>("slikaByte")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("slikaUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("zanr")
                         .HasColumnType("nvarchar(max)");
@@ -174,13 +180,13 @@ namespace dataBase.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("Racunid")
-                        .HasColumnType("int");
-
                     b.Property<float>("cijena")
                         .HasColumnType("real");
 
                     b.Property<int>("projekcijaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("racunId")
                         .HasColumnType("int");
 
                     b.Property<int>("sjedisteId")
@@ -188,9 +194,9 @@ namespace dataBase.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Racunid");
-
                     b.HasIndex("projekcijaId");
+
+                    b.HasIndex("racunId");
 
                     b.HasIndex("sjedisteId");
 
@@ -282,15 +288,18 @@ namespace dataBase.Migrations
                     b.Property<string>("naziv")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ponudaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("porcija")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("stavkaPonudeId")
-                        .HasColumnType("int");
+                    b.Property<string>("slikaUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-                    b.HasIndex("stavkaPonudeId");
+                    b.HasIndex("ponudaId");
 
                     b.ToTable("proizvod");
                 });
@@ -561,9 +570,7 @@ namespace dataBase.Migrations
                 {
                     b.HasOne("Modeli.DetaljiFilma", "detaljiFilma")
                         .WithMany()
-                        .HasForeignKey("detaljiFilmaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("detaljiFilmaID");
 
                     b.Navigation("detaljiFilma");
                 });
@@ -589,15 +596,15 @@ namespace dataBase.Migrations
 
             modelBuilder.Entity("Modeli.Karta", b =>
                 {
-                    b.HasOne("Modeli.Racun", null)
-                        .WithMany("k")
-                        .HasForeignKey("Racunid");
-
                     b.HasOne("Modeli.Projekcija", "projekcija")
                         .WithMany()
                         .HasForeignKey("projekcijaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Modeli.Racun", "racun")
+                        .WithMany()
+                        .HasForeignKey("racunId");
 
                     b.HasOne("Modeli.Sjediste", "sjediste")
                         .WithMany()
@@ -606,6 +613,8 @@ namespace dataBase.Migrations
                         .IsRequired();
 
                     b.Navigation("projekcija");
+
+                    b.Navigation("racun");
 
                     b.Navigation("sjediste");
                 });
@@ -645,13 +654,11 @@ namespace dataBase.Migrations
 
             modelBuilder.Entity("Modeli.Proizvod", b =>
                 {
-                    b.HasOne("Modeli.StavkaPonude", "stavkaPonude")
+                    b.HasOne("Modeli.Ponuda", "ponude")
                         .WithMany()
-                        .HasForeignKey("stavkaPonudeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ponudaId");
 
-                    b.Navigation("stavkaPonude");
+                    b.Navigation("ponude");
                 });
 
             modelBuilder.Entity("Modeli.Projekcija", b =>
@@ -782,11 +789,6 @@ namespace dataBase.Migrations
                         .IsRequired();
 
                     b.Navigation("vrstaRadnika");
-                });
-
-            modelBuilder.Entity("Modeli.Racun", b =>
-                {
-                    b.Navigation("k");
                 });
 #pragma warning restore 612, 618
         }

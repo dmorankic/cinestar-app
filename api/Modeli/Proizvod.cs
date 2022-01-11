@@ -10,6 +10,7 @@ namespace Modeli
         public string porcija { get; set; }
         public string naziv { get; set; }
         public double cijena { get; set; }
+        public string slikaUrl { get; set; }
 
         //potjece iz stavke ponude
         public int? ponudaId { get; set; }

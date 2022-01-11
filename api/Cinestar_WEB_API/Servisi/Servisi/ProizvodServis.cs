@@ -61,6 +61,8 @@ namespace Servisi.Servisi
 
             proizvod.cijena = obj.cijena;
 
+            proizvod.slikaUrl = obj.slikaUrl;
+
             db_context.SaveChanges();
 
             return obj;

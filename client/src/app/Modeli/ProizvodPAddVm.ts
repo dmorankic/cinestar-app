@@ -4,4 +4,5 @@ export class proizvodPAddVm{
   naziv:string;
   cijena:number;
   ponudaId:number;
+  slikaUrl:string;
 }
