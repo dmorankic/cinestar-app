@@ -16,7 +16,7 @@ export class ProizvodComponent implements OnInit {
   private sub: any;
   sviProizvodi:boolean=false;
   prikaziDodavanje: boolean=false;
-  add:proizvodPAddVm={id:0,porcija:'',naziv:'',cijena:0,ponudaId:0};
+  add:proizvodPAddVm={id:0,porcija:'',naziv:'',cijena:0,ponudaId:0,slikaUrl:''};
    prikaziUredjivanje: boolean=false;
    odabraniProizvod: any;
   constructor(private route:ActivatedRoute,private httpKlijent: HttpClient,private router:Router) { }

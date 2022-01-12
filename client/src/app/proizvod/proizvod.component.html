@@ -8,6 +8,7 @@
     <th>Naziv</th>
     <th>Porcija</th>
     <th>Cijena</th>
+    <th>Slika</th>
     <th>Akcija</th>
   </tr>
   <tbody>
@@ -16,6 +17,7 @@
     <td>{{s.naziv}}</td>
     <td>{{s.porcija}}</td>
     <td >{{s.cijena+"KM"}}</td>
+    <td><img class="profilna-slika" src="{{s.slikaUrl}}"></td>
 
     <td>
       <button (click)="obrisiProizvod(s)"  class="btn btn-light">Obrisi</button>
@@ -83,6 +85,11 @@
                   *Obavezno polje.
                 </div>
               </div>
+            </div>
+            <div class="form-group">
+              <label for="slika">Link slike</label>
+              <input  [(ngModel)]="add.slikaUrl" [ngModelOptions]="{standalone: true}"
+                      type="text" class="form-control" id="slika" >
             </div>
             <!--<div class="form-group">
               <label >ID ponude</label>
@@ -195,6 +202,11 @@
                   *Obavezno polje.
                 </div>
               </div>
+            </div>
+            <div class="form-group">
+              <label for="slika1">Link slike</label>
+              <input  [(ngModel)]="odabraniProizvod.slikaUrl" [ngModelOptions]="{standalone: true}"
+                      type="text" class="form-control" id="slika1" >
             </div>
 
             <br>
