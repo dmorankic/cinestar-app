@@ -64,7 +64,12 @@ namespace Cinestar_WEB_API.Controllers
         [HttpGet]
         public List<Film> GetAll(int? _id)
         {
-            return _dbContext.filmovi.Where(x => _id == null || _id == x.id).ToList();
+            var filmovi = _dbContext.filmovi.Where(x => _id == null || _id == x.id).ToList();
+            foreach (var film in filmovi)
+            {
+                film.detaljiFilma = _dbContext.detaljiFilma.Find(film.detaljiFilmaID);
+            }
+            return filmovi;
 
         }
 

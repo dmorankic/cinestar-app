@@ -28,7 +28,6 @@ import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component
 import { MidComponent } from './bi-dashboard/mid/mid.component';
 import { NavComponent } from './bi-dashboard/nav/nav.component';
 import { ClientNavComponent } from './Components/klijent-nav/client-nav/client-nav.component';
-import { MainNavComponent } from './Components/Main-Nav/main-nav/main-nav.component';
 import { ClientHomeComponent } from './Components/home/client/client-home/client-home.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details/client-movie-details.component';
 import { StavkeComponent } from './stavke/stavke.component';
@@ -64,7 +63,6 @@ import { StavkaComponent } from './buy-snacks-modal/stavka/stavka.component';
     MidComponent,
     NavComponent,
     ClientNavComponent,
-    MainNavComponent,
     ClientHomeComponent,
     ClientMovieDetailsComponent,
     StavkeComponent,

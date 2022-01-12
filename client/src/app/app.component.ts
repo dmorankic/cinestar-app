@@ -8,41 +8,9 @@ import { aplication_settings } from './aplication_settings';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angularClient';
-  management=false;
-  client=false;
-  auth=false;
-  constructor(private router: Router) {
-    router.events.subscribe((val) => {
-        let routeHit = false;
-        let route=val as NavigationEnd;
-        let path = route.url as string
-        if(route.url){
-          if(path=="/"+aplication_settings.routesAuth[0] || path=="/"+aplication_settings.routesAuth[1]){
-            this.auth=true;
-            routeHit=true;
-          }
-          if(!routeHit)
-          {
-            this.auth=false;
-          }
-        }
 
-      aplication_settings.routesKlijent.forEach(x=>{
+  constructor() {
 
-        let route=val as NavigationEnd;
-        let path = route.url as string
-        if(path?.includes("/"+x)){
-          this.client=true;
-        }
-      })
-      if(this.client){
-        this.management=false;
-      }
-      else{
-        this.management=true;
-      }
-    });
   }
 }
 
