@@ -53,7 +53,8 @@ namespace Cinestar_WEB_API
                 });
             });
 
-
+            //outsourceing services registering
+            services.AddInfrastructure();
 
         }
 
