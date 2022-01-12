@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\dataBase\dataBase.csproj" />
+    <ProjectReference Include="..\Servisi\Servisi.csproj" />
   </ItemGroup>
 
 </Project>

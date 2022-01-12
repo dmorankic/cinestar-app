@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dataBase", "..\dataBase\dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Modeli", "..\Modeli\Modeli.csproj", "{91DDE46B-82E6-491E-B1F2-871129DA7B98}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoDataBackgroundUpdating", "AutoDataBackgroundUpdating\AutoDataBackgroundUpdating.csproj", "{75E0D1DB-162F-49C7-8F92-CF04B8E5AE6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servisi", "Servisi\Servisi.csproj", "{75E0D1DB-162F-49C7-8F92-CF04B8E5AE6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
