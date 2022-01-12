@@ -4,6 +4,8 @@ import { MoviesPanelComponent } from './client-movies/movies-panel/movies-panel.
 import { DatepipeComponent } from './datepipe/datepipe.component';
 import { DetaljiFilmaComponent } from './detalji-filma/detalji-filma.component';
 import { FilmoviComponent } from './filmovi/filmovi.component';
+import { ClientHomeComponent } from './GeneralComponents/home/client/client-home/client-home.component';
+import { HomeComponent } from './GeneralComponents/home/home.component';
 import { GlumciComponent } from './glumci/glumci.component';
 import { PonudeComponent } from './Ponude/ponude/ponude.component';
 import { ProizvodComponent } from './proizvod/proizvod.component';
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path:'Proizvod',component:ProizvodComponent },
   { path:'Datepipe',component:DatepipeComponent },
   { path: 'movies', component: MoviesPanelComponent },
+  { path: 'cinehome', component: ClientHomeComponent },
+  { path: 'home', component: HomeComponent },
 
 ];
 

@@ -8,6 +8,9 @@ import { aplication_settings } from './aplication_settings';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  management=false;
+  client=false;
+  auth=false;
 
   constructor() {
 

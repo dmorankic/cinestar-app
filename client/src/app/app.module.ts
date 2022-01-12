@@ -19,6 +19,8 @@ import {DatePipe} from "@angular/common";
 import { MoviesPanelComponent } from './client-movies/movies-panel/movies-panel.component';
 import { ManagementNavigationComponent } from './GeneralComponents/management-navigation/management-navigation.component';
 import { ClientNavComponent } from './GeneralComponents/client-nav/client-nav.component';
+import { ClientHomeComponent } from './GeneralComponents/home/client/client-home/client-home.component';
+import { HomeComponent } from './GeneralComponents/home/home.component';
 
 
 
@@ -35,7 +37,9 @@ import { ClientNavComponent } from './GeneralComponents/client-nav/client-nav.co
     DatepipeComponent,
     MoviesPanelComponent,
     ManagementNavigationComponent,
-    ClientNavComponent
+    ClientNavComponent,
+    ClientHomeComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
