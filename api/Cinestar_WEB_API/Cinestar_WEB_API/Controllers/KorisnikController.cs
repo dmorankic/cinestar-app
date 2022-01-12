@@ -8,11 +8,11 @@ namespace Cinestar_WEB_API.Controllers
     [ApiController]
     [Route("/cinestar_api/seminarski/[controller]")]
 
-    public class RadnikController : BaseController<Radnik, object>
+    public class KorisnikController : BaseController<Korisnik,object>
     {
-        private readonly IBaseService<Radnik, object> service;
+        private readonly IBaseService<Korisnik, object> service;
 
-        public RadnikController(IBaseService<Radnik, object> service) : base(service)
+        public KorisnikController(IBaseService<Korisnik, object> service) :base(service)
         {
 
         }
