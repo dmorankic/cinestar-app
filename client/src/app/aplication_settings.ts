@@ -1,5 +1,4 @@
 import {HttpHeaders} from "@angular/common/http";
-import { InterceptorService } from "./Auth/Services/interceptor.service";
 
 
 export class aplication_settings{
@@ -19,10 +18,6 @@ export class aplication_settings{
   static get arminURL():string{
     return this.armin_local;
   }
-
-  // private static interceptorService: InterceptorService;
-
-  // static get intercept(){ return this.interceptorService==null?new InterceptorService:this.interceptorService }
 }
 
 
