@@ -28,34 +28,54 @@ namespace Servisi.Servisi
         public virtual db_type Delete(int id)
         {
             var set = db_context.Set<db_type>();
-            var record = set.Find(id);
-            if (record != null)
+
+            if (set != null)
             {
-                var result = set.Remove(record);
-                db_context.SaveChanges();
+                var record = set.Find(id);
+
+                if (record != null)
+                {
+                    set.Remove(record);
+                    db_context.SaveChanges();
+                }
+                else  return null;            
+
+                return record;
             }
-            return record;
+            else return null;
+
         }
 
         public virtual IEnumerable<db_type> GetAll()
         {
             var set = db_context.Set<db_type>();
-            return set.ToList();
+
+            return set != null ? set.ToList() : null;
+           
         }
 
         public virtual db_type GetById(int id)
         {
             var set = db_context.Set<db_type>();
-            var record =  set.Find(id);
-            return record;
+            if (set != null)
+            {
+                var record = set.Find(id);
+                return record != null ? record : null;
+            }
+            else return null;
         }
 
         public virtual db_type Insert(db_type obj)
         {
             var set = db_context.Set<db_type>();
-            set.Add(obj);
-             db_context.SaveChanges();
-            return obj;
+            if (set != null)
+            {
+                set.Add(obj);
+                db_context.SaveChanges();
+                return obj;
+            }
+
+            return null;
         }
 
         public virtual db_type Update(int id, db_type obj)
@@ -63,7 +83,7 @@ namespace Servisi.Servisi
             var set = db_context.Set<db_type>();
             var data = set.Find(id);
            
-            //requires over
+            //requires overwrite for update on each type
             //data.property = .....
             
             db_context.SaveChanges();

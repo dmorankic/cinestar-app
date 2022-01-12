@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="IServisi\" />
-    <Folder Include="Servisi\" />
 	<PackageReference Include="IdentityModel" Version="5.2.0" />
 	<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
 	<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />

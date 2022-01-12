@@ -16,35 +16,58 @@ namespace Cinestar_WEB_API.Controllers
             this.service = service;
         }
 
+        
         [HttpGet]
-        public virtual IEnumerable<db_type> GetAll()//[FromQuery] TSearch q)
+        public virtual ActionResult<IEnumerable<db_type>> GetAll()//[FromQuery] TSearch q)
         {
             var result = service.GetAll();
-            return result;
+            if(result!=null)
+                return Ok(result);
+
+            return BadRequest("Somthing went wrong!");
         }
 
         [HttpGet("{id}")]
-        public virtual db_type GetByID(int id)
+        public virtual ActionResult<db_type> GetByID(int id)
         {
-            return service.GetById(id);
+            var result = service.GetById(id);
+            if (result != null)
+                return Ok(result);
+
+            return BadRequest("Somthing went wrong!");
+
         }
 
         [HttpPut("{id}")]
-        public virtual db_type Update(int id,[FromBody] db_type entity)
+        public virtual ActionResult<db_type> Update(int id,[FromBody] db_type entity)
         {
-            return service.Update(id, entity);
+            var result = service.Update(id, entity);
+            if (result != null)
+                return Ok(result);
+
+            return BadRequest("Somthing went wrong!");
+
         }
 
         [HttpPost]
-        public virtual db_type Insert([FromBody] db_type entity)
+        public virtual ActionResult<db_type> Insert([FromBody] db_type entity)
         {
-            return service.Insert(entity);
+
+            var result = service.Insert(entity);
+            if (result != null)
+                return Ok(result);
+
+            return BadRequest("Somthing went wrong!");
         }
 
         [HttpDelete("{id}")]
-        public virtual db_type Delete(int id)
+        public virtual ActionResult<db_type> Delete(int id)
         {
-            return service.Delete(id);
+            var result = service.Delete(id);
+            if (result != null)
+                return Ok(result);
+
+            return BadRequest("Somthing went wrong!");
         }
     }
 }
