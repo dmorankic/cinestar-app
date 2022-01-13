@@ -30,6 +30,7 @@ namespace Servisi.Servisi
             obj.radnik = db_context.radnici.Find(obj.radnikId);
 
             obj.radnik.grad= db_context.grad.Find(obj.radnik.gradId);    
+
             obj.radnik.vrstaRadnika= db_context.vrstaRadnika.Find(obj.radnik.vrstaRadnikaId);    
 
             db_context.ponuda.Add(obj);
@@ -42,26 +43,31 @@ namespace Servisi.Servisi
         public override Ponuda Update(int id, Ponuda obj)
         {
             var ponuda = db_context.ponuda.Find(id);
-            ponuda.vrsta_ponude = obj.vrsta_ponude;
-            ponuda.krajPonude = obj.krajPonude;
-            ponuda.pocetakPonude = obj.pocetakPonude;
-            ponuda.trajanjePonude = obj.trajanjePonude;
-            if (obj.radnikId != 0)
+            if(ponuda != null)
             {
-                ponuda.radnikId = obj.radnikId;
-                var radnik = db_context.radnici.Find(obj.radnikId);
-                //radnik.grad = db_context.grad.Find(obj.radnik.gradId);
-                radnik.grad = db_context.grad.Find(radnik.gradId);
+                ponuda.vrsta_ponude = obj.vrsta_ponude;
+                ponuda.krajPonude = obj.krajPonude;
+                ponuda.pocetakPonude = obj.pocetakPonude;
+                ponuda.trajanjePonude = obj.trajanjePonude;
+                if (obj.radnikId != 0)
+                {
+                    ponuda.radnikId = obj.radnikId;
+                    var radnik = db_context.radnici.Find(obj.radnikId);
+                    //radnik.grad = db_context.grad.Find(obj.radnik.gradId);
+                    radnik.grad = db_context.grad.Find(radnik.gradId);
 
-                //radnik.vrstaRadnika = db_context.vrstaRadnika.Find(obj.radnik.vrstaRadnikaId);
-                radnik.vrstaRadnika = db_context.vrstaRadnika.Find(radnik.vrstaRadnikaId);
+                    //radnik.vrstaRadnika = db_context.vrstaRadnika.Find(obj.radnik.vrstaRadnikaId);
+                    radnik.vrstaRadnika = db_context.vrstaRadnika.Find(radnik.vrstaRadnikaId);
 
-                ponuda.radnik = radnik;
+                    ponuda.radnik = radnik;
 
+                }
+
+                db_context.SaveChanges();
+                return obj;
             }
 
-            db_context.SaveChanges();
-            return obj;
+            return null;
         }
     }
 }
