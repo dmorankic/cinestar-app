@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details.component';
 import { MoviesPanelComponent } from './client-movies/movies-panel/movies-panel.component';
 import { DatepipeComponent } from './datepipe/datepipe.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path:'Worker',component:WorkerComponent },
   { path:'Users',component:UsersPanelComponent },
   { path: 'movie/:id', component: ClientMovieDetailsComponent },
+  { path: 'buy-tickets', component: BuyTicketsComponent },
 
 ];
 

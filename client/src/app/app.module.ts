@@ -25,6 +25,7 @@ import { WorkerComponent } from './Korisnici/worker-panel/worker/worker.componen
 import { FilterPipe } from './Korisnici/Pipes/filter-pipe.pipe';
 import { UsersPanelComponent } from './Korisnici/users-panel/users-panel.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details.component';
+import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.component';
 
 
 
@@ -47,7 +48,8 @@ import { ClientMovieDetailsComponent } from './client-movie-details/client-movie
     WorkerComponent,
     FilterPipe,
     UsersPanelComponent,
-    ClientMovieDetailsComponent
+    ClientMovieDetailsComponent,
+    BuyTicketsComponent
   ],
   imports: [
     BrowserModule,
