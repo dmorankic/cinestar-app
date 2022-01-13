@@ -66,10 +66,10 @@ export class BuyTicketsComponent implements OnInit,AfterViewInit {
     let interval = setInterval(
         (x:any)=>{
           this.loadReceipt()
-          if(JSON.stringify(this.buyService.getSnacksRacuni()) === JSON.stringify(this.receats))
+          if((JSON.stringify(this.buyService.getSnacksRacuni()) === JSON.stringify(this.receats)) && this.buyService.getSnacksRacuni()!=[])
             clearInterval(interval);
         },
-        2000
+        100
     )
 
 

@@ -26,6 +26,8 @@ import { FilterPipe } from './Korisnici/Pipes/filter-pipe.pipe';
 import { UsersPanelComponent } from './Korisnici/users-panel/users-panel.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details.component';
 import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.component';
+import { BuySnacksModalComponent } from './buy-kupac/buy-snacks/buy-snacks-modal.component';
+import { StavkaComponent } from './buy-kupac/buy-snacks/stavka/stavka.component';
 
 
 
@@ -49,7 +51,9 @@ import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.compone
     FilterPipe,
     UsersPanelComponent,
     ClientMovieDetailsComponent,
-    BuyTicketsComponent
+    BuyTicketsComponent,
+    BuySnacksModalComponent,
+    StavkaComponent
   ],
   imports: [
     BrowserModule,
