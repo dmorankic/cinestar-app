@@ -23,6 +23,7 @@ import { ClientHomeComponent } from './GeneralComponents/home/client/client-home
 import { HomeComponent } from './GeneralComponents/home/home.component';
 import { WorkerComponent } from './Korisnici/worker-panel/worker/worker.component';
 import { FilterPipe } from './Korisnici/Pipes/filter-pipe.pipe';
+import { UsersPanelComponent } from './Korisnici/users-panel/users-panel.component';
 
 
 
@@ -43,7 +44,8 @@ import { FilterPipe } from './Korisnici/Pipes/filter-pipe.pipe';
     ClientHomeComponent,
     HomeComponent,
     WorkerComponent,
-    FilterPipe
+    FilterPipe,
+    UsersPanelComponent
   ],
   imports: [
     BrowserModule,

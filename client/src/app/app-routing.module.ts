@@ -7,6 +7,7 @@ import { FilmoviComponent } from './filmovi/filmovi.component';
 import { ClientHomeComponent } from './GeneralComponents/home/client/client-home/client-home.component';
 import { HomeComponent } from './GeneralComponents/home/home.component';
 import { GlumciComponent } from './glumci/glumci.component';
+import { UsersPanelComponent } from './Korisnici/users-panel/users-panel.component';
 import { WorkerComponent } from './Korisnici/worker-panel/worker/worker.component';
 import { PonudeComponent } from './Ponude/ponude/ponude.component';
 import { ProizvodComponent } from './proizvod/proizvod.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'cinehome', component: ClientHomeComponent },
   { path: 'home', component: HomeComponent },
   { path:'Worker',component:WorkerComponent },
+  { path:'Users',component:UsersPanelComponent },
 
 ];
 
