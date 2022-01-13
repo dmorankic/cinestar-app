@@ -21,6 +21,8 @@ import { ManagementNavigationComponent } from './GeneralComponents/management-na
 import { ClientNavComponent } from './GeneralComponents/client-nav/client-nav.component';
 import { ClientHomeComponent } from './GeneralComponents/home/client/client-home/client-home.component';
 import { HomeComponent } from './GeneralComponents/home/home.component';
+import { WorkerComponent } from './Korisnici/worker-panel/worker/worker.component';
+import { FilterPipe } from './Korisnici/Pipes/filter-pipe.pipe';
 
 
 
@@ -39,7 +41,9 @@ import { HomeComponent } from './GeneralComponents/home/home.component';
     ManagementNavigationComponent,
     ClientNavComponent,
     ClientHomeComponent,
-    HomeComponent
+    HomeComponent,
+    WorkerComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
