@@ -6,5 +6,11 @@ namespace Modeli.AuthModeli
 {
     public class RegisterRequest
     {
+        public string ime_prezime { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public string email { get; set; }
+        public DateTime bdate { get; set; }
+        public int cityId { get; set; }
     }
 }

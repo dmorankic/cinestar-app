@@ -13,6 +13,7 @@ namespace Cinestar_WEB_API
         {
             //the power of generics
             services.AddTransient(typeof(IBaseService<,>),typeof(BaseService<,>));
+            services.AddTransient<KorisnikServis>();
             
             //dependency injection for database context
             services.AddTransient<ApplicationDbContext>();
@@ -20,6 +21,11 @@ namespace Cinestar_WEB_API
             //loging service registration
             services.AddTransient<ILogger,Logger>();
             services.AddTransient<ILoggerFactory,LoggerFactory>();
+
+            services.AddSingleton<IAuthService,AuthService>();
+            services.AddSingleton<IEmailService, EmailService>();
+
+
 
             return services;
         }
