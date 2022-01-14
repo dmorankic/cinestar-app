@@ -94,6 +94,11 @@ namespace Cinestar_WEB_API
                 });
             });
 
+            var emailConfig = Configuration
+            .GetSection("EmailConfiguration")
+            .Get<Modeli.EmailConfiguration.EmailConfig>();
+
+            services.AddSingleton(emailConfig);
             //outsourceing services registering
             services.AddInfrastructure();
 
