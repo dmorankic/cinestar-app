@@ -28,6 +28,13 @@ import { ClientMovieDetailsComponent } from './client-movie-details/client-movie
 import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.component';
 import { BuySnacksModalComponent } from './buy-kupac/buy-snacks/buy-snacks-modal.component';
 import { StavkaComponent } from './buy-kupac/buy-snacks/stavka/stavka.component';
+import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
+import { MidComponent } from './bi-dashboard/mid/mid.component';
+import { TableComponent } from './bi-dashboard/table/table.component';
+import { NavComponent } from './bi-dashboard/nav/nav.component';
+import { LoginComponent } from './Auth/Components/Login/login/login.component';
+import { RegisterComponent } from './Auth/Components/Register/register/register.component';
+import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mail.component';
 
 
 
@@ -53,7 +60,11 @@ import { StavkaComponent } from './buy-kupac/buy-snacks/stavka/stavka.component'
     ClientMovieDetailsComponent,
     BuyTicketsComponent,
     BuySnacksModalComponent,
-    StavkaComponent
+    StavkaComponent,
+
+    LoginComponent,
+    RegisterComponent,
+    ConfirmMailComponent
   ],
   imports: [
     BrowserModule,

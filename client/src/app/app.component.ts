@@ -17,7 +17,7 @@ export class AppComponent {
         let route=val as NavigationEnd;
         let path = route.url as string
         if(route.url){
-          if(path=="/"+aplication_settings.routesAuth[0] || path=="/"+aplication_settings.routesAuth[1]){
+          if(path=="/"+aplication_settings.routesAuth[0] || path=="/"+aplication_settings.routesAuth[1]|| path.includes("/"+aplication_settings.routesAuth[2]+"/")){
             this.auth=true;
             routeHit=true;
           }

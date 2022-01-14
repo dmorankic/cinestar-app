@@ -8,7 +8,7 @@ export class aplication_settings{
   static cinestar__plesk__server_standard_endpoints = "https://localhost:44383/";
   static auth_server = "https://auth-server.p2098.app.fit.ba";
 
-  static routesAuth:string[]=['Login','Register'];
+  static routesAuth:string[]=['Login','Register','Confirm'];
   static routesKlijent:string[]=['movies','cinehome','buy-tickets'];
 
   static http_opcije= {

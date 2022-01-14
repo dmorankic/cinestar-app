@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mail.component';
+import { LoginComponent } from './Auth/Components/Login/login/login.component';
+import { RegisterComponent } from './Auth/Components/Register/register/register.component';
+import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
 import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details.component';
 import { MoviesPanelComponent } from './client-movies/movies-panel/movies-panel.component';
@@ -34,7 +38,9 @@ const routes: Routes = [
   { path:'Users',component:UsersPanelComponent },
   { path: 'movie/:id', component: ClientMovieDetailsComponent },
   { path: 'buy-tickets', component: BuyTicketsComponent },
-
+  { path:'Login',component:LoginComponent },
+  { path:'Register',component:RegisterComponent },
+  { path:'Confirm/:id',component:ConfirmMailComponent },
 ];
 
 @NgModule({
