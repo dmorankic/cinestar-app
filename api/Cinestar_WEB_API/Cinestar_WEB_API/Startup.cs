@@ -32,13 +32,54 @@ namespace Cinestar_WEB_API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = "Cookie";
+                config.DefaultChallengeScheme = "oidc";
+            })
+            .AddCookie("Cookie")
+            .AddOpenIdConnect("oidc", config =>
+            {
+                // base-address of identityserver
+                config.Authority = "https://localhost:44376/";
 
+                config.ClientId = "web.client";
+
+                config.ClientSecret = "SuperSecretPassword";
+
+                config.SaveTokens = true;
+
+                config.ResponseType = "code";
+
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "cinestar_api", Version = "v1" });
-               
+                c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "bearerAuth"
+                                }
+                            },
+                            new string[] {}
+                    }
+                });
             });
 
 
