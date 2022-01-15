@@ -1,5 +1,6 @@
 using Cinestar_WEB_API;
 using Microsoft.OpenApi.Models;
+using Servisi.HubConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,7 @@ var emailConfig = builder.Configuration
 
 builder.Services.AddSingleton(emailConfig);
 
+builder.Services.AddSignalR();
 
 //outsourceing services registering
 builder.Services.AddInfrastructure();
@@ -97,6 +99,9 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChartsHub>("/dashboard");
+});
 app.Run();
