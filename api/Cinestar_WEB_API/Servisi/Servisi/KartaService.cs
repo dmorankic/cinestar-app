@@ -15,13 +15,16 @@ namespace Servisi.Servisi
         private readonly IConfiguration config;
         private readonly ILogger logger;
         private readonly ApplicationDbContext db_context;
+        private readonly ReportingService reportingService;
 
-        public KartaService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context) : base(_config, _logger, _db_context)
+        public KartaService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, ReportingService reportingService) : base(_config, _logger, _db_context)
         {
             //this.db = db;
             this.config = _config;
             this.logger = _logger;
             db_context = _db_context;
+            this.reportingService = reportingService;
+
         }
 
         public override Karta Update(int id, Karta obj)
@@ -38,6 +41,13 @@ namespace Servisi.Servisi
                 return obj;
             }
             return null;
+        }
+
+        public override Karta Insert(Karta obj)
+        {
+            var result = base.Insert(obj);
+            reportingService.NotifyClients();
+            return result;
         }
 
 

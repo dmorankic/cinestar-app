@@ -14,6 +14,7 @@ namespace Cinestar_WEB_API
             //the power of generics
             services.AddTransient(typeof(IBaseService<,>),typeof(BaseService<,>));
             services.AddTransient<KorisnikServis>();
+            services.AddTransient<IBaseService <Racun,object>,RacunService>();
             
             //dependency injection for database context
             services.AddTransient<ApplicationDbContext>();
@@ -24,6 +25,8 @@ namespace Cinestar_WEB_API
 
             services.AddSingleton<IAuthService,AuthService>();
             services.AddSingleton<IEmailService, EmailService>();
+
+            services.AddSingleton<ReportingService>();
 
 
 

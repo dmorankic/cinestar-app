@@ -15,13 +15,16 @@ namespace Servisi.Servisi
         private readonly IConfiguration config;
         private readonly ILogger logger;
         private readonly ApplicationDbContext db_context;
+        private readonly ReportingService reportingService;
 
-        public KorisnikServis(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context):base(_config, _logger, _db_context)
+        public KorisnikServis(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, ReportingService reportingService) :base(_config, _logger, _db_context)
         {
             //this.db = db;
             this.config = _config;
             this.logger = _logger;
             db_context = _db_context;
+            this.reportingService = reportingService;
+
         }
 
         public override Korisnik Update(int id, Korisnik obj)
@@ -54,8 +57,8 @@ namespace Servisi.Servisi
 
         public override Korisnik Insert(Korisnik obj)
         {
-            var mail = new ConfirmMailKorisnik() { issuedConfCode = "123456" };
 
+            var mail = new ConfirmMailKorisnik() { issuedConfCode = "123456" };
 
             var resp = db_context.confirmMailKorisnik.Add(mail);
 
@@ -71,6 +74,8 @@ namespace Servisi.Servisi
 
             db_context.SaveChanges();
 
+            reportingService.NotifyClients();
+            
             return obj;
         }
     }

@@ -9,7 +9,7 @@ namespace Modeli.DashboardModels
         public  List<TopUser> topUsers { get; set; }
         public  List<TopMovie> topMovies { get; set; }
         public  List<TopTheatar> topTheaters { get; set; }
-        public  List<float> chart1 { get; set; }
+        public  List<int> chart1 { get; set; }
         public  List<float> chart2 { get; set; }
         public  List<float> chart3 { get; set; }
 
@@ -19,7 +19,7 @@ namespace Modeli.DashboardModels
             topTheaters = new List<TopTheatar>();   
             topUsers = new List<TopUser>();
 
-            chart1 = new List<float>();
+            chart1 = new List<int>();
             chart2 = new List<float>();
             chart3 = new List<float>(); 
         }

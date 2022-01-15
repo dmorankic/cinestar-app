@@ -15,13 +15,17 @@ namespace Servisi.Servisi
         private readonly IConfiguration config;
         private readonly ILogger logger;
         private readonly ApplicationDbContext db_context;
+        private readonly ReportingService reportingService;
 
-        public RacunService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context) : base(_config, _logger, _db_context)
+
+        public RacunService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, ReportingService reportingService) : base(_config, _logger, _db_context)
         {
             //this.db = db;
             this.config = _config;
             this.logger = _logger;
             db_context = _db_context;
+            this.reportingService = reportingService;
+
         }
 
         public override Racun Update(int id, Racun obj)
@@ -41,6 +45,13 @@ namespace Servisi.Servisi
             return obj;
         }
 
-     
+        public override Racun Insert(Racun obj)
+        {
+            var result = base.Insert(obj);
+            reportingService.NotifyClients();
+            return result;
+        }
+
+
     }
 }
