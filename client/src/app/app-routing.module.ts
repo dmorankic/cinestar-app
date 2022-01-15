@@ -41,6 +41,7 @@ const routes: Routes = [
   { path:'Login',component:LoginComponent },
   { path:'Register',component:RegisterComponent },
   { path:'Confirm/:id',component:ConfirmMailComponent },
+  { path:'Statistics',component:DashboardComponent },
 ];
 
 @NgModule({

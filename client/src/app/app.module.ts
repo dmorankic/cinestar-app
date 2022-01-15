@@ -61,10 +61,13 @@ import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mai
     BuyTicketsComponent,
     BuySnacksModalComponent,
     StavkaComponent,
-
+    DashboardComponent,
     LoginComponent,
     RegisterComponent,
-    ConfirmMailComponent
+    ConfirmMailComponent,
+    NavComponent,
+    MidComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
