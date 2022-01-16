@@ -1,21 +1,23 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as signalR from '@microsoft/signalr';
+import { Chart, registerables } from 'chart.js';
 import { UIChart } from 'primeng/chart/chart';
+import { SignalRService } from '../Services/signal-r.service';
 @Component({
   selector: 'app-mid',
   templateUrl: './mid.component.html',
   styleUrls: ['./mid.component.scss']
 })
 export class MidComponent implements OnInit {
-  data1:any;
-  data2:any;
-  data3:any;
-  data1Options:any;
-  @ViewChild("chart1") chart1: UIChart;
-  @ViewChild("chart2") chart2: UIChart;
-  @ViewChild("chart3") chart3: UIChart;
 
-  @Input() data:any;
+  data1Options:any;
+  chart1: any;
+  chart2: any;
+  chart3: any;
+  public connection:signalR.HubConnection;
+
+  data:any;
 
   timeFilter:any;
   dayLabels:string[]=['MON','TUE','WED','THU','FRI','SAT','SUN'];
@@ -23,124 +25,112 @@ export class MidComponent implements OnInit {
   monthLabels:string[]=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July'];
   yearLabels:string[]=[];
   activeLabels:string[]=[];
-  constructor(private activatedRoute:ActivatedRoute){
+  constructor(private activatedRoute:ActivatedRoute,private rService:SignalRService){
     this.activatedRoute.queryParams.subscribe(params => {
       this.timeFilter = params['time'];
   });
-    this.activeLabels=this.monthLabels;
-    this.data1 = {
-      labels: this.activeLabels,
-      datasets: [
-          {
-              label: 'Frekventnost novih korisnika',
-              data: [],
-              backgroundColor: [
-                "#FFCB0B",
-                "#FFCB0B",
-              ],
-            hoverBackgroundColor: "#DC3545",
-            borderColor: '#FFCB0B',
-            labelColor:'#495057'
-
-
-          },
-
-
-      ]
-  }
-
-  this.data1Options = {
-    plugins: {
-        legend: {
-            labels: {
-                color: '#F8F9FA'
-            }
-        },
-        scales: {
-          xAxes: {
-              title:{
-                color:'#F8F9FA'
-              }
-          },
-          y: {
-              type: 'linear',
-              display: true,
-              position: 'left',
-              ticks: {
-                  min: 0,
-                  max: 100,
-                  color: '#F8F9FA'
-              },
-              grid: {
-                  color: '#F8F9FA'
-              }
-          }
-        }
-    }
-  };
-
-  this.data2 = {
-    labels: this.activeLabels,
-    datasets: [
-      {
-        label: 'Zarada kina on site',
-        data: [],
-        backgroundColor: [
-          "#FFCB0B",
-          "#FFCB0B",
-        ],
-        hoverBackgroundColor: "#DC3545",
-        borderColor: '#FFCB0B'
-
-
-      },
-
-
-    ]
-  }
-
-    this.data3 = {
-      labels: this.activeLabels,
-      datasets: [
-        {
-            label: 'Zarada kina online',
-            data: [],
-            backgroundColor: [
-              "#FFCB0B",
-              "#FFCB0B",
-            ],
-          hoverBackgroundColor: "#DC3545",
-          borderColor: '#FFCB0B'
-
-        },
-      ]
-    }
+  Chart.register(...registerables);
 
   }
 
 	ngOnInit() {
-    let interval = setInterval(()=>{
-      if(this.data){
-        this.data1.datasets.data = this.data.chart1;
-        this.data2.datasets.data = this.data.chart2;
-        this.data3.datasets.data = this.data.chart3;
-      }
-    },5000)
+    this.startConnection();
+    this.addServerListener()
   }
 
-  update() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.timeFilter = params['time'];
-  });
-  console.log(this.timeFilter)
-    if(this.timeFilter=="day"){
-      this.activeLabels=this.dayLabels;
-    }else if(this.timeFilter=="month"){
-      this.activeLabels=this.monthLabels;
+  public startConnection = () => {
 
+    this.connection = new signalR.HubConnectionBuilder()
+    .withUrl('https://localhost:44383/dashboard',{skipNegotiation:true,transport:signalR.HttpTransportType.WebSockets})
+    .build();
+
+    this.connection
+    .start()
+    .then(() => console.log('SignalR Connected!'))
+    .catch(err => console.error("error while starting conecction :",err.toString()) );
+
+  }
+
+  addServerListener(){
+    this.connection.on("transferchartdata", (data) => {
+      this.data=data;
+
+      this.updateCharts();
+    });
+
+
+  }
+
+  updateCharts(){
+    if(this.data){
+      if(this.chart1){
+        document.getElementById("canvas1")?.remove();
+        var canvas1=document.getElementById("chart1_parent")
+        if(canvas1)
+          canvas1.innerHTML='<canvas id="canvas1">{{chart1}}</canvas>';
+      }
+      if(this.chart2){
+        document.getElementById("canvas2")?.remove();
+        var canvas2=document.getElementById("chart2_parent")
+        if(canvas2)
+          canvas2.innerHTML='<canvas id="canvas2">{{chart2}}</canvas>';
+      }
+      if(this.chart3){
+        document.getElementById("canvas3")?.remove();
+        var canvas3=document.getElementById("chart3_parent")
+        if(canvas3)
+          canvas3.innerHTML='<canvas id="canvas3">{{chart3}}</canvas>';
+      }
     }
-    this.data1.labels=this.activeLabels;
-    this.data2.labels=this.activeLabels;
-    this.data3.labels=this.activeLabels;
+    this.chart1 = new Chart('canvas1', {
+      type: 'line',
+      data: {
+        labels: this.monthLabels,
+        datasets: [
+          {
+            data:this.data.chart1,
+            borderColor: '#3e95cd',
+            fill: false,
+            label: 'Frekventnost novih korisnika',
+            backgroundColor: 'rgba(93, 175, 89, 0.1)',
+            borderWidth: 3,
+          },
+        ],
+      },
+    });
+
+    this.chart2 = new Chart('canvas2', {
+      type: 'line',
+      data: {
+        labels: this.monthLabels,
+        datasets: [
+          {
+            data:this.data.chart2,
+            borderColor: '#3e95cd',
+            fill: false,
+            label: 'Zarada kina on site',
+            backgroundColor: 'rgba(93, 175, 89, 0.1)',
+            borderWidth: 3,
+          },
+        ],
+      },
+    });
+
+    this.chart3 = new Chart('canvas3', {
+      type: 'line',
+      data: {
+        labels: this.monthLabels,
+        datasets: [
+          {
+            data:this.data.chart3,
+            borderColor: '#3e95cd',
+            fill: false,
+            label: 'Zarada kina online',
+            backgroundColor: 'rgba(93, 175, 89, 0.1)',
+            borderWidth: 3,
+          },
+        ],
+      },
+    });
   }
 }

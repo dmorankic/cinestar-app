@@ -37,24 +37,7 @@ export class SignalRService {
     });
   }
 
-  // getDataObservable():Observable<any[]>{
-  //   return new Observable<any[]>(observer=>{
-  //     this.addTransferChartDataListener();
-  //   })
-  // }
 
-  // public chartDataListener = () => {
-  //   this.connection.on('transferchartdata', (data) => {
-  //     this.data = data;
-  //   });
-  // }
-
-  // private startHttpRequest = () => {
-  //   this.http.get('https://localhost:5001/api/Dashboard')
-  //     .subscribe(res => {
-  //       console.log(res);
-  //     })
-  // }
 
 
 }
