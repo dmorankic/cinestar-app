@@ -80,12 +80,12 @@
                 </option>
               </select>
 
-              <label for="" class="mt-1 text-light fw-bold w-100">Grad</label>
+              <!-- <label for="" class="mt-1 text-light fw-bold w-100">Grad</label>
               <select id="grad"  class="w-75 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="grad" (change)="setGrad($event)">
                 <option [value]="o.value" *ngFor="let o of options;index as i" >
                   {{o.naziv}}
                 </option>
-              </select>
+              </select> -->
               <div class="d-flex flex-row">
                 <input type="submit" class="btn btn-outline-primary m-2 fw-bold" value="Snjimi" />
                 <button type="button" class="btn btn-outline-primary m-2 fw-bold" (click)="toggle('back')">Cancel</button>

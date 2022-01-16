@@ -128,7 +128,7 @@ export class UsersPanelComponent implements OnInit {
     (this.user as User).broj_telefona=form.value.broj_telefona;
     (this.user as User).gradId=form.value.grad;
     (this.user as User).confirmed=form.value.confirmed?1:0;
-    // this.userService.update(id,this.user).subscribe();
+     this.userService.update(id,this.user).subscribe();
     console.log(form.value.grad)
     this.loadUsers()
   }
