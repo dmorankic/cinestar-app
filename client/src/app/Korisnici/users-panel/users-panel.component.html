@@ -3,13 +3,13 @@
   <div class="inputs col-9 h-75 d-flex flex-column  border border-dark rounded  pb-4"
     style="background: rgba(0,0,0,.3)">
     <h1 class="align-self-center text-light mt-5">User management</h1>
-    <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="Search(contactForm)">
-      <select id="Grad" (click)="SearchPoGradu($event)" class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" formControlName="select"  (click)="SearchPoGradu($event)">
-        <option [ngValue]="i" *ngFor="let o of options;index as i">
+    <form  class="filter  w-100 p-2 d-flex flex-row justify-content-center align-items-center" [formGroup]="contactForm" (ngSubmit)="clearFilters()">
+      <select id="Grad" (click)="SearchPoGradu($event)"  class="col-2 text-center rounded me-1 p-1 float-end fw-bold bg-dark text-light" (change)="SearchPoGradu($event)" [(ngModel)]="city" formControlName="pretragaGrada">
+        <option [value]="i" *ngFor="let o of options;index as i">
           {{o.naziv}}
-       </option>
+        </option>
       </select>
-      <input type="text" formControlName="searchText" name="searchText" placeholder="Search" class="rounded bg-dark text-light border-0 p-1  me-1" >
+      <input type="text" formControlName="searchText" name="searchText" placeholder="Trazi" class="rounded bg-dark text-light border-0 p-1  me-1" [(ngModel)] = Name (keyup)="loadUsers()">
       <input type="submit" value="Ocisti filtere" class="btn rounded bg-dark text-light border-0 fw-bold ps-2 pe-2 ms-1" >
     </form>
     <div

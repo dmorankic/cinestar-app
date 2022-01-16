@@ -26,7 +26,7 @@ export class MidComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute,private rService:SignalRService){
     this.activatedRoute.queryParams.subscribe(params => {
       this.timeFilter = params['time'];
-  });
+    });
 
     Chart.register(...registerables);
     Chart.defaults.color="white"

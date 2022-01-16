@@ -11,6 +11,7 @@ export interface User{
   confMailXkorisniciId?:   number;
   confMailXkorisnici?:     ConfMailXkorisnici;
   spol:number;
+  gradId:number;
 }
 
 export interface ConfMailXkorisnici {

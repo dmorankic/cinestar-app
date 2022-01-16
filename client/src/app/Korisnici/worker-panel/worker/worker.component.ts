@@ -74,11 +74,11 @@ export class WorkerComponent implements OnInit {
     this.createForm();
   }
 
-  clearFilters(form: FormGroup){
+  clearFilters(){
     this.city="";
        this.Name="";
        this.loadUsers()
-    }
+  }
 
     async loadUsers(pretragaGrada:any=null){
     this.workers=null;

@@ -43,6 +43,7 @@ namespace Servisi.Servisi
                     user.broj_telefona = obj.broj_telefona;
                     user.b_date = obj.b_date;
                     user.datum_kreiranja_racuna = obj.datum_kreiranja_racuna;
+                    user.gradId = obj.gradId;
 
                     db_context.SaveChanges();
 

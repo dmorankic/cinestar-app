@@ -59,7 +59,7 @@ export class UsersPanelComponent implements OnInit {
 
   Search(form: FormGroup){
     this.city="";
-       this.Name="";
+       this.contactForm.value.searchText.setValue('');
        this.loadUsers()
     }
 
@@ -116,19 +116,25 @@ export class UsersPanelComponent implements OnInit {
       this.getUrediForm.broj_telefona.setValue(this.user.broj_telefona);
       this.getUrediForm.confirmed.setValue(this.user.confirmed);
       this.urediForma.controls.spol.setValue(this.user.spol);
-      this.getUrediForm.grad.setValue(this.user.grad);
     });
     this.toggle('back')
   }
 
-  update(id:number,form:NgForm){
+  update(id:number,form:FormGroup){
     (this.user as User).username=form.value.username;
-    (this.user as User).ime_prezime=form.value.imePrezime;
+    (this.user as User).ime_prezime=form.value.ime_prezime;
     (this.user as User).email=form.value.email;
     (this.user as User).password=form.value.password;
     (this.user as User).broj_telefona=form.value.broj_telefona;
+    (this.user as User).gradId=form.value.grad;
     (this.user as User).confirmed=form.value.confirmed?1:0;
-    this.userService.update(id,this.user).subscribe();
+    // this.userService.update(id,this.user).subscribe();
+    console.log(form.value.grad)
+    this.loadUsers()
+  }
+  clearFilters(){
+    this.city="";
+    this.Name="";
     this.loadUsers()
   }
 
@@ -144,7 +150,7 @@ export class UsersPanelComponent implements OnInit {
   setGrad(e:any=null,city:Grad|null=null){
     if(e!=null){
       this.grad=this.options[e.target.value[0]];
-      console.log(this.grad);
+      console.log(e.target);
     }else{
       this.grad=city;
     }
@@ -166,7 +172,7 @@ export class UsersPanelComponent implements OnInit {
       email: [new FormControl(''),Validators.required],
       password: [new FormControl(''),Validators.required],
       ime_prezime: [new FormControl(''),Validators.required],
-      grad:[new FormControl(this.options),Validators.required],
+      grad:['',Validators.required],
       spol:[new FormControl(this.spolovi),Validators.required],
       b_date:[new FormControl(),Validators.required],
       confirmed:[new FormControl(),Validators.required],
