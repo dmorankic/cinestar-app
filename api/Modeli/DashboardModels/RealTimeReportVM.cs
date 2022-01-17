@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Modeli.DashboardModels
 {
-    public class RealTimeReport
+    public class RealTimeReportVM
     {
         public  List<TopUser> topUsers { get; set; }
         public  List<TopMovie> topMovies { get; set; }
@@ -13,7 +13,7 @@ namespace Modeli.DashboardModels
         public  List<float> chart2 { get; set; }
         public  List<float> chart3 { get; set; }
 
-        public RealTimeReport()
+        public RealTimeReportVM()
         {
             topMovies = new List<TopMovie>();
             topTheaters = new List<TopTheatar>();   

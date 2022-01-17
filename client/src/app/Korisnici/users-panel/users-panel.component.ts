@@ -54,7 +54,6 @@ export class UsersPanelComponent implements OnInit {
   ngOnInit(): void {
     this.createForm()
     this.loadUsers()
-    this.loadGradovi()
   }
 
   Search(form: FormGroup){
@@ -66,7 +65,8 @@ export class UsersPanelComponent implements OnInit {
   loadUsers(pretragaGrada:any=null){
       this.users$=null;
       this.userService.getAll().subscribe(x=>{
-      this.users$=x;
+      this.users$=x.korisnici;
+      this.options=x.gradovi;
       this.count=this.users$.length;
       if(pretragaGrada!=null)
       {
@@ -80,11 +80,7 @@ export class UsersPanelComponent implements OnInit {
     });
   }
 
-  loadGradovi(){
-   this.userService.getGradovi().subscribe(x=>{
-     this.options=x;
-   })
-  }
+
 
   toggle(action:string){
     if(action=='back'){
@@ -129,7 +125,6 @@ export class UsersPanelComponent implements OnInit {
     (this.user as User).gradId=form.value.grad;
     (this.user as User).confirmed=form.value.confirmed?1:0;
      this.userService.update(id,this.user).subscribe();
-    console.log(form.value.grad)
     this.loadUsers()
   }
   clearFilters(){

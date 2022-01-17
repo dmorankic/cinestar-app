@@ -16,10 +16,10 @@
         </button>
         </div>    </div>
 
-    <div class="bottom  w-100  p-0 m-0 d-flex justify-content-center align-items-center" style="height: 40%; background-color: #FFCB0B;">
-      <div class="col-2 m-2 border d-flex justify-content-center align-items-cneter flex-column" *ngFor="let film of filmovi" style="height: 90%;"  [routerLink]="['/movie', film.id]">
+    <div class="bottom  w-100  p-0 m-0 d-flex justify-content-center align-items-center scroll-vertical" style="height: 40%; background-color: #FFCB0B;">
+      <div class="col-2 m-1 border d-flex justify-content-center align-items-cneter flex-column" *ngFor="let film of filmovi;index as i" style="height: 90%;"  [routerLink]="['/movie', film.id]">
 
-        <div class="card bg-dark text-light col-12 h-100 d-flex align-items-center justify-content-center" [routerLink]="['/movie', film.id]" style="overflow: hidden;" >
+        <div class="card bg-dark text-light col-12 h-100 d-flex align-items-center justify-content-center" [routerLink]="['/movie', film.id]" style="overflow: hidden;"  >
           <!-- <img class="card-img-top" src={{film?.slika}} alt="Card image cap"> -->
           <!--<app-film-preview *ngIf="display" [data]="film.video" [id]="film.id.toString()"></app-film-preview> -->
           <div class="card-body col-12 w-100 d-flex align-items-center justify-content-center flex-column" [ngStyle]="{

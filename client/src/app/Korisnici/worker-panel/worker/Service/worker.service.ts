@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { aplication_settings } from 'src/app/aplication_settings';
+import { RadnikVM } from 'src/app/Modeli/KorisnikVM';
 import { Grad, Worker } from '../Model/Worker';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class WorkerService {
 
   getAll(){
     return this.http
-    .get(aplication_settings.cinestar__plesk__server+this.type);
+    .get<RadnikVM>(aplication_settings.damir_local+'RadnikVM');
   }
 
   getById(id:number){
@@ -23,7 +24,7 @@ export class WorkerService {
 
   insert(worker:Worker){
     return this.http
-    .post(aplication_settings.cinestar__plesk__server+this.type,{
+    .post(aplication_settings.damir_local+'RadnikVM/',{
       ime_prezime: worker.ime_prezime,
       username: worker.username,
       email:  worker.email,
@@ -43,7 +44,7 @@ export class WorkerService {
   update(id:number,worker:Worker){
 
     return this.http
-    .put(aplication_settings.cinestar__plesk__server+this.type+id,{
+    .put(aplication_settings.damir_local+'RadnikVM/'+id,{
       ime_prezime: worker.ime_prezime,
       username: worker.username,
       email:  worker.email,

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Modeli;
 using Modeli.AuthModeli;
 using Modeli.MailModels;
+using Modeli.ViewModels;
 using Servisi.IServisi;
 using System;
 using System.Collections.Generic;
@@ -21,16 +22,16 @@ namespace Servisi.Servisi
         private readonly ILogger logger;
         private readonly ApplicationDbContext db_context;
         private readonly IEmailService emailService;
-        private readonly KorisnikServis userService;
+        private readonly IBaseService<Korisnik,UpsertKorisnikVM> userService;
 
         private DiscoveryDocumentResponse _discDocument { get; set; }
 
         //public CrudRepo(DB_Context db,IMapper mapper,IConfiguration config,ILogger logger):base(db,mapper, config)
-        public AuthService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, IEmailService emailService, KorisnikServis userService)
+        public AuthService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, IEmailService emailService, IBaseService<Korisnik, UpsertKorisnikVM> userService)
         {
             using (var client = new HttpClient())
             {
-                _discDocument = client.GetDiscoveryDocumentAsync("https://localhost:44376/.well-known/openid-configuration").Result;
+                _discDocument = client.GetDiscoveryDocumentAsync("https://localhost:7153/.well-known/openid-configuration").Result;
             }
             //this.db = db;
             this.config = _config;

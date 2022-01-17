@@ -2,15 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Modeli;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Modeli.ViewModels;
+
 
 namespace Servisi.Servisi
 {
-    public class KorisnikServis:BaseService<Korisnik,object>
+    public class KorisnikServis:BaseService<Korisnik,UpsertKorisnikVM>
     {
         private readonly IConfiguration config;
         private readonly ILogger logger;
@@ -56,7 +53,47 @@ namespace Servisi.Servisi
             return null;
         }
 
-        public override Korisnik Insert(Korisnik obj)
+        public override Korisnik UpdateVM(int id, UpsertKorisnikVM obj)
+        {
+            var set = db_context.Set<Korisnik>();
+            if (set != null)
+            {
+                var user = set.Find(id);
+                if (user != null)
+                {
+                    if (user.ime_prezime != obj.ime_prezime && obj.ime_prezime != "")
+                        user.ime_prezime = obj.ime_prezime;
+
+                    if (user.username != obj.username && obj.username != "")
+                        user.username = obj.username;
+
+                    if (user.email != obj.email && obj.email != "")
+                        user.email = obj.email;
+
+                    if (user.password != obj.password && obj.password != "")
+                        user.password = obj.password;
+
+                    if (user.broj_telefona != obj.broj_telefona && obj.broj_telefona != -1)
+                        user.broj_telefona = obj.broj_telefona;
+
+                    if (user.b_date != obj.b_date)
+                        user.b_date = obj.b_date;
+
+                    if(user.confirmed!=obj.confirmed&&obj.confirmed!=-1)
+                        user.confirmed = obj.confirmed;
+
+                    db_context.SaveChanges();
+
+                    return user;
+                }
+                else return user;
+
+            }
+
+            return null;
+        }
+
+        public override Korisnik InsertVM(UpsertKorisnikVM obj)
         {
 
             var mail = new ConfirmMailKorisnik() { issuedConfCode = "123456" };
@@ -65,19 +102,30 @@ namespace Servisi.Servisi
 
             db_context.SaveChanges();
 
-            obj.confMailXkorisniciId = resp.Entity.id;
+            Korisnik newUser = new Korisnik();
 
-            obj.confMailXkorisnici = mail;
+            newUser.email = obj.email;
+            newUser.confMailXkorisnici = mail;
+            newUser.confMailXkorisniciId = resp.Entity.id;
+            newUser.grad = db_context.grad.Find(obj.gradId);
+            newUser.gradId = obj.gradId;
+            newUser.b_date = obj.b_date;
+            newUser.broj_telefona = obj.broj_telefona;
+            newUser.confirmed = obj.confirmed;
+            newUser.datum_kreiranja_racuna = System.DateTime.Now;
+            newUser.ime_prezime = obj.ime_prezime;
+            newUser.password = obj.password;
+            newUser.spol = obj.spol;
+            newUser.username = obj.username;
 
-            obj.grad = db_context.grad.Find(obj.gradId);
 
-            db_context.korisnici.Add(obj);
+            db_context.korisnici.Add(newUser);
 
             db_context.SaveChanges();
 
             reportingService.NotifyClients();
             
-            return obj;
+            return newUser;
         }
     }
 }

@@ -83,7 +83,7 @@ export class WorkerComponent implements OnInit {
     async loadUsers(pretragaGrada:any=null){
     this.workers=null;
     this.workerService.getAll().subscribe(x=>{
-      this.workers=x;
+      this.workers=x.radnici;
       this.count=this.workers.length;
       if(pretragaGrada!=null)
       {

@@ -22,10 +22,10 @@ namespace Servisi.Servisi
             dbContext= _dbContext;
         }
 
-        public RealTimeReport prepareReport()
+        public RealTimeReportVM prepareReport()
         {
 
-            RealTimeReport report = new RealTimeReport();
+            RealTimeReportVM report = new RealTimeReportVM();
             var r = new Random();
 
             report.topUsers = GetTopUsers();

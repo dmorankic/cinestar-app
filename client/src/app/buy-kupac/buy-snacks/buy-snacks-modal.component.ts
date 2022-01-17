@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Proizvod } from 'src/app/Modeli/SnacksVM';
 import { BuyService } from '../Services/buy.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { BuyService } from '../Services/buy.service';
 export class BuySnacksModalComponent implements OnInit {
 
   tickets:any[]=[];
-  stavke:any[]=[];
+  stavke:Proizvod[]=[];
 
   constructor(private buyService:BuyService) {
 
@@ -39,7 +40,7 @@ export class BuySnacksModalComponent implements OnInit {
   loadStavke(){
     this.stavke=[];
     this.buyService.getStavke().subscribe(x=>{
-      this.stavke=x as any;
+      this.stavke=x.proizvodi;
     });
   }
 

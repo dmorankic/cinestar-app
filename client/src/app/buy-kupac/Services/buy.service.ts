@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { aplication_settings } from 'src/app/aplication_settings';
+import { SnacksVM } from 'src/app/Modeli/SnacksVM';
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +72,7 @@ export class BuyService {
   }
 
   getStavke(){
-    return this.httpClient.get(aplication_settings.arminURL+'Proizvod');
+    return this.httpClient.get<SnacksVM>(aplication_settings.damir_local+'SnacksVM');
   }
 
   getSjedista(){

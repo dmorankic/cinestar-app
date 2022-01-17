@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { aplication_settings } from 'src/app/aplication_settings';
 import { Grad } from '../../worker-panel/worker/Model/General';
 import { User } from '../../worker-panel/worker/Model/User';
-// import { UpdateModeEnum } from 'chart.js';
+import { KorisnikVM } from 'src/app/Modeli/RadnikVM';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class UserService {
 
   getAll(){
     return this.http
-    .get(aplication_settings.cinestar__plesk__server+this.type);
+    .get<KorisnikVM>(aplication_settings.damir_local+'KorisnikVM');
 
   }
 
@@ -24,7 +24,7 @@ export class UserService {
   }
 
   insert(user:User){
-    return this.http.post(aplication_settings.cinestar__plesk__server+this.type,{
+    return this.http.post(aplication_settings.damir_local+'KorisnikVM/',{
       ime_prezime: user.ime_prezime,
       username: user.username,
       email:  user.email,
@@ -43,7 +43,7 @@ export class UserService {
   }
   update(id:number,user:User){
 
-    return this.http.put(aplication_settings.cinestar__plesk__server+this.type+id,{
+    return this.http.put(aplication_settings.damir_local+'KorisnikVM/'+id,{
       ime_prezime: user.ime_prezime,
       username: user.username,
       email:  user.email,

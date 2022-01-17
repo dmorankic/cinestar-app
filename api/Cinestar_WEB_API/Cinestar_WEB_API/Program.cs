@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(config =>
 .AddOpenIdConnect("oidc", config =>
 {
     // base-address of identityserver
-    config.Authority = "https://localhost:44376/";
+    config.Authority = "https://localhost:7153/";
 
     config.ClientId = "web.client";
 
@@ -84,12 +84,9 @@ builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cinestar_WEB_API v1"));
-}
+
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cinestar_WEB_API v1"));
 
 app.UseRouting();
 

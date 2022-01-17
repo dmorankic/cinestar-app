@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { aplication_settings } from 'src/app/aplication_settings';
+import { ClientHomeVM, Film } from 'src/app/Modeli/ClientHomeVM';
 
 @Component({
   selector: 'app-client-home',
@@ -8,7 +9,7 @@ import { aplication_settings } from 'src/app/aplication_settings';
   styleUrls: ['./client-home.component.scss']
 })
 export class ClientHomeComponent implements OnInit {
-  filmovi:any;
+  filmovi:Film[];
 
   baneri: string[]=[];
   currentBanner:any;
@@ -16,13 +17,8 @@ export class ClientHomeComponent implements OnInit {
   constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get(aplication_settings.cinestar__plesk__server_standard_endpoints + "Film/GetAll").subscribe(x => {
-      this.filmovi = x;
-      var movies = [];
-      for (let i = 0; i < this.filmovi.length; i++) {
-        movies.push(this.filmovi[i]);
-      }
-      this.filmovi = movies;
+    this.http.get<ClientHomeVM>(aplication_settings.damir_local + "ClientHomeVM").subscribe(x => {
+      this.filmovi = x.filmovi;
     });
     this.baneri.push(
       "https://image.tmdb.org/t/p/original/oSNqhngemquRBzxKSC3ysAmnC5e.jpg",

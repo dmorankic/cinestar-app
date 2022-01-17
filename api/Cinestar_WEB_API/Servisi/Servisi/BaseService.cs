@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Servisi.Servisi
 {
-    public class BaseService<db_type, view_type> : IBaseService<db_type, view_type> where db_type : class
+    public class BaseService<db_type, upsert_request> : IBaseService<db_type, upsert_request> where db_type : class
     {
         //private readonly IMapper mapper;
         private readonly IConfiguration config;
@@ -49,7 +49,7 @@ namespace Servisi.Servisi
         public virtual IEnumerable<db_type> GetAll()
         {
             var set = db_context.Set<db_type>();
-
+             
             return set != null ? set.ToList() : null;
            
         }
@@ -78,6 +78,21 @@ namespace Servisi.Servisi
             return null;
         }
 
+        public virtual db_type InsertVM(upsert_request obj)
+        {
+            var set = db_context.Set<db_type>();
+            //if (set != null)
+            //{
+            //    set.Add(obj);
+            //    db_context.SaveChanges();
+            //    return obj;
+            //}
+
+            //requires override
+
+            return null;
+        }
+
         public virtual db_type Update(int id, db_type obj)
         {
             var set = db_context.Set<db_type>();
@@ -88,6 +103,19 @@ namespace Servisi.Servisi
             
             db_context.SaveChanges();
             return obj;
+        }
+
+        public virtual db_type UpdateVM(int id, upsert_request obj)
+        {
+            var set = db_context.Set<db_type>();
+            var data = set.Find(id);
+
+            //requires overwrite for update on each type
+            //data.property = .....
+
+            db_context.SaveChanges();
+
+            return data;
         }
     }
 }
