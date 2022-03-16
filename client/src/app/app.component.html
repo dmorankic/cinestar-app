@@ -1,6 +1,6 @@
-<div class="container-fluid w-100 h-100 p-0 m-0 d-flex flex-column " [style.background]="client?'#FFCB0C':'linear-gradient(to right,rgb(82, 82, 235),rgb(87, 160, 202))'">
+<div class="container-fluid w-100 h-100 p-0 m-0 d-flex flex-column "  [style.background]="client?'#E3D972':'linear-gradient(to right,rgb(82, 82, 235),rgb(87, 160, 202))'">
 
-  <div class="container-fluid w-100  p-0 m-0" style="height:6%">
+  <div class="container-fluid w-100  p-0 m-0" style="height:50px!important">
     <app-management-navigation *ngIf="management"></app-management-navigation>
     <app-client-nav *ngIf="!management"></app-client-nav>
   </div>
@@ -12,7 +12,7 @@
         <img class="h-100" src="../assets/banner.png" alt="">
     </div>
     </div>
-  <div  [class.col-8]="!management" [class.scroll]="client" [class.col-12]="auth" class="h-100 ms-3 me-3">
+  <div  [class.col-8]="!management" [class.scroll]="client" [class.col-12]="auth" class="h-100 ms-3 me-3" [style.background]="client?'#E3D972':'linear-gradient(to right,rgb(82, 82, 235),rgb(87, 160, 202))'">
     <router-outlet></router-outlet>
   </div>
 

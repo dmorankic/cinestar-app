@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit,OnDestroy {
     this.signalrService.startConnection();
     this.signalrService.addServerListener();
     this.startHttpRequest();
-    this.dataUpdate()
+    this.dataUpdate();
   }
 
   private startHttpRequest = () => {
@@ -51,20 +51,20 @@ export class DashboardComponent implements OnInit,OnDestroy {
   }
 
   dataUpdate(){
-  setInterval(()=>{
-    //  this.signalrService.askServerListener();
-    //  this.signalrService.askServer()
-    const resp = this.signalrService.data;
-    this.topUsers=resp.topUsers;
-    this.topMovies=resp.topMovies;
-    this.topCinema=resp.topTheaters;
+    setInterval(()=>{
+      //  this.signalrService.askServerListener();
+      //  this.signalrService.askServer()
+      const resp = this.signalrService.data;
+      this.topUsers=resp.topUsers;
+      this.topMovies=resp.topMovies;
+      this.topCinema=resp.topTheaters;
 
-    this.chart1=resp.chart1;
-    this.chart2=resp.chart2;
-    this.chart3=resp.chart3;
+      this.chart1=resp.chart1;
+      this.chart2=resp.chart2;
+      this.chart3=resp.chart3;
 
-    this.data = {chart1:this.chart1,chart2:this.chart2,chart3:this.chart3};
-    },2000)
+      this.data = {chart1:this.chart1,chart2:this.chart2,chart3:this.chart3};
+      },2000)
   }
 
 

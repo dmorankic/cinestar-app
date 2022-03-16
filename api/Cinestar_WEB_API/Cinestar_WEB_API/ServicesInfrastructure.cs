@@ -15,7 +15,6 @@ namespace Cinestar_WEB_API
             //the power of generics
             services.AddTransient<IBaseService<Korisnik, UpsertKorisnikVM>, KorisnikServis>();
             services.AddTransient<IBaseService<Radnik, UpsertRadnikVM>, RadnikService>();
-            //services.AddTransient<IBaseService<Korisnik, object>, KorisnikServis>();
             //services.AddTransient<IBaseService<Radnik, object>, RadnikService>();
             services.AddTransient<IBaseService<Grad, object>, GradServis>();
             services.AddTransient<IBaseService<VrstaRadnika, object>, UlogeServis>();

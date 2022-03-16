@@ -167,9 +167,9 @@ export class UsersPanelComponent implements OnInit {
       email: [new FormControl(''),Validators.required],
       password: [new FormControl(''),Validators.required],
       ime_prezime: [new FormControl(''),Validators.required],
-      grad:['',Validators.required],
+      grad:[''],//Validators.required],
       spol:[new FormControl(this.spolovi),Validators.required],
-      b_date:[new FormControl(),Validators.required],
+      //b_date:[new FormControl(),Validators.required],
       confirmed:[new FormControl(),Validators.required],
     })
   }

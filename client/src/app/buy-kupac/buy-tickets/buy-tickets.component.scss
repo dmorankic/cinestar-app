@@ -18,7 +18,7 @@
 
 }
 .scroll::-webkit-scrollbar-thumb {
-  background-color: #0478d8;
+  background-color: #c3d804;
   border-radius: 10px;
 }
 
@@ -26,4 +26,41 @@
   background-size: 240px 365px!important;
   background-repeat: no-repeat!important;
 
+}
+
+.seat:hover{
+  background-color: rgb(251, 248, 37);
+  transition: .4s;
+}
+
+
+.seat{
+  transition: 1s;
+  background-color: #f1ff74;
+
+}
+
+.btn:hover{
+  background-color: rgba($color: #000000, $alpha: 0.5)!important;
+  color: white!important;
+  transition: .7s;
+
+}
+
+.receat{
+  transition: .9s;
+}
+
+.receat:hover{
+  background-color: rgba($color: #edf022, $alpha: 0.5)!important;
+  transition: .9s;
+  color:black!important;
+  opacity: 50%!important;
+}
+
+.receat:hover{
+  p{
+    color:black!important;
+    transition: .9s;
+  }
 }

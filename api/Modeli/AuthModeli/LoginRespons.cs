@@ -12,5 +12,6 @@ namespace Modeli.AuthModeli
         public string scope { get; set; }
         public string error { get; set; }
         public int id { get; set; }
+        public int level { get; set; }
     }
 }

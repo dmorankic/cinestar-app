@@ -23,11 +23,12 @@ namespace Servisi.Servisi
         private readonly ApplicationDbContext db_context;
         private readonly IEmailService emailService;
         private readonly IBaseService<Korisnik,UpsertKorisnikVM> userService;
+        private readonly ReportingService reportingService;
 
         private DiscoveryDocumentResponse _discDocument { get; set; }
 
         //public CrudRepo(DB_Context db,IMapper mapper,IConfiguration config,ILogger logger):base(db,mapper, config)
-        public AuthService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, IEmailService emailService, IBaseService<Korisnik, UpsertKorisnikVM> userService)
+        public AuthService(IConfiguration _config, ILogger _logger, ApplicationDbContext _db_context, IEmailService emailService, IBaseService<Korisnik, UpsertKorisnikVM> userService, ReportingService reportingService)
         {
             using (var client = new HttpClient())
             {
@@ -39,6 +40,7 @@ namespace Servisi.Servisi
             db_context = _db_context;
             this.emailService = emailService;
             this.userService = userService;
+            this.reportingService = reportingService;
         }
         public async Task<TokenResponse> GetToken(string scope)
         {
@@ -61,6 +63,40 @@ namespace Servisi.Servisi
                 return tokenResponse;
             }
         }
+        public LoginRespons LoginManagement(LoginRequest request)
+        {
+            User user = null;
+
+            try
+            {
+                user = db_context.radnici.Where(x => x.username == request.username && x.password == request.password).First(); 
+            }
+            catch (Exception err)
+            {
+                user = null;
+            }
+
+            var respons = new LoginRespons();
+
+            if (user != null)
+            {
+                var ids4_token_respons = GetToken("cinestar_api.read");
+                respons.issued = DateTime.Now;
+                respons.token = ids4_token_respons.Result.AccessToken;
+                respons.expiresIn = ids4_token_respons.Result.ExpiresIn;
+                respons.error = "x";
+                respons.id = user.Id;
+                respons.level = 1;
+            }
+            else
+            {
+                respons.error = "Kredencijali koje ste unijeli nisu tacni." +
+                    "Molim vas da obratite pažnju pri ponovnom unosu vaših kredencijala.";
+            }
+
+            return respons;
+        }
+
         public LoginRespons Login(LoginRequest request)
         {
             User user = null;
@@ -87,10 +123,12 @@ namespace Servisi.Servisi
                 respons.expiresIn = ids4_token_respons.Result.ExpiresIn;
                 respons.error = "x";
                 respons.id = user.Id;
+                respons.level = 1;
+
             }
             else
             {
-                respons.error = "Username or password were incorrect. Please try entering your credentials again.";
+                respons.error = "Korisnicko ime ili lozinka nisu tacne. Molimo unesite vaše kredencijale ponovo.";
             }
 
             return respons;
@@ -98,29 +136,44 @@ namespace Servisi.Servisi
 
         public string Register(RegisterRequest req)
         {
-            var user = new Korisnik()
-            {
-                ime_prezime = req.ime_prezime,
-                username = req.username,
-                password = req.password,
-                email = req.email,
-                b_date = req.bdate,
-                confirmed = 0,
-                gradId = req.cityId
-            };
+            var mail = new ConfirmMailKorisnik() { issuedConfCode = "123456" };
 
-            userService.Insert(user);
+            var resp = db_context.confirmMailKorisnik.Add(mail);
+
+            db_context.SaveChanges();
+
+            Korisnik newUser = new Korisnik();
+                newUser.email = req.email;
+                newUser.confMailXkorisnici = mail;
+                newUser.confMailXkorisniciId = resp.Entity.id;
+                newUser.gradId = req.cityId;
+                newUser.b_date = req.bdate;
+                newUser.broj_telefona = req.broj_telefona;
+                newUser.datum_kreiranja_racuna = DateTime.Now;
+                newUser.ime_prezime = req.ime_prezime;
+                newUser.password = req.password;
+                newUser.spol = req.gender;
+                newUser.username = req.username;
+                newUser.confirmed = 0;
 
 
-            try
-            {
-                emailService.SendEmail(new Mail(req.email, "confirmation mail from cinestar", "This is you confirmation token : 225643", user.ime_prezime));
-                return $"{user.Id}";
-            }
-            catch (Exception err)
-            {
-                return err.InnerException.Message;
-            }
+                db_context.korisnici.Add(newUser);
+
+                db_context.SaveChanges();
+
+                reportingService.NotifyClients();
+
+                try
+                {
+                    emailService.SendEmail(new Mail(req.email, "Konfirmacijski mail od Cinestara!", "Ovo je vaš konfirmacijski kod : "+ mail.issuedConfCode+"\nAko ovo niste vi molim vas da ignorišete mail!", newUser.ime_prezime));
+                    return $"{newUser.Id}";
+                }
+                catch (Exception err)
+                {
+                    return err.InnerException.Message;
+                }
+            
+
         }
 
         public async Task<string> ConfirmUser(ConfirmationRequest req)
@@ -129,7 +182,7 @@ namespace Servisi.Servisi
             var users = db_context.korisnici.Where(x => x.Id == req.userId);
             var korisnik = users.First();
             if (korisnik.confirmed == 1)
-                return System.Text.Json.JsonSerializer.Serialize(new { message = "User already confirmed." });
+                return System.Text.Json.JsonSerializer.Serialize(new { message = "Vec ste potvrdili korisnika." });
 
 
             if (users.Count() != 0)
@@ -145,7 +198,7 @@ namespace Servisi.Servisi
                     return System.Text.Json.JsonSerializer.Serialize(new { message = "You have confirmed user sucessfully"});
                 }
                 else
-                    return System.Text.Json.JsonSerializer.Serialize(new { message = "Entered code doesnt match  " + req.userCode + "  " + confCode });
+                    return System.Text.Json.JsonSerializer.Serialize(new { message = "Uneseni kod :  " + req.userCode+ " nije dobar, provjerite vaš unos i mail koji ste primili." });
 
             }
             else

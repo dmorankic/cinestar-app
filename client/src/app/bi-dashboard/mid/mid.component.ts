@@ -80,7 +80,7 @@ export class MidComponent implements OnInit {
         datasets: [
           {
             data:this.data.chart1,
-            borderColor: '#3e95cd',
+            borderColor: '#FFFFFF',
             label: 'Frekventnost novih korisnika',
             backgroundColor: '#FFC107',
             borderWidth: 3,
@@ -97,7 +97,7 @@ export class MidComponent implements OnInit {
         datasets: [
           {
             data:this.data.chart2,
-            borderColor: '#3e95cd',
+            borderColor: '#FFFFFF',
             fill: false,
             label: 'Zarada kina on site',
             backgroundColor: '#FFC107',
@@ -115,7 +115,7 @@ export class MidComponent implements OnInit {
         datasets: [
           {
             data:this.data.chart3,
-            borderColor: '#3e95cd',
+            borderColor: '#FFFFFF',
             fill: false,
             label: 'Zarada kina online',
             backgroundColor: '#FFC107',

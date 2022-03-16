@@ -3,15 +3,18 @@ export class Register{
   password:string;
   ime_prezime:string;
   email:string;
-  b_date:string;
-  grad:string;
+  bdate:string;
+  gender:number;
+  broj_telefona:number;
+  cityId:number;
 
-  constructor(username:string,password:string,ime_prezime:string,email:string,b_date:string,grad:string) {
+  constructor(username:string,password:string,ime_prezime:string,email:string,bdate:string,gender:number,broj_telefona:number) {
     this.username=username;
     this.password=password;
     this.ime_prezime=ime_prezime;
     this.email=email;
-    this.b_date=b_date;
-    this.grad=grad;
+    this.bdate=bdate;
+    this.broj_telefona=broj_telefona;
+    this.gender=gender;
   }
 }
