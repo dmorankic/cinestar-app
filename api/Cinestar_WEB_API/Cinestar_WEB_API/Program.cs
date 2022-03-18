@@ -4,6 +4,17 @@ using Servisi.HubConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//------------------------Damir dodao za startup-----------------------------------------------------
+//var startup = new Startup(builder.Configuration);
+//startup.ConfigureServices(builder.Services);
+/*void ConfigureConfiguration(ConfigurationManager configuration) => { }
+void ConfigureServices(IServiceCollection services) => { }
+void ConfigureMiddleware(IApplicationBuilder app, IServiceProvider services) => { }
+void ConfigureEndpoints(IEndpointRouteBuilder app, IServiceProvider services) => { }
+ConfigureConfiguration(builder.configuration);
+ConfigureServices(builder.Services);*/
+
+
 // Add services to the container.
 builder.Services.AddAuthentication(config =>
 {
@@ -84,6 +95,11 @@ builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
+//-----------------------------Damir doodao za startup----------------------------------------
+//startup.Configure(app, app.Lifetime);
+//ConfigureMiddleware(app, app.Services);
+//ConfigureEndpoints(app, app.Services);
+app.UseStaticFiles();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cinestar_WEB_API v1"));
@@ -101,4 +117,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     endpoints.MapHub<ChartsHub>("/dashboard");
 });
+//DODAVAO DAMIR ZA JS NOTIFIAKCIJE
+    
+//KRAJ DAMIROVOG DODAVANJA ZA JS NOTIFIKACIJE
 app.Run();
