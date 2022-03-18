@@ -33,7 +33,7 @@ export class DetaljiFilmaComponent implements OnInit {
 
   ucitajDetalje() {
     this.prikaziTable=true;
-    this.httpKlijent.get(aplication_settings.cinestar__plesk__server_standard_endpoints+ "DetaljiFilma/GetAll").subscribe(x=>{
+    this.httpKlijent.get(aplication_settings.damir_local+ "DetaljiFilma/GetAll").subscribe(x=>{
       this.detaljiPodaci = x;
     });
 
@@ -62,7 +62,7 @@ export class DetaljiFilmaComponent implements OnInit {
     this.editDetalji._datumObjave=this.odabraniPodaci.datumObjave;
     this.editDetalji._trailer=this.odabraniPodaci.trailer;
 
-    this.httpKlijent.post(aplication_settings.cinestar__plesk__server_standard_endpoints+ "DetaljiFilma/Update?id="+this.odabraniPodaci.id , this.editDetalji).subscribe((povratnaVrijednost:any) =>{
+    this.httpKlijent.post(aplication_settings.damir_local+ "DetaljiFilma/Update?id="+this.odabraniPodaci.id , this.editDetalji).subscribe((povratnaVrijednost:any) =>{
       alert("uredu..." + povratnaVrijednost.id);
     });
     this.prikaziUredjivanje=false;
