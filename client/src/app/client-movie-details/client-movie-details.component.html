@@ -1,11 +1,36 @@
-<div class="container-fluid w-100 h-100 p-0 m-0 col-12 d-flex flex-column scroll" style="background-color: #FFCB0B;">
+<div class="container-fluid w-100 h-100 p-0 m-0 col-12 d-flex flex-column align-items-center scroll" style="background-color: #D7D062;">
   <div class="container w-100 h-50 p-0 m-0 d-flex justify-content-center"  style="text-align:center;">
     <iframe [src]='url' class="embed-responsive-item d-flex justify-content-center"  [style.width]="!isYt?'880px':!dontDisplayTrailer?'100%':'0px'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
-  <div class="h-25 bg-dark bg-opacity-25 w-100 fw-bold text-light">
-    <p>Deskripcija filma :</p>
-    <p>psa aut autem fugit doloribus veniam in non voluptatibus. A unde tempore et iure atque exercitationem culpa. Consequatur eaque non modi ullam at ut. Maiores qui et quidem. Eveniet nemo et aliquid nisi nisi. Nesciunt incidunt laudantium et voluptas</p>
-    <p>Naziv filma: {{movie[0].naziv}}</p>
-    <p>Žanr : {{movie[0].zanr}}</p>
+  <div class="h-25 bg-dark bg-opacity-25 w-100 fw-bold text-light justify-content-start">
+    <p>Opis filma :</p>
+    <p>A woman's beach vacation takes a dark turn when she begins to confront the troubles of her past.</p>
+    <p>Naziv filma: {{movie.naziv}}</p>
+    <p>Žanr : {{movie.zanr}}</p>
+    <p>Trajanje filma : {{movieDetails.trajanje}}</p>
+    <p>Datum publikacije filma :  12. 12. 2021.</p>
+  </div>
+  <div class="tabela container-fluid p-0 m-0 col-8 bg-dark">
+    <table class="bg-light w-100 h-100" style="background-color: #b9b24d;">
+      <tr style="background-color: #ebe379;">
+        <th>Termini</th>
+        <th>PON</th>
+        <th>UTO</th>
+        <th>SRI</th>
+        <th>ČET</th>
+        <th>PET</th>
+        <th>SUB</th>
+        <th>NED</th>
+
+      </tr>
+      <tr *ngFor="let termin of sati;index as i" style="background-color: #D7D062;">
+        <td class="col-1 text-light fw-bold" style="background-color: #3f3e3d;"><p style="height: 30px;">{{termin}}:00</p></td>
+        <td style="background-color: #D7D062;" class="col-1" *ngFor="let termin of dani;index as j" routerLink="/buy-tickets">
+          <p class="" style="height: 30px;" [class]="i==4&&j==4?'bg-dark text-dark':'bg-white text-white'"> .</p>
+        </td>
+
+      </tr>
+    </table>
+
   </div>
 </div>

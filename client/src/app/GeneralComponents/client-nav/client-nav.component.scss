@@ -10,3 +10,7 @@
 .btn:focus{
   outline: 0!important;
 }
+
+.auth-btn:hover{
+  background-color: rgba($color: #000000, $alpha: 0.7)!important;
+}

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mail.component';
 import { LoginComponent } from './Auth/Components/Login/login/login.component';
 import { RegisterComponent } from './Auth/Components/Register/register/register.component';
+import { GuardService } from './Auth/Services/guard.service';
 import { DashboardComponent } from './bi-dashboard/dashboard/dashboard.component';
 import { BuyTicketsComponent } from './buy-kupac/buy-tickets/buy-tickets.component';
 import { ClientMovieDetailsComponent } from './client-movie-details/client-movie-details.component';
@@ -21,8 +22,8 @@ import { ProjekcijeComponent } from './projekcije/projekcije.component';
 import { StavkeComponent } from './stavke/stavke.component';
 
 const routes: Routes = [
-  {path: 'Film', component: FilmoviComponent},
-  {path: 'Projekcija', component: ProjekcijeComponent},
+  {path: 'Film', component: FilmoviComponent },
+  {path: 'Projekcija', component: ProjekcijeComponent },
   { path:'Ponude',component:PonudeComponent },
   { path:'DetaljiFilma',component:DetaljiFilmaComponent },
   { path:'Glumci',component:GlumciComponent },
@@ -33,15 +34,16 @@ const routes: Routes = [
   { path:'Datepipe',component:DatepipeComponent },
   { path: 'movies', component: MoviesPanelComponent },
   { path: 'cinehome', component: ClientHomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path:'Worker',component:WorkerComponent },
-  { path:'Users',component:UsersPanelComponent },
+  { path: 'Management/home', component: HomeComponent },
+  { path:'Management/Worker',component:WorkerComponent  },
+  { path:'Management/Users',component:UsersPanelComponent  },
   { path: 'movie/:id', component: ClientMovieDetailsComponent },
-  { path: 'buy-tickets', component: BuyTicketsComponent },
+  { path: 'buy-tickets', component: BuyTicketsComponent},
   { path:'Login',component:LoginComponent },
+  { path:'Management/Login',component:LoginComponent },
   { path:'Register',component:RegisterComponent },
   { path:'Confirm/:id',component:ConfirmMailComponent },
-  { path:'Statistics',component:DashboardComponent },
+  { path:'Management/Statistics',component:DashboardComponent , },
 ];
 
 @NgModule({

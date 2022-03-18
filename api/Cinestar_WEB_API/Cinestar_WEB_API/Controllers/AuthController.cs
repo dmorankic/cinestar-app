@@ -39,6 +39,13 @@ namespace Cinestar_WBE_API.Controllers
         }
 
         [HttpPost]
+        [Route("login/management")]
+        public LoginRespons LoginManagement([FromBody] LoginRequest req)
+        {
+            return authService.LoginManagement(req);
+        }
+
+        [HttpPost]
         [Route("registration")]
         public string Registration([FromBody] RegisterRequest req)
         {

@@ -8,9 +8,12 @@ import { BuyService } from '../Services/buy.service';
   styleUrls: ['./buy-snacks-modal.component.scss']
 })
 export class BuySnacksModalComponent implements OnInit {
+  @Input()
+  snacks:any[]=[];
 
-  tickets:any[]=[];
   stavke:Proizvod[]=[];
+
+  receats:any=[]
 
   constructor(private buyService:BuyService) {
 
@@ -22,19 +25,15 @@ export class BuySnacksModalComponent implements OnInit {
   }
 
   hideModal(naredba:string=''){
+
     if(naredba=='ukloniRacune'){
-      this.buyService.racuniSnacks=[];
+      this.buyService.snacks=[];
       this.loadTickets();
       this.loadStavke();
     }
+
     var modal = document.getElementById("myModal");
     (modal as HTMLElement).style.display = "none";
-  }
-
-  ukloniRacun(racun:any){
-    console.log(racun)
-    this.buyService.ukloniSnackRacun(racun);
-    this.loadReceipt()
   }
 
   loadStavke(){
@@ -45,15 +44,38 @@ export class BuySnacksModalComponent implements OnInit {
   }
 
   loadTickets(){
-    this.tickets=[];
-    this.tickets = this.buyService.getSnacksRacuni();
+    this.snacks=[];
+    this.snacks = this.getSnacks();
   }
 
-  loadReceipt(){
-    this.tickets=[]
-    this.tickets=this.buyService.getSnacksRacuni();
+  // loadReceipt(){
+  //   this.snacks=[]
+  //   this.snacks=this.getSnacks();
+  // }
 
-  }
+
+    //Upravljanje racunima za snacks
+
+    public getSnacks(){
+      return this.snacks;
+    }
+
+    dodajSnack(stavka:any){
+      console.log(stavka)
+      this.snacks.push(stavka);
+    }
+
+    ukloniSnack(stavka:any){
+      let tempSnacks : any[] = [];
+      for (let i = 0; i < this.snacks.length; i++) {
+        if(this.snacks[i].id!=stavka.id){
+          tempSnacks.push(this.snacks[i])
+        }
+      }
+      this.snacks = []
+      this.snacks = tempSnacks;
+    }
+
 
 
 }

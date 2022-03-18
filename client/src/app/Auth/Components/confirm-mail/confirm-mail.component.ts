@@ -14,33 +14,35 @@ export class ConfirmMailComponent implements OnInit {
   person_id:any;
   respons:any;
   email?:string;
-  constructor(private route: ActivatedRoute,private userService:UserService,private router:Router) {
-    this.route.queryParams.subscribe(params => {
-      this.person_id = params['id'];
-    });
+  username?:string;
+  constructor(private route: ActivatedRoute,private userService:UserService,private router:Router,private authService:AuthService) {
+      this.person_id = this.route.snapshot.paramMap.get('id')
+
   }
 
   ngOnInit(): void {
     this.userService.getById(this.person_id).subscribe(x=>{
       this.email=(x as User).email;
+      this.username=(x as User).username;
     })
   }
 
-  // confirm_mail(code:string){
-  //   this.authService
-  //   .confirm_mail(this.person_id,code)
-  //   .subscribe(
-  //     res=>{
-  //     this.respons=res;
-  //     alert(this.respons.message)
-  //     if(this.respons.message=="You have confirmed user sucessfully")
-  //       this.router.navigate(['/'])
-  //   },
-  //   err=>{
-  //     console.log(err)
-  //   })
+  confirm_mail(code:string){
+    this.authService
+    .confirmUser(this.person_id,code)
+    .subscribe(
+      res=>{
+        this.respons=(res as any).message;
+      if(this.respons=="You have confirmed user sucessfully")
+        this.router.navigate(['/cinehome'])
+
+      console.log(this.respons)
+    },
+    err=>{
+      console.log(err)
+    })
 
 
-  // }
+  }
 
 }

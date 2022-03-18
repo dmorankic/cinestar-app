@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angula
 import { Uloga } from './Model/General';
 import { Grad, VrstaRadnika, Worker } from './Model/Worker';
 import { WorkerService } from './Service/worker.service';
+import {DatePipe} from '@angular/common'
 
 
 @Component({
@@ -51,24 +52,24 @@ export class WorkerComponent implements OnInit {
 
    }
 
-   refresh(){
-     this.loadUsers();
-   }
+  refresh(){
+    this.loadUsers();
+  }
   ngOnInit(): void {
     this.loadUsers()
     this.dodajForm=this.fb.group({
       username: [new FormControl(''),Validators.required],
-      strucnaSprema: [new FormControl(''),Validators.required],
-      broj_telefona: [new FormControl(''),Validators.required],
-      email: [new FormControl(''),Validators.required],
-      password: [new FormControl(''),Validators.required],
       ime_prezime: [new FormControl(''),Validators.required],
-      uloga: [new FormControl(this.uloge),Validators.required],
+      password: [new FormControl(''),Validators.required],
+      email: [new FormControl(''),Validators.required],
+      broj_telefona: [new FormControl(''),Validators.required],
       jmbg: [new FormControl(''),Validators.required],
-      grad:[new FormControl(this.gradovi),Validators.required],
-      spol:[new FormControl(this.spolovi),Validators.required],
+      strucnaSprema: [new FormControl(''),Validators.required],
       datum_uposlenja:[new FormControl(),Validators.required],
       b_date:[new FormControl(),Validators.required],
+      uloga: [new FormControl(this.uloge),Validators.required],
+      spol:[new FormControl(this.spolovi),Validators.required],
+      grad:[new FormControl(this.gradovi),Validators.required],
       plata:[new FormControl(),Validators.required],
     })
     this.createForm();
@@ -80,7 +81,7 @@ export class WorkerComponent implements OnInit {
        this.loadUsers()
   }
 
-    async loadUsers(pretragaGrada:any=null){
+  async loadUsers(pretragaGrada:any=null){
     this.workers=null;
     this.workerService.getAll().subscribe(x=>{
       this.workers=x.radnici;
@@ -92,7 +93,6 @@ export class WorkerComponent implements OnInit {
           if(item.gradId==pretragaGrada.value){
             item.grad=this.gradovi[pretragaGrada.value-2]
             item.vrstaRadnika=this.uloge.find((x:any)=>x.value==item.vrstaRadnikaId)
-
             this.workersFiltered.push(item);
           }
         });
@@ -100,6 +100,18 @@ export class WorkerComponent implements OnInit {
         this.workers=((this.workersFiltered as unknown) as Worker[]);
       }
     });
+    this.SearchPoGradu("");
+  }
+
+  reloadUsers(){
+    let tempWorkers:any[]=[];
+
+    this.workers.forEach((item:Worker)=>{
+      tempWorkers.push(item);
+    })
+
+    this.workers=[];
+    this.workers=((this.workersFiltered as unknown) as Worker[]);
   }
 
   async loadGradovi(){
@@ -163,7 +175,6 @@ export class WorkerComponent implements OnInit {
   odaberi(id:number){
     this.workerService.getById(id).subscribe(x=>{
       this.worker=x;
-      console.log(this.worker)
       this.none=false;
       this.default=true;
       this.setUloga(null,(x as Worker).vrstaRadnika);
@@ -187,8 +198,6 @@ export class WorkerComponent implements OnInit {
     (this.worker as Worker).vrstaRadnikaId = form.value.uloga;
     (this.worker as Worker).spol=form.value.spol;
     (this.worker as Worker).gradId=form.value.grad;
-    (this.worker as Worker).datum_uposljenja=form.value.datum_uposlenja;
-    (this.worker as Worker).b_date=form.value.b_date;
     (this.worker as Worker).jmbg=form.value.jmbg;
     (this.worker as Worker).plata=form.value.plata;
     this.workerService.update(id,this.worker).subscribe(
@@ -196,13 +205,14 @@ export class WorkerComponent implements OnInit {
         this.toggle('back')
       }
     );
-    this.loadUsers()
+    this.clearFilters()
+
   }
 
   remove(id:number){
-
     this.workerService.delete(id).subscribe();
-    this.loadUsers()
+    this.clearFilters()
+
   }
 
   passwordToggle(){
@@ -227,7 +237,7 @@ export class WorkerComponent implements OnInit {
     this.workerService.insert(worker as Worker).subscribe(x=>{
       this.loadUsers()
       form.reset()
-      this.toggle('default')
+      this.toggle('none')
     });
 
   }
@@ -278,41 +288,52 @@ export class WorkerComponent implements OnInit {
       this.loadUsers(this.pretragaGrada);
       this.pretragaGrada = "NOT_CHANGED";
     }
-
   }
 
 
   createForm(){
     this.urediForma=this.fb.group({
       username: [new FormControl(''),Validators.required],
-      strucnaSprema: [new FormControl(''),Validators.required],
-      broj_telefona: [new FormControl(''),Validators.required],
-      email: [new FormControl(''),Validators.required],
-      password: [new FormControl(''),Validators.required],
       ime_prezime: [new FormControl(''),Validators.required],
-      uloga: ['',Validators.required],
+      password: [new FormControl(''),Validators.required],
+      email: [new FormControl(''),Validators.required],
+      broj_telefona: [new FormControl(''),Validators.required],
       jmbg: [new FormControl(''),Validators.required],
-      grad:['',Validators.required],
-      spol:['',Validators.required],
-      datum_uposlenja:[new FormControl(),Validators.required],
-      b_date:[new FormControl(),Validators.required],
+      strucnaSprema: [new FormControl(''),Validators.required],
       plata:[new FormControl(),Validators.required],
+      uloga: ['',Validators.required],
+      spol:['',Validators.required],
+      grad:['',Validators.required]
+      //datum_uposlenja:[new FormControl(),Validators.required],
+      //b_date:[new FormControl(),Validators.required],
     })
   }
 
   loadWorker(){
+    //  let datum_uposljenja = new Date(this.worker.datum_uposljenja);
+    //  let b_date = new Date(this.worker.b_date);
+
+    //  let datePipe = new DatePipe(navigator.language);
+    //  let p = 'y-MM-dd'; // YYYY-MM-DD
+    //  let datum_uposljenja_transformed = datePipe.transform(datum_uposljenja, p);
+    //  let b_date_transformed = datePipe.transform(datum_uposljenja_transformed, p);
+    //  this.getUrediForm.datum_uposljenja.setValue({effectiveEndDate: b_date_transformed});
+
     this.getUrediForm.username.setValue(this.worker.username);
     this.getUrediForm.ime_prezime.setValue(this.worker.ime_prezime);
     this.getUrediForm.email.setValue(this.worker.email);
     this.getUrediForm.broj_telefona.setValue(this.worker.broj_telefona);
     this.getUrediForm.strucnaSprema.setValue(this.worker.strucnaSprema);
     this.getUrediForm.spol.setValue(this.worker.spol);
-    this.getUrediForm.datum_uposlenja.setValue(this.worker.datum_uposlenja);
-    this.getUrediForm.b_date.setValue(this.worker.b_date);
+    // this.getUrediForm.datum_uposlenja.setValue(datum_uposljenja);
+    //this.getUrediForm.b_date.setValue(b_date);
     this.getUrediForm.plata.setValue(this.worker.plata);
     this.getUrediForm.jmbg.setValue(this.worker.jmbg);
     this.getUrediForm.uloga.setValue(this.worker.vrstaRadnikaId);
     this.getUrediForm.grad.setValue(this.worker.gradId);
     this.getUrediForm.password.setValue(this.worker.password);
+    console.log(this.worker.password)
+
+    console.log(typeof(this.worker.datum_uposlenja))
   }
 }

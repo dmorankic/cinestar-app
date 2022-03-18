@@ -12,20 +12,36 @@ export class BuyTicketsComponent implements OnInit,AfterViewInit {
   _seats:QueryList<ElementRef>;
   alphabet:string[] = [];
 
+  karte:any[] = []
+  snacks:any[] = []
+
   seats:any[]=[];
   rows:any[]=[];
-  tickets:any[]=[];
-  receats:any[]=[];
+
   film:any={};
 
-  constructor(private buyService:BuyService) {
+  racuni:any[]=[];
 
-    //dummy data
+
+  constructor(private buyService:BuyService) {
+    this.prepareFilm();
+    this.pripremiSjedista();
+  }
+
+  ngAfterViewInit(): void {
+  }
+
+  ngOnInit(): void {
+    // this.loadReceipt()
+  }
+
+  prepareFilm(){
     this.film.slikaUrl='https://m.media-amazon.com/images/M/MV5BZTJmYTJmYTktMzU1Yy00ZTZlLTgzNjItYmY4ZDFjZGFjYjZhXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_Ratio0.7273_AL_.jpg'
     this.film.cijena = 5;
     this.film.naziv = 'top movie';
-    //
+  }
 
+  pripremiSjedista(){
     for(let i=0; i < 45;i++){
       this.seats.push(i)
     }
@@ -50,83 +66,125 @@ export class BuyTicketsComponent implements OnInit,AfterViewInit {
         row=[];
       }
     }
-
-
-  }
-  ngAfterViewInit(): void {
   }
 
-  ngOnInit(): void {
-    this.loadReceipt()
+
+  get GetSnacks(){
+    return this.snacks;
+  }
+  //Upravljanje racunima za snacks
+
+  public getSnacks(){
+    return this.snacks;
   }
 
-  showModal(){
-    var modal = document.getElementById("myModal");
-    (modal as HTMLElement).style.display = "block";
-    let interval = setInterval(
-        (x:any)=>{
-          this.loadReceipt()
-          if((JSON.stringify(this.buyService.getSnacksRacuni()) === JSON.stringify(this.receats)) && this.buyService.getSnacksRacuni()!=[])
-            clearInterval(interval);
-        },
-        100
-    )
-
-
-
+  dodajSnack(racun:any){
+    this.snacks.push(racun);
   }
 
-  ukloniRacun(racun:any){
-    console.log("this happened",racun);
-    if(racun.stavkaPonudeId)
-      this.buyService.ukloniSnackRacun(racun)
-    else{
-
-      this.buyService.ukloniMovieRacun(racun)
-    }
-
-    this.deselectSeat(racun.id)
-  }
-
-  selectSeat(index:number,row:number){
-    let seat = document.getElementById(this.alphabet[index]);
-    let receat = {id:index, cijena:this.film.cijena, naziv:'obicna karta',red:row+1,kolona:index+1}
-    if(seat){
-      if(seat.classList.contains('bg-dark')){
-        seat.classList.add('bg-secondary');
-        seat.classList.remove('bg-dark');
-        this.buyService.dodajMovieRacun(receat)
-      }
-      else{
-        seat.classList.add('bg-dark');
-        seat.classList.remove('bg-secondary');
-        this.buyService.ukloniMovieRacun(receat)
+  ukloniSnack(racun:any){
+    let tempSnacks : any[] = [];
+    for (let i = 0; i < this.snacks.length; i++) {
+      if(this.snacks[i].id!=racun.id){
+        tempSnacks.push(this.snacks[i])
       }
     }
-    this.loadReceipt()
+    this.snacks = []
+    this.snacks = tempSnacks;
   }
+
+  //Upravljanje racunima za karte
+
+  get getKarte(){
+
+    let index=0;
+    let sviRacuni:any[]=[];
+
+    for (let i = 0; i < this.karte.length; i++) {
+      sviRacuni[index++] = this.karte[i];
+    }
+
+    for (let i = 0; i < this.snacks.length; i++) {
+      sviRacuni[index++] = this.snacks[i];
+    }
+
+    return sviRacuni;
+  }
+
+
+  dodajKarta(racun:any){
+    this.karte.push(racun);
+  }
+
+
+  ukloniKarta(racun:any){
+    let tempKarte : any[] = [];
+    for (let i = 0; i < this.karte.length; i++) {
+      if(this.karte[i].id!=racun.id){
+        tempKarte.push(this.karte[i]);
+      }
+    }
+    this.karte = []
+    this.karte = tempKarte;
+  }
+
+  //selekcija i deselkcija sjedišta
 
   deselectSeat(index:number){
     let seat = document.getElementById(this.alphabet[index]);
     if(seat){
       seat.classList.add('bg-dark');
       seat.classList.remove('bg-secondary');
-      this.loadReceipt()
       return;
     }
-    console.log("seat was null??");
+  }
 
+  selectSeat(index:number,row:number){
+
+    let seat = document.getElementById(this.alphabet[index]);
+
+    let receat = {id:index, cijena:this.film.cijena, naziv:'obicna karta',red:row+1,kolona:index+1}
+
+     if(seat){
+      if(seat.classList.contains('bg-dark')){
+        seat.classList.remove('bg-dark');
+        this.dodajKarta(receat);
+      }
+       else{
+         seat.classList.add('bg-dark');
+         this.ukloniKarta(receat)
+       }
+    }
+  }
+
+  //prikaz modala
+
+  showModal(){
+    var modal = document.getElementById("myModal");
+    (modal as HTMLElement).style.display = "block";
+  }
+
+  //upravljanje svim racunima
+
+  ukloniRacun(racun:any){
+    if(racun.stavkaPonudeId)
+      this.ukloniSnack(racun) //suvišna logika
+    else{
+      this.ukloniKarta(racun)
+      this.deselectSeat(racun.id)
+    }
   }
 
 
-  loadReceipt(){
-    this.tickets=[]
-    this.tickets=this.buyService.getMovieRacuni();
-    this.buyService.getSnacksRacuni().forEach(elem=>{
-      if(!this.tickets.includes(elem))
-        this.tickets.push(elem);
-      if(!this.receats.includes(elem))
-        this.receats.push(elem);
-    })
-  }
+
+  //-----
+  // loadReceipt(){
+  //   this.buyService.getSnacks().forEach(elem=>{
+  //     if(!this.racuni.includes(elem))
+  //       this.racuni.push(elem);
+  //     if(!this.racuni.includes(elem))
+  //       this.racuni.push(elem);
+  //   })
+  // }
+
 }

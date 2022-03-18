@@ -18,8 +18,8 @@ export class AppComponent implements OnInit{
     router.events.subscribe((val) => {
         let routeHit = false;
         let route=val as NavigationEnd;
-        let path = route.url as string
-        if(route.url){
+        let path = route?.url as string
+        if(path){
           if(path=="/"+aplication_settings.routesAuth[0] || path=="/"+aplication_settings.routesAuth[1]|| path.includes("/"+aplication_settings.routesAuth[2]+"/")){
             this.auth=true;
             routeHit=true;

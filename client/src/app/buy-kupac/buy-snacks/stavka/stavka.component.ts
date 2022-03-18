@@ -9,6 +9,8 @@ import { BuyService } from '../../Services/buy.service';
   styleUrls: ['./stavka.component.scss']
 })
 export class StavkaComponent implements OnInit {
+  @Input()
+  snacks:any[]=[];
 
   @Input()
   stavka:any;
@@ -41,9 +43,9 @@ export class StavkaComponent implements OnInit {
       if(element.value==this.stavkaForma.controls.porcija.value)
       porcija=element.name
     });
-    let racun = {id: this.stavka.id,ponudaId:this.stavka.ponudaId,cijena:Number(cijena),porcija: porcija, kolicina: this.stavkaForma.controls.kolicina.value, naziv: this.stavka.naziv };
+    let racun = {id: this.snacks.length+1,ponudaId:this.stavka.ponudaId,cijena:Number(cijena),porcija: porcija, kolicina: this.stavkaForma.controls.kolicina.value, naziv: this.stavka.naziv };
     console.log(racun)
-    this.buyService.dodajSnackRacun(racun);
+    this.dodajSnack(racun);
     this.createForm();
   }
 
@@ -54,5 +56,10 @@ export class StavkaComponent implements OnInit {
     this.stavkaForma.controls['cijena'].setValue('')
     this.stavkaForma.controls['cijena'].setValue(ukupnaCijena+' KM')
   }
+
+  dodajSnack(racun:any){
+    this.snacks.push(racun);
+  }
+
 
 }

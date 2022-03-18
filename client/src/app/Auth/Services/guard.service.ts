@@ -9,10 +9,12 @@ import { AuthService } from './auth.service';
 export class GuardService implements CanActivate {
 
   constructor(private auth:AuthService,private router:Router) { }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+  canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    var loginRoute =window.location.href.includes("Management") ? "/Management/Login" : "/Login";
     if (!this.auth.getToken) {
-      this.router.navigateByUrl("/Login");
-  }
+      this.router.navigateByUrl(loginRoute);
+    }
+
     return this.auth.getToken;
   }
 }
