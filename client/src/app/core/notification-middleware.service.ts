@@ -12,7 +12,7 @@ export class NotificationMiddlewareService {
     isSupported: false,
     isInProgress: false
   };
-  public notifications = [];
+  public notifications :any= [];
   private swRegistration:ServiceWorkerRegistration|null = null;
   constructor(private notificationService: NotificationService) { }
   init() {
@@ -31,6 +31,11 @@ export class NotificationMiddlewareService {
     } else {
       this.pushNotificationStatus.isSupported = false;
     }
+
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      this.notifications.push(event.data);
+    });
+
   }
 
   checkSubscription() {
@@ -81,11 +86,12 @@ export class NotificationMiddlewareService {
   }
 
   unsubscribe() {
+    var sub:any;
     this.pushNotificationStatus.isInProgress = true;
     this.swRegistration!.pushManager.getSubscription()
       .then(function (subscription) {
         if (subscription) {
-         var sub = JSON.parse(JSON.stringify(subscription));
+          sub = JSON.parse(JSON.stringify(subscription));
 
         }
         return subscription!.unsubscribe();
@@ -95,8 +101,14 @@ export class NotificationMiddlewareService {
         console.log('Error unsubscribing', error);
       })
       .then(() => {
-        this.pushNotificationStatus.isSubscribed = false;
-        this.pushNotificationStatus.isInProgress = false;
+        this.notificationService.unsubscribe(<PushSubscription>{
+          auth: sub.keys.auth,
+          p256Dh: sub.keys.p256dh,
+          endPoint: sub.endpoint
+        }).subscribe(() => {
+          this.pushNotificationStatus.isSubscribed = false;
+          this.pushNotificationStatus.isInProgress = false;
+        });
       });
   }
 

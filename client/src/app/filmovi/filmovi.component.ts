@@ -10,6 +10,7 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
 import{DodajFilmVM} from "../Modeli/FilmAddVm";
 import{glumacFilmAddVm} from "../Modeli/GlumacFilmAddVm";
 import { NotificationMiddlewareService } from '../core/notification-middleware.service';
+import{NotificationService,NotificationModel} from "../core/generated";
 
 @Component({
   selector: 'app-filmovi',
@@ -25,6 +26,8 @@ export class FilmoviComponent implements OnInit {
     file: new FormControl('', [Validators.required]),
     fileSource: new FormControl('', [Validators.required])
   });
+
+  model: NotificationModel = { url: "", title: "", message: "" }
 
   detaljiP:boolean=false;
   glumacFilmAdd:glumacFilmAddVm={glumacId:0,filmId:0};
@@ -63,7 +66,8 @@ export class FilmoviComponent implements OnInit {
 
 
 
-  constructor(private httpKlijent: HttpClient,public notificationMiddleware: NotificationMiddlewareService) {
+  constructor(private httpKlijent: HttpClient,public notificationMiddleware: NotificationMiddlewareService,
+              private notificationService: NotificationService) {
 
   }
 
@@ -189,6 +193,7 @@ export class FilmoviComponent implements OnInit {
   DodajFilm() {
     this.httpKlijent.post(aplication_settings.damir_local + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
+      this.sendPush();
     },error =>{ alert( error.error);});
 
 
@@ -198,6 +203,17 @@ export class FilmoviComponent implements OnInit {
     });},1000);
   }
 
+  sendPush()
+  {
+    this.model.url='https://www.olx.ba/';
+    this.model.message='Dodali ste novi film';
+    this.model.title='Novi film';
+    this.notificationService.broadcast(this.model).subscribe(() => {
+      this.model.url = "";
+      this.model.title = "";
+      this.model.message = "";
+    })
+  }
 
   obrisiFilm(s:any) {
     this.httpKlijent.post(aplication_settings.damir_local+"Film/Delete?id="+s.id,null).subscribe((pov:any)=>{
