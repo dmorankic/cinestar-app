@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import{DodajFilmVM} from "../Modeli/FilmAddVm";
 import{glumacFilmAddVm} from "../Modeli/GlumacFilmAddVm";
-
+import { NotificationMiddlewareService } from '../core/notification-middleware.service';
 
 @Component({
   selector: 'app-filmovi',
@@ -63,7 +63,7 @@ export class FilmoviComponent implements OnInit {
 
 
 
-  constructor(private httpKlijent: HttpClient) {
+  constructor(private httpKlijent: HttpClient,public notificationMiddleware: NotificationMiddlewareService) {
 
   }
 
@@ -271,4 +271,25 @@ export class FilmoviComponent implements OnInit {
       this.filmPodaci = x;
     }),1000);
   }
+
+
+  toggleSubscription() {
+    this.notificationMiddleware.toggleSubscription();
+  }
+
+  cleanUrl(url:any) {
+    if (url.indexOf(self.location.origin) >= 0) {
+      return url.replace(self.location.origin, '');
+    }
+    return url;
+  }
+
+  removeNotif(notif:any) {/*
+    var index = this.notificationMiddleware.notifications.indexOf(notif);
+    if (index >= 0) {
+      this.notificationMiddleware.notifications.splice(index, 1);
+    }*/
+  }
+
+
 }

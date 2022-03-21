@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-
+import { NotificationService, PushSubscription } from './generated';
 
 
 @Injectable({
@@ -12,9 +12,9 @@ export class NotificationMiddlewareService {
     isSupported: false,
     isInProgress: false
   };
-
+  public notifications = [];
   private swRegistration:ServiceWorkerRegistration|null = null;
-  constructor() { }
+  constructor(private notificationService: NotificationService) { }
   init() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
       navigator.serviceWorker.register('/assets/sw.js')
@@ -59,8 +59,18 @@ export class NotificationMiddlewareService {
       applicationServerKey: applicationServerKey
     })
       .then(subscription => {
+        console.log(subscription);
         console.log(JSON.parse(JSON.stringify(subscription)));
-        this.pushNotificationStatus.isSubscribed = true;
+
+        var newSub = JSON.parse(JSON.stringify(subscription));
+        console.log(newSub);
+        this.notificationService.subscribe(<PushSubscription>{
+          auth: newSub.keys.auth,
+          p256Dh: newSub.keys.p256dh,
+          endPoint: newSub.endpoint
+        }).subscribe((s:any) => {
+          this.pushNotificationStatus.isSubscribed = true;
+        })
       })
       .catch(err => {
         console.log('Failed to subscribe the user: ', err);

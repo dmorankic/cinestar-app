@@ -35,7 +35,7 @@ import { NavComponent } from './bi-dashboard/nav/nav.component';
 import { LoginComponent } from './Auth/Components/Login/login/login.component';
 import { RegisterComponent } from './Auth/Components/Register/register/register.component';
 import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mail.component';
-
+import{NotificationService, PushSubscription} from './core/generated'
 
 
 @NgModule({
@@ -79,7 +79,7 @@ import { ConfirmMailComponent } from './Auth/Components/confirm-mail/confirm-mai
     ChartModule,
     ReactiveFormsModule
   ],
-  providers: [DatePipe],
+  providers: [DatePipe,NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
