@@ -8,7 +8,7 @@ using WebPush;
 namespace Cinestar_WEB_API.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]")]
     public class NotificationController : ControllerBase
     {
         public static List<PushSubscription> Subscriptions { get; set; } = new List<PushSubscription>();

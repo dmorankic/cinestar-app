@@ -468,6 +468,15 @@
   <span *ngIf="notificationMiddleware.pushNotificationStatus.isSupported && !notificationMiddleware.pushNotificationStatus.isSubscribed">Subscribe</span>
 </button>
 
+
+
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let notif of notificationMiddleware.notifications">
+    <a [routerLink]="cleanUrl(notif.Url)" (click)="removeNotif(notif)">{{notif.Title}}
+      <small>{{notif.Message}}</small>
+    </a>
+  </li>
+</ul>
 <!--<ul class="list-group">
   <li class="list-group-item" *ngFor="let notif of notificationMiddleware.notifications">
     <a [routerLink]="cleanUrl(notif.Url)" (click)="removeNotif(notif)">{{notif.Title}}

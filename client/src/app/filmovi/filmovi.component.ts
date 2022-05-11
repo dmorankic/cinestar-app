@@ -193,7 +193,7 @@ export class FilmoviComponent implements OnInit {
   DodajFilm() {
     this.httpKlijent.post(aplication_settings.damir_local + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
-      this.sendPush();
+      this.broadcast();
     },error =>{ alert( error.error);});
 
 
@@ -203,7 +203,7 @@ export class FilmoviComponent implements OnInit {
     });},1000);
   }
 
-  sendPush()
+  broadcast()
   {
     this.model.url='https://www.olx.ba/';
     this.model.message='Dodali ste novi film';
@@ -212,7 +212,7 @@ export class FilmoviComponent implements OnInit {
       this.model.url = "";
       this.model.title = "";
       this.model.message = "";
-    })
+    });
   }
 
   obrisiFilm(s:any) {
@@ -300,11 +300,11 @@ export class FilmoviComponent implements OnInit {
     return url;
   }
 
-  removeNotif(notif:any) {/*
+  removeNotif(notif:any) {
     var index = this.notificationMiddleware.notifications.indexOf(notif);
     if (index >= 0) {
       this.notificationMiddleware.notifications.splice(index, 1);
-    }*/
+    }
   }
 
 

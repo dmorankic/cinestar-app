@@ -2,6 +2,7 @@
 'use strict';
 
 function isClientFocused() {
+
   return clients.matchAll({
     type: 'window',
     includeUncontrolled: true
@@ -25,10 +26,12 @@ self.addEventListener('push', function (event) {
   console.log('[Service Worker] Push Received.');
   var data = event.data.json();
 
+
   const promiseChain = isClientFocused()
 
     .then((clientIsFocused) => {
       if (clientIsFocused) {
+
         return clients.matchAll({
           type: 'window',
           includeUncontrolled: true
@@ -36,6 +39,7 @@ self.addEventListener('push', function (event) {
           windowClients.forEach(function (windowClient) {
             windowClient.postMessage(data);
           });
+
         });
       }
 
