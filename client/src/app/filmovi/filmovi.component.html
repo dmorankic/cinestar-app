@@ -1,16 +1,6 @@
-
-
-<!--<button class="btn btn-danger" (click)="prikaziFilmove()">Učitaj filmove</button>-->
-
 <H1>Filmovi</H1>
 
-
-
-
-
-
 <p>
-
   <input type="text" class="form-control uzadd"   [(ngModel)]="ime" placeholder="Traži filmove..">
 </p>
 <table class="table table-hover table-dark uza">
@@ -23,7 +13,8 @@
     <th>Akcija</th>
   </tr>
   <tbody>
-  <tr *ngFor="let s of getFilmPodaci()">
+
+  <tr *ngFor="let s of getFilmPodaci() | paginate :{itemsPerPage:5,currentPage:p}">
     <td>{{s.id}}</td>
     <td>{{s.naziv}}</td>
     <td>{{s.zanr}}</td>
@@ -61,6 +52,7 @@
   </tr>
   </tbody>
 </table>
+<pagination-controls (pageChange)="p=$event"></pagination-controls>
 
 
 

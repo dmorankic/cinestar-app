@@ -1,7 +1,8 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { aplication_settings } from './aplication_settings';
 import {NotificationMiddlewareService} from "./core/notification-middleware.service";
+
 
 @Component({
   selector: 'app-root',

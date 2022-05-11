@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {aplication_settings} from "../aplication_settings";
 import {DetaljiFilmaVM} from "../detalji-filma";
 import {HttpClient , HttpHeaders, HttpParams,} from "@angular/common/http";
@@ -11,6 +11,7 @@ import{DodajFilmVM} from "../Modeli/FilmAddVm";
 import{glumacFilmAddVm} from "../Modeli/GlumacFilmAddVm";
 import { NotificationMiddlewareService } from '../core/notification-middleware.service';
 import{NotificationService,NotificationModel} from "../core/generated";
+
 
 @Component({
   selector: 'app-filmovi',
@@ -29,6 +30,8 @@ export class FilmoviComponent implements OnInit {
 
   model: NotificationModel = { url: "", title: "", message: "" }
 
+  p:number=1;
+  pageSize:number=10;
   detaljiP:boolean=false;
   glumacFilmAdd:glumacFilmAddVm={glumacId:0,filmId:0};
   trajanje: string = '208min';
