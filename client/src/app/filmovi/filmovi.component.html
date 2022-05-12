@@ -14,7 +14,7 @@
   </tr>
   <tbody>
 
-  <tr *ngFor="let s of getFilmPodaci() | paginate :{itemsPerPage:5,currentPage:p}">
+  <tr *ngFor="let s of getFilmPodaci() ">
     <td>{{s.id}}</td>
     <td>{{s.naziv}}</td>
     <td>{{s.zanr}}</td>
@@ -52,7 +52,7 @@
   </tr>
   </tbody>
 </table>
-<pagination-controls (pageChange)="p=$event"></pagination-controls>
+
 
 
 
