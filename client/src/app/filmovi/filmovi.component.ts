@@ -30,8 +30,13 @@ export class FilmoviComponent implements OnInit {
 
   model: NotificationModel = { url: "", title: "", message: "" }
 
-  p:number=1;
-  pageSize:number=10;
+  getPagedHelper={totalPages:0,currentPage: 0,
+    pageSize: 0,
+    totalCount: 10}
+  page:number=1;
+  pageSize:number=2;
+  paged?:boolean=false;
+  totalPages:number=0;
   detaljiP:boolean=false;
   glumacFilmAdd:glumacFilmAddVm={glumacId:0,filmId:0};
   trajanje: string = '208min';
@@ -311,4 +316,33 @@ export class FilmoviComponent implements OnInit {
   }
 
 
+  paging(number: number) {
+    //https://localhost:44383/Film/GetAllPaged?page=2&pageSize=2
+    //aplication_settings.damir_local+'Film/GetAllPaged?page=2&pageSize=2'
+    this.httpKlijent.get(aplication_settings.damir_local + 'Film/GetAllPaged?page='+this.page+'&pageSize='+this.pageSize)
+      .subscribe((x:any) => {
+      this.filmPodaci = x.dataItems;
+        this.paged=true;
+        this.totalPages=x.totalPages;
+    });
+
+  }
+
+  getTotalPages() {
+    if(this.paged)
+    {
+     return this.totalPages;
+    }
+
+    return 0;
+  }
+
+  pageClick(pageNum:number) {
+    this.httpKlijent.get(aplication_settings.damir_local + 'Film/GetAllPaged?page='+pageNum+'&pageSize='+this.pageSize)
+      .subscribe((x:any) => {
+        this.filmPodaci = x.dataItems;
+        this.paged=true;
+        this.totalPages=x.totalPages;
+      });
+  }
 }

@@ -1,8 +1,29 @@
 <H1>Filmovi</H1>
 
-<p>
+<p id="pretraga">
   <input type="text" class="form-control uzadd"   [(ngModel)]="ime" placeholder="Traži filmove..">
 </p>
+<div id="paging">
+Items per page <select  [(ngModel)]="pageSize" class="form-select form-select-sm select" id="items_per_page">
+  <option selected>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option >5</option>
+  <option>10</option>
+  <option>20</option>
+  <option>30</option>
+  <option>40</option>
+  <option>50</option>
+</select>
+
+<div id="pagesDiv" *ngIf="paged">
+  <button (click)="pageClick(i+1)"
+          class="btn btn-light btn-sm" *ngFor="let item of [].constructor(this.totalPages); let i = index">{{i+1}}</button>
+</div>
+Current page <span id="current_page"></span><br>
+Total items <span id="total_items"></span><br>
+  <button class="btn btn-light btn-sm" (click)="paging(1)">Prikazi po stranicama</button><br>
+</div>
 <table class="table table-hover table-dark uza">
   <tr >
     <th>ID</th>
@@ -462,13 +483,13 @@
 
 
 
-<ul class="list-group">
+<!--<ul class="list-group">
   <li class="list-group-item" *ngFor="let notif of notificationMiddleware.notifications">
     <a [routerLink]="cleanUrl(notif.Url)" (click)="removeNotif(notif)">{{notif.Title}}
       <small>{{notif.Message}}</small>
     </a>
   </li>
-</ul>
+</ul>-->
 <!--<ul class="list-group">
   <li class="list-group-item" *ngFor="let notif of notificationMiddleware.notifications">
     <a [routerLink]="cleanUrl(notif.Url)" (click)="removeNotif(notif)">{{notif.Title}}

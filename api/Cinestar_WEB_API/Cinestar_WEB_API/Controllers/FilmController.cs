@@ -1,9 +1,11 @@
 ﻿    using dataBase;
 using Microsoft.AspNetCore.Mvc;
 using Modeli;
+using Modeli.SearchObjects;
 using Modeli.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Fabric.Query;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,18 +64,38 @@ namespace Cinestar_WEB_API.Controllers
         }
 
         [HttpGet]
-        public List<Film> GetAll(int? _id)
+        public List<Film> GetAll([FromQuery]BaseSearchObject search=null)
         {
-            var filmovi = _dbContext.filmovi.Where(x => _id == null || _id == x.id).ToList();
+            var filmovi = _dbContext.filmovi.Where(x => search.id == null || search.id == x.id);
             foreach (var film in filmovi)
             {
                 film.detaljiFilma = _dbContext.detaljiFilma.Find(film.detaljiFilmaID);
             }
-            return filmovi;
+            if (search.pageSize.HasValue==true && search.page.HasValue==true)
+            {
+                //    //filmovi= filmovi.Take(search.pageSize.Value).Skip(search.page.Value * search.pageSize.Value);
+                //    filmovi = filmovi.Skip((search.page.Value-1) * search.pageSize.Value).Take(search.pageSize.Value);
+               
+            }
+
+           
+
+
+            return filmovi.ToList();
 
         }
 
-        [HttpPost]
+
+        [HttpGet]
+        public Modeli.ViewModels.PagedList<Film> GetAllPaged([FromQuery] BaseSearchObject search = null)
+        {
+            var data = _dbContext.filmovi.Where(x => search.id == null || search.id == x.id)
+                                          .AsQueryable();
+
+            return Modeli.ViewModels.PagedList<Film>.Create(data, (int)search.page.Value, (int)search.pageSize.Value);
+        }
+
+            [HttpPost]
         public ActionResult AddDetalji(int filmId,int detaljiId)
         {
             Film film = _dbContext.filmovi.Find(filmId);

@@ -12,6 +12,8 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.23" />
 	  <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.3" />
+	  <PackageReference Include="Microsoft.ServiceFabric" Version="9.0.1017" />
+	  <PackageReference Include="PagedList" Version="1.17.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
 		  <PrivateAssets>all</PrivateAssets>
