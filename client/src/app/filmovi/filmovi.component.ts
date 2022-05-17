@@ -30,6 +30,9 @@ export class FilmoviComponent implements OnInit {
 
   model: NotificationModel = { url: "", title: "", message: "" }
 
+
+  //image:any;
+  //previewImg:HTMLImageElement;
   getPagedHelper={totalPages:0,currentPage: 0,
     pageSize: 0,
     totalCount: 10}
@@ -45,7 +48,7 @@ export class FilmoviComponent implements OnInit {
 
   nazivFilma:string;
 
-  router: Router;
+  //router: Router;
 
   imageSrc: string;
   dodajDetalje: DetaljiFilmaVM = {_trajanje: '', _trailer: '', _datumObjave: ''};
@@ -75,7 +78,7 @@ export class FilmoviComponent implements OnInit {
 
 
   constructor(private httpKlijent: HttpClient,public notificationMiddleware: NotificationMiddlewareService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,private router:Router) {
 
   }
 
@@ -201,6 +204,7 @@ export class FilmoviComponent implements OnInit {
   DodajFilm() {
     this.httpKlijent.post(aplication_settings.damir_local + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
+      //this.router.navigate(['Management/home']);
       this.broadcast();
     },error =>{ alert( error.error);});
 
@@ -344,5 +348,57 @@ export class FilmoviComponent implements OnInit {
         this.paged=true;
         this.totalPages=x.totalPages;
       });
+  }
+
+  preview() {
+    var file = document.getElementById("slikaInput") as HTMLInputElement;
+
+      // @ts-ignore: Object is possibly 'null'.
+      var slika=file!.files[0];
+
+    if (slika) {
+      var reader = new FileReader();
+
+      reader.onload = function () {
+        var slika1=document.getElementById("previewImg") as HTMLImageElement;
+          slika1.setAttribute("src", reader.result as string);
+      }
+      reader.readAsDataURL(slika);
+    }
+  }
+
+  uploadImage() {
+    var idzaposlenika;
+    var file = document.getElementById("fajl-input") as HTMLInputElement;
+    // @ts-ignore: Object is possibly 'null'.
+    var slika=file!.files[0];
+
+    if (file && idzaposlenika) {
+      var data = new FormData()
+      data.append('profile_image', slika)
+
+
+
+      fetch("https://restapiexample.wrd.app.fit.ba/Employee/AddProfileImage/" + idzaposlenika, {
+        method: 'POST',
+        body: data
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert("dodavanje uspješno " + data)
+          console.log('Success:', data);
+          var inputFile=document.getElementById("fajl-input") as HTMLInputElement;
+          inputFile.value = "";
+          var slikaHTML=document.getElementById("preview-slika") as HTMLImageElement;
+          slikaHTML.setAttribute("src", "");
+        })
+        .catch((error) => {
+          alert("greska  " + error)
+          console.error('Error:', error);
+        });
+    }
+    else {
+      alert("Označite zaposlenika i odaberite sliku");
+    }
   }
 }

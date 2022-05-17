@@ -26,22 +26,11 @@ namespace Cinestar_WEB_API.Controllers
         public ActionResult Add([FromBody] FilmAddVm x)
         {
 
-            //DetaljiFilma check = new DetaljiFilma();
-            //if (x._detaljiFilmaID != null)
-            //    check = _dbContext.detaljiFilma.Find(x._detaljiFilmaID);
-            //else
-            //    check.id = 0;
-
-            /*if (_dbContext.detaljiFilma.Find(x._detaljiFilmaId) == null)
-                return BadRequest("Ne postoje detalji filma pod tim ID-jem");*/
-
             List<Film> provjera = _dbContext.filmovi.
                 Where(y => y.detaljiFilmaID == x._detaljiFilmaId).ToList();
             if (provjera.Count > 0 )
                 return BadRequest("Vec postoji film sa tim ID-em detalja filma");
 
-           /* if (string.IsNullOrEmpty(x._slikaUrl))
-                x._slikaUrl = "Nisu unijeti podaci za sliku";*/
 
             if (string.IsNullOrEmpty(x._naziv)|| string.IsNullOrEmpty(x._zanr))
                 return BadRequest("Provjerite unos naziva i zanra");
@@ -52,11 +41,7 @@ namespace Cinestar_WEB_API.Controllers
             {
                 naziv = x._naziv,
                 zanr = x._zanr,
-                slikaUrl=x._slikaUrl/*,
-                detaljiFilma=det,
-                detaljiFilmaID = x._detaljiFilmaId*/
-                //,slika=x._slika
-
+                slikaUrl=x._slikaUrl
             };
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();

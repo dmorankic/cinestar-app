@@ -191,7 +191,7 @@ Total items <span id="total_items"></span><br>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel2">Dodavanje filma</h5>
+        <h3 class="modal-title" id="staticBackdropLabel2">Dodavanje filma</h3>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -243,6 +243,14 @@ Total items <span id="total_items"></span><br>
               <img src="{{imageSrc}}" *ngIf="imageSrc" style="height: 300px; width:300px">
               -->
             </div>
+
+            <label>Odaberi sliku</label>
+            <input id="slikaInput"  accept="image/*" type="file" (change)="preview()" /><br>
+
+            <label>Trenutna slika studenta</label>
+            <img id="previewImg"  style="height: 200px; display: block; border: 1px solid blue;" />
+
+            <button class="btn btn-primary btn-sm" (click)="uploadImage()">Zadatak H (upload)</button> max 300 KB
 
 
             <br>

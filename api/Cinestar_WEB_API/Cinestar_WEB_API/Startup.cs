@@ -1,4 +1,5 @@
-﻿using WebPush;
+﻿using dataBase;
+using WebPush;
 
 namespace Cinestar_WEB_API
 {
@@ -17,6 +18,7 @@ namespace Cinestar_WEB_API
                 Configuration.GetValue<string>("VapidDetails:PrivateKey"));
             services.AddTransient(c => vapidDetails);
             //services.AddControllers();
+            services.AddDbContext<ApplicationDbContext>();
         }
         public void Configure(IApplicationBuilder app)
         {
