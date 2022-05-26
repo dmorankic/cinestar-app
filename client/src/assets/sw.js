@@ -26,12 +26,14 @@ self.addEventListener('push', function (event) {
   console.log('[Service Worker] Push Received.');
   var data = event.data.json();
 
-  
+
 
   const promiseChain = isClientFocused()
 
     .then((clientIsFocused) => {
       if (clientIsFocused) {
+
+
 
         return clients.matchAll({
           type: 'window',
@@ -55,6 +57,8 @@ self.addEventListener('push', function (event) {
       // Client isn't focused, we need to show a notification.
       return self.registration.showNotification(title, options);
     });
+
+
 
   event.waitUntil(promiseChain);
 });
