@@ -26,6 +26,7 @@ self.addEventListener('push', function (event) {
   console.log('[Service Worker] Push Received.');
   var data = event.data.json();
 
+  
 
   const promiseChain = isClientFocused()
 

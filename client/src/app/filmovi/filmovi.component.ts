@@ -221,13 +221,16 @@ export class FilmoviComponent implements OnInit {
         data.append('_slikaUrl',file);
         this.httpKlijent.post(aplication_settings.damir_local+"Film/AddImage?filmId="+povratnaVrijednost.id,data)
           .subscribe((x:any)=>{
-            this.getFilmPodaci();
+
             var slikaInput = document.getElementById("slikaInput") as HTMLInputElement;
             slikaInput.value="";
             var slikaPrew=document.getElementById("previewImg") as HTMLImageElement;
             slikaPrew.setAttribute("src", "");
+            this.prikaziFilmove();
+            //this.getFilmPodaci();
           });
       }
+      setTimeout(()=>{ this.prikaziFilmove();},3000);
 
 
       this.broadcast();
