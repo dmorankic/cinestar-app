@@ -13,6 +13,7 @@ import { NotificationMiddlewareService } from '../core/notification-middleware.s
 import{NotificationService,NotificationModel} from "../core/generated";
 
 
+
 @Component({
   selector: 'app-filmovi',
   templateUrl: './filmovi.component.html',
@@ -202,9 +203,33 @@ export class FilmoviComponent implements OnInit {
 
 
   DodajFilm() {
+
+
+
     this.httpKlijent.post(aplication_settings.damir_local + "Film/Add", this.add).subscribe((povratnaVrijednost: any) => {
       alert("uredu..." + povratnaVrijednost.id);
-      //this.router.navigate(['Management/home']);
+
+
+      this.add._naziv="";
+      this.add._zanr="";
+
+      var temp = document.getElementById("slikaInput") as HTMLInputElement;
+      // @ts-ignore: Object is possibly 'null'.
+      var file=temp.files[0];
+      if(file){
+        var data=new FormData();
+        data.append('_slikaUrl',file);
+        this.httpKlijent.post(aplication_settings.damir_local+"Film/AddImage?filmId="+povratnaVrijednost.id,data)
+          .subscribe((x:any)=>{
+            this.getFilmPodaci();
+            var slikaInput = document.getElementById("slikaInput") as HTMLInputElement;
+            slikaInput.value="";
+            var slikaPrew=document.getElementById("previewImg") as HTMLImageElement;
+            slikaPrew.setAttribute("src", "");
+          });
+      }
+
+
       this.broadcast();
     },error =>{ alert( error.error);});
 
@@ -368,8 +393,8 @@ export class FilmoviComponent implements OnInit {
   }
 
   uploadImage() {
-    var idzaposlenika;
-    var file = document.getElementById("fajl-input") as HTMLInputElement;
+    /*var idzaposlenika;
+    var file = document.getElementById("slikaInput") as HTMLInputElement;
     // @ts-ignore: Object is possibly 'null'.
     var slika=file!.files[0];
 
@@ -399,6 +424,6 @@ export class FilmoviComponent implements OnInit {
     }
     else {
       alert("Označite zaposlenika i odaberite sliku");
-    }
+    }*/
   }
 }

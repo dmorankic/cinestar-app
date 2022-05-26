@@ -37,15 +37,40 @@ namespace Cinestar_WEB_API.Controllers
 
             DetaljiFilma det = _dbContext.detaljiFilma.Find(x._detaljiFilmaId);
 
+            
+
             Film dodaj = new Film()
             {
                 naziv = x._naziv,
-                zanr = x._zanr,
-                slikaUrl=x._slikaUrl
+                zanr = x._zanr
             };
+
+            //if (x._slikaUrl != null)
+            //{
+            //    string ekstenzija = Path.GetExtension(x._slikaUrl.FileName);
+            //    var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+            //    x._slikaUrl.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+            //    dodaj.slikaUrl = Config.SlikeURL + filename;
+            //}
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();
             return Ok(dodaj);
+        }
+        [HttpPost]
+        public ActionResult AddImage([FromForm] ImageAddVm x,int filmId)
+        {
+            Film dodaj = _dbContext.filmovi.Find(filmId);
+            if (x._slikaUrl != null)
+            {
+                string ekstenzija = Path.GetExtension(x._slikaUrl.FileName);
+                var filename = $"{Guid.NewGuid()}{ekstenzija}";
+
+                x._slikaUrl.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
+                dodaj.slikaUrl = Config.SlikeURL + filename;
+            }
+            _dbContext.SaveChanges();
+            return Ok();
         }
 
         [HttpGet]

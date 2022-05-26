@@ -234,23 +234,15 @@ Total items <span id="total_items"></span><br>
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="slika">Link slike</label>
-              <input type="url" id="slika" class="form-control"
-                  placeholder="Unesite link slike"   [(ngModel)]="add._slikaUrl"  [ngModelOptions]="{standalone: true}">
-              <!--
-              <input  (change)="onFileChange($event)" type="file" class="form-control" id="slika" aria-describedby="emailHelp" placeholder="Unesite žanr">
-              <img src="{{imageSrc}}" *ngIf="imageSrc" style="height: 300px; width:300px">
-              -->
-            </div>
 
-            <label>Odaberi sliku</label>
+
+            <label>Odaberi sliku</label><br>
             <input id="slikaInput"  accept="image/*" type="file" (change)="preview()" /><br>
 
-            <label>Trenutna slika studenta</label>
+            <label>Odabrana slika</label>
             <img id="previewImg"  style="height: 200px; display: block; border: 1px solid blue;" />
 
-            <button class="btn btn-primary btn-sm" (click)="uploadImage()">Zadatak H (upload)</button> max 300 KB
+
 
 
             <br>
