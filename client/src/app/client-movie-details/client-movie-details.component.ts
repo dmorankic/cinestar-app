@@ -35,23 +35,7 @@ export class ClientMovieDetailsComponent implements OnInit {
       this.dani.push(i)
     }
 
-      this.http.get<DeskripcijaFilmaVM>(aplication_settings.damir_local+ "DetaljiFilmaVM/"+this.id).subscribe(x=>{
-        this.movieDetails = x.detalji;
-        this.movie = x.film;
-        if(this.movieDetails.trailer.includes("www.youtube.com")){
-          this.isYt=true;
-          this.dontDisplayTrailer=false;
-          var turnToEmbededVideo = this.movieDetails.trailer.replace("watch?v=","embed/");
-          this.url=this.sec.bypassSecurityTrustResourceUrl(turnToEmbededVideo as string);
-        }else if(this.movieDetails.trailer.includes("www.imdb.com")){
-          this.url=this.sec.bypassSecurityTrustResourceUrl(this.movieDetails.trailer as string);
-          this.dontDisplayTrailer=false;
-        }else{
-          this.dontDisplayTrailer=true;
-        }
-        console.log(this.url)
-      });
-      console.log("movie ",this.movie)
+
 
   }
 

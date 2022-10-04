@@ -1,5 +1,6 @@
 ﻿    using dataBase;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Modeli;
 using Modeli.SearchObjects;
 using Modeli.ViewModels;
@@ -7,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Fabric.Query;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Cinestar_WEB_API.Controllers
@@ -45,17 +48,36 @@ namespace Cinestar_WEB_API.Controllers
                 zanr = x._zanr
             };
 
-            //if (x._slikaUrl != null)
-            //{
-            //    string ekstenzija = Path.GetExtension(x._slikaUrl.FileName);
-            //    var filename = $"{Guid.NewGuid()}{ekstenzija}";
-
-            //    x._slikaUrl.CopyTo(new FileStream(Config.SlikeFolder + filename, FileMode.Create));
-            //    dodaj.slikaUrl = Config.SlikeURL + filename;
-            //}
+           
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();
+            SendEmailNotification(x._naziv);
             return Ok(dodaj);
+        }
+        [HttpPost]
+        public void SendEmailNotification(string film)
+        {
+            var smtpClient = new SmtpClient("smtp.office365.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.Timeout = 1000000;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            NetworkCredential nc = new System.Net.NetworkCredential("cinemaonlinecinema@outlook.com", "Nekilaganpw1!");
+            smtpClient.Credentials = nc;
+            string fromAddress = "cinemaonlinecinema@outlook.com";
+            string toAddress = "damir.morankic00802@gmail.com";
+
+            var message = new MailMessage(fromAddress, toAddress, "Novi film", "Uspjesno ste dodali film " + film);
+            message.IsBodyHtml = false;
+
+            try
+            {
+                smtpClient.SendAsync(message, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in CreateTestMessage1(): {0}",
+                            ex.ToString());
+            }
         }
         [HttpPost]
         public ActionResult AddImage([FromForm] ImageAddVm x,int filmId)
@@ -172,7 +194,56 @@ namespace Cinestar_WEB_API.Controllers
             return Ok(brisi);
         }
 
-        
+        [HttpGet]
+        public FilmFullVm GetAllFullById(int _id)
+        {
+            FilmFullVm pov = new FilmFullVm();
+            pov.film = _dbContext.filmovi
+                .Include(x => x.detaljiFilma)
+                .Where(x => x.id == _id)
+                .FirstOrDefault();
+            pov.glumci = new List<Glumac>();
+            pov.projekcije = new List<Projekcija>();
+            foreach (var glumacFilm in _dbContext.glumacFilm)
+            {
+                if (glumacFilm.filmId == pov.film.id)
+                    pov.glumci.Add(_dbContext.glumci.Find(glumacFilm.glumacId));
+            }
+            foreach (var projekcija in _dbContext.projekcije.Include(x => x.vrstaProjekcije))
+            {
+                if (projekcija.filmId == pov.film.id)
+                    pov.projekcije.Add(projekcija);
+            }
+            return pov;
+        }
+        [HttpGet]
+        public List<FilmFullVm> GetAllFull(int? _id)
+        {
+
+            List<FilmFullVm> ret = new List<FilmFullVm>();
+            foreach (var film in _dbContext.filmovi.Include(x => x.detaljiFilma))
+            {
+                FilmFullVm pov = new FilmFullVm();
+                pov.film = film;
+                pov.glumci = new List<Glumac>();
+                pov.projekcije = new List<Projekcija>();
+                foreach (var glumacFilm in _dbContext.glumacFilm)
+                {
+                    if (glumacFilm.filmId == film.id)
+                        pov.glumci.Add(_dbContext.glumci.Find(glumacFilm.glumacId));
+                }
+                foreach (var projekcija in _dbContext.projekcije.Include(x => x.vrstaProjekcije))
+                {
+                    if (projekcija.filmId == film.id)
+                        pov.projekcije.Add(projekcija);
+                }
+                ret.Add(pov);
+            }
+            return ret;
+
+        }
+
+
 
 
 
