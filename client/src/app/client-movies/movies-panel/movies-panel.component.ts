@@ -25,4 +25,7 @@ export class MoviesPanelComponent implements OnInit {
     });
   }
 
+  openDetails(s:any) {
+    this.router.navigate(['/movie',s.film.id]);
+  }
 }

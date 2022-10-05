@@ -12,31 +12,32 @@ import { DeskripcijaFilmaVM } from '../Modeli/DetaljiFilmaVM';
   styleUrls: ['./client-movie-details.component.scss']
 })
 export class ClientMovieDetailsComponent implements OnInit {
-  movie:any;
-  movieDetails:any;
-  url?:SafeUrl;
-  isYt=false;
-  dontDisplayTrailer=false;
+
   id:any;
   sati:any=[];
   dani:any=[];
+  Movie:any;
 
   constructor(private activatedRoute:ActivatedRoute,private http:HttpClient,private sec:DomSanitizer) {
     this.id = this.activatedRoute.snapshot.paramMap.get('id')
    }
 
   ngOnInit(): void {
-    let termin = 14.00;
+   /* let termin = 14.00;
     for(let i = 0;i<6;i++){
       this.sati.push(termin)
       termin+=2.00;
     }
     for(let i = 0;i<7;i++){
       this.dani.push(i)
-    }
+    }*/
 
-
-
+    this.loadMovieDetails();
   }
 
+  private loadMovieDetails() {
+    this.http.get(aplication_settings.damir_local+`Film/GetAllFullById?_id=${this.id}`).subscribe((x:any)=>{
+      this.Movie=x;
+    });
+  }
 }

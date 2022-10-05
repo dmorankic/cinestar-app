@@ -21,7 +21,7 @@ export class NotificationService {
 
   constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
     this.http = http;
-    this.baseUrl = baseUrl ? baseUrl : "https://localhost:44383";
+    this.baseUrl = baseUrl ? baseUrl : "https://localhost:44384";
   }
 
   subscribe(sub: PushSubscription | null): Observable<void> {

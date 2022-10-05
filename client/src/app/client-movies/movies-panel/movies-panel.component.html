@@ -6,7 +6,7 @@
     </div>
     <div class="detalji">
       <span class="naziv">{{s.film.naziv}}</span><br><br><br><br>
-      <button type="button" class="btn btn-light">Pogledaj detalje filma i dostupne projekcije</button>
+      <button type="button" class="btn btn-light" (click)="openDetails(s)">Pogledaj detalje filma i dostupne projekcije</button>
       <!--<span>Žanr: {{s.film.zanr}}</span><br>
       <span>Trajanje: {{s.film.detaljiFilma?.trajanje}}</span><br>
       <span>Datum objave: {{s.film.detaljiFilma?.datumObjave | date}}</span><br>
