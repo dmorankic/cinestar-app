@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Modeli;
 using Modeli.SearchObjects;
 using Modeli.ViewModels;
+using Servisi.IServisi;
+using Servisi.Servisi;
 using System;
 using System.Collections.Generic;
 using System.Fabric.Query;
@@ -18,7 +20,9 @@ namespace Cinestar_WEB_API.Controllers
     [Route("[controller]/[action]")]
     public class FilmController : ControllerBase
     {
+        private readonly FilmService service;
         private readonly ApplicationDbContext _dbContext;
+        
         public FilmController(ApplicationDbContext dbContext)
         {
             this._dbContext = dbContext;
@@ -51,34 +55,10 @@ namespace Cinestar_WEB_API.Controllers
            
             _dbContext.Add(dodaj);
             _dbContext.SaveChanges();
-            SendEmailNotification(x._naziv);
+            //SendEmailNotification(x._naziv);
             return Ok(dodaj);
         }
-        [HttpPost]
-        public void SendEmailNotification(string film)
-        {
-            var smtpClient = new SmtpClient("smtp.office365.com", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.Timeout = 1000000;
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            NetworkCredential nc = new System.Net.NetworkCredential("cinemaonlinecinema@outlook.com", "Nekilaganpw1!");
-            smtpClient.Credentials = nc;
-            string fromAddress = "cinemaonlinecinema@outlook.com";
-            string toAddress = "damir.morankic00802@gmail.com";
-
-            var message = new MailMessage(fromAddress, toAddress, "Novi film", "Uspjesno ste dodali film " + film);
-            message.IsBodyHtml = false;
-
-            try
-            {
-                smtpClient.SendAsync(message, null);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception caught in CreateTestMessage1(): {0}",
-                            ex.ToString());
-            }
-        }
+        
         [HttpPost]
         public ActionResult AddImage([FromForm] ImageAddVm x,int filmId)
         {
@@ -242,11 +222,7 @@ namespace Cinestar_WEB_API.Controllers
             return ret;
 
         }
-
-
-
-
-
+       
 
     }
 }

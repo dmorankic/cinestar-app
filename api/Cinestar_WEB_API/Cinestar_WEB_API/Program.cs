@@ -1,13 +1,15 @@
 using Cinestar_WEB_API;
+using Cinestar_WEB_API.Controllers;
 using Microsoft.OpenApi.Models;
 using Servisi.HubConfig;
+using Servisi.Servisi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //-----------------------------------------DODAO DAMIR 
 var startup = new Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
-
+startup.ConfigureServices(builder.Services.AddHostedService<FilmService>()
+);
 
 
 // Add services to the container.
