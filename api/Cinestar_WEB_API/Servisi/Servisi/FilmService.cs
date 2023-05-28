@@ -25,7 +25,7 @@ namespace Servisi.Servisi
             smtpClient.EnableSsl = true;
             smtpClient.Timeout = 1000000;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            NetworkCredential nc = new System.Net.NetworkCredential("cinemaonlinecinema@outlook.com", "Nekilaganpw1!");
+            NetworkCredential nc = new System.Net.NetworkCredential("lololo@outlook.com", "lolololo");
             smtpClient.Credentials = nc;
             string fromAddress = "cinemaonlinecinema@outlook.com";
             string toAddress = "damir.morankic00802@gmail.com";
@@ -50,7 +50,7 @@ namespace Servisi.Servisi
                 int brojFilmova = _dbContext.filmovi.Count();
                 SendEmailNotification(brojFilmova);
             }
-            , null, TimeSpan.Zero, TimeSpan.FromHours(24));
+            , null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
             return Task.CompletedTask;
         }
         public Task StopAsync(CancellationToken cancellationToken)
