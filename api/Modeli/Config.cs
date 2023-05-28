@@ -8,7 +8,7 @@ namespace Modeli
 {
     public class Config
     {
-        public static string AplikacijURL = "https://localhost:44383/";
+        public static string AplikacijURL = "https://localhost:44384/";
 
         public static string Slike => "slike/";
         public static string SlikeURL => AplikacijURL + Slike;
